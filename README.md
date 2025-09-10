@@ -19,21 +19,72 @@ Modern, AI‑assisted platform for evaluating startups with consistent signals, 
 
 ---
 
-## 🏗️ Architecture
+## 🏛️ System Architecture
 
-```
-frontend/ (Vite + React + Tailwind)
-  ├─ components/
-  │   ├─ layout/ Navbar, Footer
-  │   └─ investor/chat/ (Chat UI: SSE stream, renderer for tables/lists)
-  ├─ pages/ About, Pricing, FAQs, Investor views
-  └─ services/ chatService.js (SSE reader with id-based dedupe)
+```mermaid
+%%{init: {'theme': 'dark', 'themeVariables': { 'primaryColor': '#0d9488', 'primaryTextColor': '#f0fdfa', 'primaryBorderColor': '#14b8a6', 'lineColor': '#5eead4', 'secondaryColor': '#1e1b4b', 'tertiaryColor': '#0f172a', 'background': '#020617', 'mainBkg': '#0f172a', 'nodeBorder': '#14b8a6', 'clusterBkg': '#0f172a80', 'clusterBorder': '#334155', 'titleColor': '#f0fdfa', 'edgeLabelBackground': '#0f172a', 'nodeTextColor': '#f0fdfa' }}}%%
+graph TB
+    subgraph INTERNET["☁️  INTERNET"]
+        USER["👤 User / Investor / Founder"]
+    end
 
-backend/ (Django + DRF)
-  ├─ core/services/ai_service.py  ← intent detection + deterministic formatters
-  ├─ core/views/chat_views.py     ← SSE, sequence id, deterministic first
-  └─ config/settings/*            ← env profiles
+    subgraph CDN["🌍  CDN  ·  Edge Layer"]
+        VITE["⚡ Vite Dev Server\n:5173"]
+    end
+
+    subgraph SPA["⚛️  FRONTEND  ·  React 18 SPA"]
+        direction LR
+        ROUTER["🧭 Router\nReact Router v6"]
+        PAGES["📄 Pages\n13 Routes"]
+        COMPS["🧩 Components\n8 Modules"]
+        SRVS["🔌 Services\n11 API Clients"]
+        FEAT["⚙ Features\n3 Feature Packs"]
+    end
+
+    subgraph API["🐍  BACKEND  ·  Django REST Framework"]
+        direction LR
+        VIEWS["🎯 Views\n7 View Modules"]
+        SERIAL["📋 Serializers\n5 Schemas"]
+        BIZ["🧠 Services\n3 Engines"]
+        REPO["📦 Repos\n2 Repositories"]
+        MODELS["🏗 Models\n4 Domains"]
+    end
+
+    subgraph AI["🤖  AI  ·  LLM Gateway"]
+        direction LR
+        OPENAI["OpenAI\nGPT-4o"]
+        GEMINI["Google\nGemini 2.0"]
+    end
+
+    subgraph DATA["🗄️  DATA  ·  Persistence"]
+        SQLITE[("SQLite\ndev default")]
+    end
+
+    USER -->|HTTPS| VITE
+    VITE --> ROUTER
+    ROUTER --> PAGES
+    PAGES --> COMPS
+    PAGES --> SRVS
+    COMPS --> SRVS
+    FEAT --> SRVS
+    SRVS -->|REST + SSE\n:8000/api/v1| VIEWS
+    VIEWS --> SERIAL
+    VIEWS --> BIZ
+    BIZ --> REPO
+    BIZ -->|"Streaming API"| OPENAI
+    BIZ -->|"Fallback API"| GEMINI
+    REPO --> MODELS
+    MODELS --> SQLITE
+
+    style INTERNET fill:#020617,stroke:#334155,color:#94a3b8
+    style CDN fill:#0c0a09,stroke:#14b8a6,color:#5eead4
+    style SPA fill:#0f172a,stroke:#6366f1,color:#a5b4fc
+    style API fill:#0f172a,stroke:#0d9488,color:#5eead4
+    style AI fill:#1e1b4b,stroke:#8b5cf6,color:#c4b5fd
+    style DATA fill:#0c0a09,stroke:#f59e0b,color:#fcd34d
 ```
+
+> **Note**: For a deep dive into frontend, backend, data flows, and API endpoints, view the full [Architecture Reference](Architecture/architecture_diagram.md).
 
 Key flows:
 - Deterministic pre‑answer: backend inspects the question and returns a structured answer when possible (no LLM needed).
