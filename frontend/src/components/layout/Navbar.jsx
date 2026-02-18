@@ -13,7 +13,7 @@ function Navbar() {
         </div>
 
         {/* Desktop Links */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden lg:flex items-center gap-8">
           {["Home", "Services", "Pricing", "About us", "Faqs"].map((item) => (
             <a
               key={item}
@@ -26,7 +26,7 @@ function Navbar() {
         </nav>
 
         {/* Desktop CTA */}
-        <div className="hidden md:flex items-center">
+        <div className="hidden lg:flex items-center">
           <button className="rounded-full bg-gradient-to-r from-[#00f5a0] to-[#00d9f5] px-6 py-2.5 text-sm font-semibold text-[#02030a] transition-all hover:brightness-110 hover:shadow-[0_0_20px_rgba(0,245,160,0.3)]">
             Get In Touch
           </button>
@@ -34,33 +34,29 @@ function Navbar() {
 
         {/* Mobile Toggle */}
         <button
-          className="flex h-10 w-10 flex-col items-center justify-center gap-1.5 rounded-full border border-white/10 bg-white/5 md:hidden"
+          className="flex h-10 w-10 flex-col items-center justify-center gap-1.5 rounded-full border border-white/10 bg-white/5 lg:hidden"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-label="Toggle navigation"
         >
           <span
-            className={`h-0.5 w-5 rounded-full bg-white transition-transform duration-300 ${
-              isMenuOpen ? "translate-y-2 rotate-45" : ""
-            }`}
+            className={`h-0.5 w-5 rounded-full bg-white transition-transform duration-300 ${isMenuOpen ? "translate-y-2 rotate-45" : ""
+              }`}
           />
           <span
-            className={`h-0.5 w-5 rounded-full bg-white transition-opacity duration-300 ${
-              isMenuOpen ? "opacity-0" : ""
-            }`}
+            className={`h-0.5 w-5 rounded-full bg-white transition-opacity duration-300 ${isMenuOpen ? "opacity-0" : ""
+              }`}
           />
           <span
-            className={`h-0.5 w-5 rounded-full bg-white transition-transform duration-300 ${
-              isMenuOpen ? "-translate-y-2 -rotate-45" : ""
-            }`}
+            className={`h-0.5 w-5 rounded-full bg-white transition-transform duration-300 ${isMenuOpen ? "-translate-y-2 -rotate-45" : ""
+              }`}
           />
         </button>
       </div>
 
       {/* Mobile Menu */}
       <div
-        className={`absolute left-0 top-20 w-full overflow-hidden bg-[#02030a]/95 backdrop-blur-xl transition-all duration-300 md:hidden ${
-          isMenuOpen ? "max-h-[400px] border-b border-white/10" : "max-h-0"
-        }`}
+        className={`absolute left-0 top-20 w-full overflow-hidden bg-[#02030a]/95 backdrop-blur-xl transition-all duration-300 lg:hidden ${isMenuOpen ? "max-h-[400px] border-b border-white/10" : "max-h-0"
+          }`}
       >
         <nav className="flex flex-col p-6 space-y-4">
           {["Home", "Services", "Pricing", "About us", "Faqs"].map((item) => (
