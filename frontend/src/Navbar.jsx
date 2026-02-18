@@ -25,10 +25,12 @@ function Navbar() {
           className={`navbar-links${isMenuOpen ? " navbar-links-open" : ""
             }`}
         >
-          <a href="#advantage">Our Advantage</a>
-          <a href="#features">Features</a>
-          <a href="#testimonials">Testimonials</a>
-          <a href="#solutions">Solutions</a>
+          
+          <a href="#features">Home</a>
+          <a href="#advantage">Services</a>
+          <a 
+          href="#testimonials">Pricing</a>
+          <a href="#solutions">About us</a>
           <a href="#faqs">Faqs</a>
           <div className="navbar-right-mobile">
             <button className="navbar-cta">Get In Touch</button>
