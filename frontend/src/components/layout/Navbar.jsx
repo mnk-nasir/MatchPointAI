@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
 
 function Navbar() {
@@ -8,9 +9,9 @@ function Navbar() {
     <header className="fixed top-0 left-0 right-0 z-50 w-full border-b border-white/5 bg-[#02030a]/80 backdrop-blur-md transition-all duration-300">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-8">
         {/* Logo */}
-        <div className="flex items-center gap-3">
+        <Link to="/" className="flex items-center gap-3">
           <img src={logo} alt="MatchPoint logo" className="h-8 w-auto" />
-        </div>
+        </Link>
 
         {/* Desktop Links */}
         <nav className="hidden lg:flex items-center gap-8">

@@ -1,5 +1,6 @@
-import React, { useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import React, { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import * as THREE from "three";
 
 function LuxuryBackground() {
@@ -129,9 +130,134 @@ function LuxuryBackground() {
   return <div ref={mountRef} className="absolute inset-0 z-0" />;
 }
 
+// Decoding Text Component
+const DecodedText = ({ text, delay = 0 }) => {
+  const [displayText, setDisplayText] = useState("");
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&";
+
+  useEffect(() => {
+    let iteration = 0;
+    const interval = setInterval(() => {
+      setDisplayText(
+        text
+          .split("")
+          .map((letter, index) => {
+            if (index < iteration) {
+              return text[index];
+            }
+            return chars[Math.floor(Math.random() * chars.length)];
+          })
+          .join("")
+      );
+
+      if (iteration >= text.length) {
+        clearInterval(interval);
+      }
+
+      iteration += 1 / 3;
+    }, 30);
+
+    return () => clearInterval(interval);
+  }, [text]);
+
+  return <span>{displayText}</span>;
+};
+
 function Hero() {
+  const navigate = useNavigate();
+  const [isNavigating, setIsNavigating] = useState(false);
+
+  const handleFundingClick = () => {
+    setIsNavigating(true);
+    setTimeout(() => {
+      navigate("/funding");
+    }, 2500);
+  };
+
   return (
-    <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#02020a] text-white">
+    <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#02020a] text-white selection:bg-[#38bdf8] selection:text-[#02020a]">
+      {/* Navigation Transition Overlay */}
+      <AnimatePresence>
+        {isNavigating && (
+          <motion.div
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-[#02030a]"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            {/* Cyber Grid Background */}
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,#38bdf81a_1px,transparent_1px),linear-gradient(to_bottom,#38bdf81a_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,#000_40%,transparent_100%)] opacity-20" />
+
+            {/* Animated Noise Texture */}
+            <div className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+
+            <div className="relative z-10 flex flex-col items-center gap-10 w-full max-w-md p-8">
+              {/* Hexagon Loader */}
+              <div className="relative h-32 w-32 flex items-center justify-center">
+                {/* Outer Ring */}
+                <motion.div
+                  className="absolute inset-0 border border-[#38bdf8]/30 rounded-full"
+                  animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.6, 0.3] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                />
+
+                {/* Spinning Segments */}
+                <motion.div
+                  className="absolute inset-2 border-t-2 border-r-2 border-[#38bdf8]"
+                  style={{ borderRadius: '40%' }}
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                />
+                <motion.div
+                  className="absolute inset-4 border-b-2 border-l-2 border-[#facc15]"
+                  style={{ borderRadius: '40%' }}
+                  animate={{ rotate: -360 }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                />
+
+                {/* Center Core */}
+                <div className="h-4 w-4 bg-[#38bdf8] rounded-full shadow-[0_0_20px_#38bdf8]" />
+              </div>
+
+              {/* Text Animation */}
+              <div className="text-center space-y-4 font-mono">
+                <motion.h2
+                  className="text-3xl font-bold text-white tracking-[0.2em] uppercase text-transparent bg-clip-text bg-gradient-to-r from-[#38bdf8] via-white to-[#38bdf8]"
+                >
+                  <DecodedText text="ACCESSING_CORE" />
+                </motion.h2>
+
+                <div className="flex flex-col items-center gap-2">
+                  <p className="text-[#38bdf8]/70 text-xs tracking-widest uppercase">
+                    Authenticating User Signature...
+                  </p>
+                  <p className="text-[#facc15]/70 text-xs tracking-widest uppercase">
+                    <DecodedText text="ENCRYPTING_DATA_STREAM" />
+                  </p>
+                </div>
+              </div>
+
+              {/* Tech Progress Bar */}
+              <div className="w-full space-y-2">
+                <div className="flex justify-between text-[10px] text-[#38bdf8]/50 font-mono">
+                  <span>SYS_LOAD</span>
+                  <span>100%</span>
+                </div>
+                <div className="h-1 w-full bg-[#38bdf8]/10 rounded-none overflow-hidden relative">
+                  <motion.div
+                    className="absolute inset-0 bg-[#38bdf8] shadow-[0_0_10px_#38bdf8]"
+                    initial={{ x: "-100%" }}
+                    animate={{ x: "0%" }}
+                    transition={{ duration: 2, ease: "circOut" }}
+                  />
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <LuxuryBackground />
 
       <div className="pointer-events-none absolute inset-0">
@@ -169,33 +295,40 @@ function Hero() {
             transition={{ duration: 0.9, delay: 0.1, ease: "easeOut" }}
             className="mx-auto max-w-2xl text-sm leading-relaxed text-white/70 sm:text-base"
           >
-            Advanced investment analytics, valuation intelligence, and risk
-            architecture designed for modern venture ecosystems. Built for
-            institutions that treat every decision as a signal.
+            The premier platform connecting those seeking funding with strategic investors.
+            Experience advanced analytics, valuation intelligence, and risk
+            architecture designed for modern venture ecosystems.
           </motion.p>
 
           <div className="mt-4 flex flex-wrap items-center justify-center gap-4">
             <motion.button
               whileHover={{
-                scale: 1.04,
+                scale: 1.05,
                 boxShadow:
-                  "0 0 0 1px rgba(250,204,21,0.45), 0 0 40px rgba(59,130,246,0.65)",
+                  "0 0 20px rgba(56, 189, 248, 0.5), 0 0 40px rgba(56, 189, 248, 0.3)",
               }}
-              whileTap={{ scale: 0.97 }}
-              className="rounded-full bg-[radial-gradient(circle_at_10%_0,#facc15,transparent_55%),radial-gradient(circle_at_80%_0,#38bdf8,transparent_60%)] px-8 py-3 text-sm font-semibold tracking-[0.14em] text-black shadow-[0_0_0_1px_rgba(250,204,21,0.65)] transition-colors"
+              whileTap={{ scale: 0.95 }}
+              onClick={handleFundingClick}
+              className="relative overflow-hidden rounded-none bg-transparent px-8 py-4 text-sm font-bold tracking-[0.2em] text-[#38bdf8] border border-[#38bdf8] transition-all group"
             >
-              Enter the Platform
+              <div className="absolute inset-0 bg-[#38bdf8]/10 group-hover:bg-[#38bdf8]/20 transition-colors" />
+              <div className="absolute -inset-1 bg-gradient-to-r from-transparent via-[#38bdf8]/50 to-transparent opacity-0 group-hover:opacity-100 blur-lg transition-opacity duration-500" />
+              <span className="relative z-10 flex items-center gap-2">
+                I'M SEEKING FUNDING
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+              </span>
             </motion.button>
 
             <motion.button
               whileHover={{
-                scale: 1.03,
-                backgroundColor: "rgba(15,23,42,0.85)",
+                scale: 1.05,
+                borderColor: "rgba(250, 204, 21, 0.8)",
+                color: "#facc15"
               }}
-              whileTap={{ scale: 0.97 }}
-              className="rounded-full border border-white/18 bg-black/40 px-7 py-3 text-sm font-medium tracking-[0.14em] text-white/80 backdrop-blur-lg transition"
+              whileTap={{ scale: 0.95 }}
+              className="rounded-none border border-white/20 bg-black/40 px-8 py-4 text-sm font-bold tracking-[0.2em] text-white/70 backdrop-blur-lg transition-colors hover:bg-black/60"
             >
-              Explore Intelligence Engine
+              I WANT TO INVEST
             </motion.button>
           </div>
         </motion.div>
