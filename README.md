@@ -8,7 +8,7 @@
 - Uses [DeepFace](https://github.com/serengil/deepface) for facial analysis
 - Simple OpenCV interface
 
-## 🧠 How It Works
+## 🧠 How It Workss
 
 The program captures video frames and uses DeepFace to detect the dominant emotion. A custom function then extends these emotions to interpret more nuanced feelings based on combinations and intensity levels.
 
