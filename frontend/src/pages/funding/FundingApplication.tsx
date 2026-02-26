@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { GlassCard } from "../../components/ui/GlassCard";
 import { GlowButton } from "../../components/ui/GlowButton";
-import { ChevronRight, ChevronLeft, Trophy } from "lucide-react";
+import { ChevronRight, ChevronLeft, Trophy, Loader2, AlertCircle } from "lucide-react";
 import StepIdentity from "../../components/form/StepIdentity";
 import StepProblemSolution from "../../components/form/StepProblemSolution";
 import StepMarket from "../../components/form/StepMarket";
@@ -11,6 +11,7 @@ import StepFinancials from "../../components/form/StepFinancials";
 import StepTeam from "../../components/form/StepTeam";
 import StepExit from "../../components/form/StepExit";
 import FundingResult from "../../components/form/FundingResult";
+import { evaluationService } from "../../services/evaluation";
 
 // Steps configuration
 const STEPS = [
@@ -27,111 +28,162 @@ const STEPS = [
 export default function FundingApplication() {
   const [currentStep, setCurrentStep] = useState(1);
   const [direction, setDirection] = useState(0);
-  const [totalScore, setTotalScore] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [backendResult, setBackendResult] = useState<any>(null);
+
   const [formData, setFormData] = useState<any>({
+    // Step 1: Identity
     companyName: "",
     legalStructure: "",
     incorporationYear: "",
     country: "",
     capTableSummary: "",
     stage: "",
-    previousFunding: "",
-    // Step 2
+    previousFunding: "", // Maps to funding_raised in backend
+
+    // Step 2: Problem & Solution
     coreProblem: "",
     solution: "",
     whyNow: "",
     uniqueAdvantage: "",
-    // Step 3
-    tam: "",
+
+    // Step 3: Market
+    tam: "", // Maps to tam_size
     sam: "",
     som: "",
     targetCustomer: "",
-    competitors: "",
+    competitors: "", // Maps to competition_level or generic field
     marketGrowth: "",
     competitiveAdvantageScore: 5,
-    // Step 4
-    monthlyRevenue: "",
+
+    // Step 4: Traction
+    monthlyRevenue: "", // Maps to mrr
     revenueGrowth: "",
-    activeUsers: "",
+    activeUsers: "", // Maps to active_users
     payingCustomers: "",
     retentionRate: "",
     hasSignedContracts: false,
     hasLOIs: false,
     hasPartnerships: false,
+
+    // Step 5 & 7: Team
+    foundersCount: 1, // Maps to founders_count
+    hasTechnicalFounder: false, // Maps to has_technical_founder
+    teamSize: 1, // Maps to team_size
+
+    // Step 6: Financials
+    burnRate: "", // Maps to burn_rate
+
+    // Step 8: Exit
+    exitStrategy: "", // Maps to exit_strategy
   });
 
   const updateFormData = (newData: any) => {
     setFormData((prev: any) => ({ ...prev, ...newData }));
   };
 
-  // Calculate score dynamically
-  useEffect(() => {
-    let score = 0;
-    const currentYear = new Date().getFullYear();
+  const handleSubmit = async () => {
+    setIsSubmitting(true);
+    setError(null);
 
-    // Step 1 Scoring Logic
-    if (
-      formData.incorporationYear &&
-      currentYear - Number(formData.incorporationYear) > 2
-    ) {
-      score += 5;
-    }
-    if (Number(formData.previousFunding) > 0) {
-      score += 10;
-    }
-    // "Beyond Seed" means Series A, B, C+, IPO
-    if (
-      ["series-a", "series-b", "series-c", "public"].includes(formData.stage)
-    ) {
-      score += 10;
-    }
+    try {
+      const payload = {
+        step1: {
+          companyName: formData.companyName,
+          legalStructure: formData.legalStructure,
+          incorporationYear: formData.incorporationYear,
+          country: formData.country,
+          stage: formData.stage,
+          previousFunding: formData.previousFunding,
+          capTableSummary: formData.capTableSummary,
+        },
+        step2: {
+          coreProblem: formData.coreProblem,
+          solution: formData.solution,
+          whyNow: formData.whyNow,
+          uniqueAdvantage: formData.uniqueAdvantage,
+        },
+        step3: {
+          tam: formData.tam,
+          sam: formData.sam,
+          som: formData.som,
+          targetCustomer: formData.targetCustomer,
+          competitors: formData.competitors,
+          marketGrowth: formData.marketGrowth,
+          competitiveAdvantageScore: formData.competitiveAdvantageScore,
+        },
+        step4: {
+          monthlyRevenue: formData.monthlyRevenue,
+          revenueGrowth: formData.revenueGrowth,
+          activeUsers: formData.activeUsers,
+          payingCustomers: formData.payingCustomers,
+          retentionRate: formData.retentionRate,
+          hasSignedContracts: formData.hasSignedContracts,
+          hasLOIs: formData.hasLOIs,
+          hasPartnerships: formData.hasPartnerships,
+        },
+        step5: {
+          foundersCount: formData.foundersCount,
+          hasTechnicalFounder: formData.hasTechnicalFounder,
+          teamSize: formData.teamSize,
+          isFullTime: formData.isFullTime,
+          keyHires: formData.keyHires,
+          advisoryBoard: formData.advisoryBoard,
+          founderBackground: formData.founderBackground,
+          domainExperience: formData.domainExperience,
+          prevStartupExp: formData.prevStartupExp,
+        },
+        step6: {
+          amountRaising: formData.amountRaising,
+          preMoneyValuation: formData.preMoneyValuation,
+          equityOffered: formData.equityOffered,
+          fundUse: formData.fundUse,
+          burnRate: formData.burnRate,
+          nextRound: formData.nextRound,
+        },
+        step7: {
+          founderBackground: formData.founderBackground,
+          isFullTime: formData.isFullTime,
+          vision: formData.vision,
+        },
+        step8: {
+          exitStrategy: formData.exitStrategy,
+          investorReturn: formData.investorReturn,
+          exitValuation: formData.exitValuation,
+          exitTimeline: formData.exitTimeline,
+        },
+      } as const;
 
-    // Step 2 Scoring Logic
-    if (
-      formData.coreProblem &&
-      formData.solution &&
-      formData.whyNow &&
-      formData.uniqueAdvantage
-    ) {
-      score += 15;
+      const result = await evaluationService.submitFullEvaluation(payload as any);
+      setBackendResult(result);
+      setIsSubmitted(true);
+    } catch (err: any) {
+      setError(err.message || "Failed to submit evaluation. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
-    if (formData.uniqueAdvantage && formData.uniqueAdvantage.length > 50) {
-      score += 10;
-    }
+  };
 
-    // Step 3 Scoring Logic
-    if (Number(formData.tam) > 100000000) {
-      score += 10;
+  const nextStep = () => {
+    if (currentStep < STEPS.length) {
+      setDirection(1);
+      setCurrentStep((prev) => prev + 1);
+    } else {
+      // Final step - submit
+      handleSubmit();
     }
-    if (Number(formData.marketGrowth) > 10) {
-      score += 10;
-    }
-    if (Number(formData.competitiveAdvantageScore) > 7) {
-      score += 10;
-    }
+  };
 
-    // Step 4 Scoring Logic
-    if (Number(formData.monthlyRevenue) > 0) {
-      score += 15;
+  const prevStep = () => {
+    if (currentStep > 1) {
+      setDirection(-1);
+      setCurrentStep((prev) => prev - 1);
     }
-    if (Number(formData.revenueGrowth) > 10) {
-      score += 10;
-    }
-    if (Number(formData.retentionRate) > 60) {
-      score += 10;
-    }
-    if (formData.hasSignedContracts) score += 5;
-    if (formData.hasLOIs) score += 5;
-    if (formData.hasPartnerships) score += 5;
+  };
 
-    // Step 7 Scoring Logic
-    if (Number(formData.domainExperience) > 5) score += 10;
-    if (formData.prevStartupExp) score += 10;
-    if (formData.isFullTime) score += 10;
 
-    setTotalScore(score);
-  }, [formData]);
 
   const handleNext = () => {
     // Basic validation for Step 1
@@ -256,53 +308,64 @@ export default function FundingApplication() {
     });
   };
 
-  if (isSubmitted) {
-    return <FundingResult totalScore={totalScore} data={formData} onRestart={handleRestart} />;
+  if (isSubmitted && backendResult) {
+    return (
+      <FundingResult
+        totalScore={backendResult.total_score}
+        rating={backendResult.rating}
+        strengths={backendResult.strengths}
+        weaknesses={backendResult.weaknesses}
+        data={formData}
+        onRestart={() => window.location.reload()}
+      />
+    );
   }
 
   return (
-    <div className="min-h-screen bg-web3-bg text-white font-sans selection:bg-web3-primary/30 pb-24 sm:pb-0">
+    <div className="min-h-screen bg-mp-bg text-white font-sans selection:bg-mp-primary/30 pb-24 sm:pb-0 pt-20">
       {/* Background Gradients */}
-      <div className="fixed inset-0 bg-web3-gradient pointer-events-none" />
+      <div className="fixed inset-0 bg-mp-gradient pointer-events-none" />
 
       <div className="relative mx-auto max-w-4xl px-4 py-12 md:py-20">
+        {/* Error Message */}
+        {error && (
+          <div className="mb-6 flex items-center gap-3 rounded-lg border border-red-500/50 bg-red-500/10 p-4 text-red-200">
+            <AlertCircle className="h-5 w-5 shrink-0" />
+            <p>{error}</p>
+          </div>
+        )}
+
         {/* Header & Progress */}
         <div className="mb-8 space-y-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
+              <h1 className="text-2xl font-bold tracking-tight sm:text-3xl text-mp-primary">
                 Funding Application
               </h1>
               <p className="text-white/60 mt-1">
                 Step {currentStep} of {STEPS.length}:{" "}
-                <span className="text-web3-primary font-medium">
+                <span className="text-mp-primary font-medium">
                   {STEPS[currentStep - 1].title}
                 </span>
               </p>
-            </div>
-
-            {/* Score Display (Optional but cool) */}
-            <div className="hidden sm:flex items-center gap-2 rounded-full border border-web3-primary/30 bg-web3-primary/10 px-4 py-2 text-sm font-medium text-web3-primary">
-              <Trophy className="h-4 w-4" />
-              <span>Score: {totalScore}</span>
             </div>
           </div>
 
           {/* Progress Bar */}
           <div className="relative h-2 w-full overflow-hidden rounded-full bg-white/10">
             <motion.div
-              className="absolute h-full bg-gradient-to-r from-web3-primary to-web3-purple"
+              className="absolute h-full bg-gradient-to-r from-mp-primary to-purple-500"
               initial={{ width: 0 }}
-              animate={{ width: `${progress}%` }}
+              animate={{ width: `${(currentStep / STEPS.length) * 100}%` }}
               transition={{ duration: 0.5, ease: "circOut" }}
             />
           </div>
         </div>
 
         {/* Main Card */}
-        <GlassCard className="min-h-[500px] p-6 sm:p-10" gradient>
+        <GlassCard className="min-h-[500px] p-6 sm:p-10 border-mp-primary/20" gradient>
           <div className="mb-8">
-            <h2 className="text-2xl font-semibold mb-2">{STEPS[currentStep - 1].title}</h2>
+            <h2 className="text-2xl font-semibold mb-2 text-white">{STEPS[currentStep - 1].title}</h2>
             <p className="text-white/60">{STEPS[currentStep - 1].description}</p>
           </div>
 
@@ -333,9 +396,7 @@ export default function FundingApplication() {
               )}
 
               {currentStep === 5 && (
-                <div className="flex h-64 items-center justify-center rounded-xl border border-dashed border-white/20 bg-white/5">
-                  <p className="text-white/40">Step 5 (Team) content coming soon...</p>
-                </div>
+                <StepTeam data={formData} updateData={updateFormData} />
               )}
 
               {currentStep === 6 && (
@@ -343,7 +404,7 @@ export default function FundingApplication() {
               )}
 
               {currentStep === 7 && (
-                <StepTeam data={formData} updateData={updateFormData} />
+                <StepTeam data={formData} updateData={updateFormData} isFounderVision={true} />
               )}
 
               {currentStep === 8 && (
@@ -351,46 +412,42 @@ export default function FundingApplication() {
               )}
             </motion.div>
           </AnimatePresence>
-        </GlassCard>
 
-        {/* Desktop Navigation */}
-        <div className="mt-8 hidden sm:flex items-center justify-between">
-          <GlowButton
-            variant="ghost"
-            onClick={handleBack}
-            disabled={currentStep === 1}
-          >
-            <ChevronLeft className="mr-2 h-4 w-4" />
-            Back
-          </GlowButton>
+          {/* Navigation Buttons */}
+          <div className="mt-10 flex justify-between pt-6 border-t border-white/10">
+            <button
+              onClick={prevStep}
+              disabled={currentStep === 1 || isSubmitting}
+              className={`flex items-center gap-2 px-6 py-2.5 rounded-lg transition-colors ${currentStep === 1
+                ? "opacity-0 pointer-events-none"
+                : "text-white/70 hover:text-white hover:bg-white/5"
+                }`}
+            >
+              <ChevronLeft className="h-4 w-4" />
+              Back
+            </button>
 
-          <GlowButton onClick={handleNext}>
-            {currentStep === STEPS.length ? "Submit Application" : "Next Step"}
-            <ChevronRight className="ml-2 h-4 w-4" />
-          </GlowButton>
-        </div>
-      </div>
-
-      {/* Mobile Sticky Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 border-t border-white/10 bg-[#02030a]/80 backdrop-blur-xl p-4 sm:hidden z-50">
-        <div className="flex items-center justify-between gap-4">
-          <GlowButton
-            variant="secondary"
-            size="sm"
-            onClick={handleBack}
-            disabled={currentStep === 1}
-            className="flex-1"
-          >
-            Back
-          </GlowButton>
-          <div className="flex items-center gap-2 text-xs font-medium text-web3-primary bg-web3-primary/10 px-3 py-1 rounded-full">
-            <Trophy className="h-3 w-3" />
-            {totalScore}
+            <GlowButton
+              onClick={nextStep}
+              disabled={isSubmitting}
+              className="min-w-[140px]"
+            >
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Submitting...
+                </>
+              ) : currentStep === STEPS.length ? (
+                "Submit Evaluation"
+              ) : (
+                <>
+                  Next Step
+                  <ChevronRight className="ml-2 h-4 w-4" />
+                </>
+              )}
+            </GlowButton>
           </div>
-          <GlowButton size="sm" onClick={handleNext} className="flex-1">
-            {currentStep === STEPS.length ? "Submit" : "Next"}
-          </GlowButton>
-        </div>
+        </GlassCard>
       </div>
     </div>
   );
