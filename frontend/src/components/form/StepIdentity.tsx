@@ -30,12 +30,12 @@ const LEGAL_STRUCTURES = [
 ];
 
 const STAGES = [
+  { value: "idea", label: "Idea" },
+  { value: "mvp", label: "MVP Launched" },
   { value: "pre-seed", label: "Pre-Seed" },
   { value: "seed", label: "Seed" },
   { value: "series-a", label: "Series A" },
-  { value: "series-b", label: "Series B" },
-  { value: "series-c", label: "Series C+" },
-  { value: "public", label: "Public (IPO)" },
+  { value: "growth", label: "Growth" },
 ];
 
 export default function StepIdentity({ data, updateData }: StepIdentityProps) {

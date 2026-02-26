@@ -8,6 +8,9 @@ import { useWindowSize } from "react-use";
 
 interface FundingResultProps {
   totalScore: number;
+  rating: string;
+  strengths: string[];
+  weaknesses: string[];
   data: any;
   onRestart?: () => void;
 }
@@ -89,7 +92,7 @@ const CountUp = ({ end }: { end: number }) => {
   return <span className="text-3xl font-bold text-white">{count}</span>;
 };
 
-const FundingResult: React.FC<FundingResultProps> = ({ totalScore, data, onRestart }) => {
+const FundingResult: React.FC<FundingResultProps> = ({ totalScore, rating, strengths, weaknesses, data, onRestart }) => {
   const { width, height } = useWindowSize();
   const [showConfetti, setShowConfetti] = useState(false);
 
@@ -100,38 +103,42 @@ const FundingResult: React.FC<FundingResultProps> = ({ totalScore, data, onResta
     }
   }, [totalScore]);
 
-  const getClassification = (score: number) => {
-    if (score >= 180) return {
-      label: "High Potential",
-      color: "text-emerald-400",
-      bg: "bg-emerald-500/10",
-      border: "border-emerald-500/20",
-      desc: "Exceptional application with strong market fit and metrics."
-    };
-    if (score >= 120) return {
-      label: "Strong",
-      color: "text-blue-400",
-      bg: "bg-blue-500/10",
-      border: "border-blue-500/20",
-      desc: "Solid business case with good traction potential."
-    };
-    if (score >= 60) return {
-      label: "Moderate",
-      color: "text-amber-400",
-      bg: "bg-amber-500/10",
-      border: "border-amber-500/20",
-      desc: "Promising but requires more validation or stronger metrics."
-    };
-    return {
-      label: "High Risk",
-      color: "text-red-400",
-      bg: "bg-red-500/10",
-      border: "border-red-500/20",
-      desc: "Significant gaps in model or traction. Review key areas."
-    };
-  };
-
-  const classification = getClassification(totalScore);
+  const classification = (() => {
+    switch (rating) {
+      case "HIGH_POTENTIAL":
+        return {
+          label: "High Potential",
+          color: "text-emerald-400",
+          bg: "bg-emerald-500/10",
+          border: "border-emerald-500/20",
+          desc: "Exceptional application with strong market fit and metrics.",
+        };
+      case "STRONG":
+        return {
+          label: "Strong",
+          color: "text-blue-400",
+          bg: "bg-blue-500/10",
+          border: "border-blue-500/20",
+          desc: "Solid business case with good traction potential.",
+        };
+      case "MODERATE":
+        return {
+          label: "Moderate",
+          color: "text-amber-400",
+          bg: "bg-amber-500/10",
+          border: "border-amber-500/20",
+          desc: "Promising but requires more validation or stronger metrics.",
+        };
+      default:
+        return {
+          label: "High Risk",
+          color: "text-red-400",
+          bg: "bg-red-500/10",
+          border: "border-red-500/20",
+          desc: "Significant gaps in model or traction. Review key areas.",
+        };
+    }
+  })();
 
   const getStrengths = () => {
     const strengths = [];
@@ -185,7 +192,7 @@ const FundingResult: React.FC<FundingResultProps> = ({ totalScore, data, onResta
                 <CheckCircle className="w-4 h-4 text-emerald-400" /> Key Strengths
               </h3>
               <div className="flex flex-wrap gap-2">
-                {getStrengths().map((s, i) => (
+                {strengths.map((s, i) => (
                   <span key={i} className="text-xs font-medium px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-emerald-300">
                     {s}
                   </span>
@@ -198,7 +205,7 @@ const FundingResult: React.FC<FundingResultProps> = ({ totalScore, data, onResta
                 <XCircle className="w-4 h-4 text-red-400" /> Areas to Improve
               </h3>
               <div className="flex flex-wrap gap-2">
-                {getWeaknesses().map((w, i) => (
+                {weaknesses.map((w, i) => (
                   <span key={i} className="text-xs font-medium px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-red-300">
                     {w}
                   </span>
