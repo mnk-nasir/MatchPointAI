@@ -3,7 +3,8 @@ import { motion } from "framer-motion";
 import { Input } from "../ui/Input";
 import { Textarea } from "../ui/Textarea";
 import { Slider } from "../ui/Slider";
-import { DollarSign, TrendingUp, Target } from "lucide-react";
+import { TrendingUp, Target } from "lucide-react";
+import { currencySymbol } from "../../utils/currency";
 
 interface MarketData {
   tam: number | "";
@@ -13,14 +14,17 @@ interface MarketData {
   competitors: string;
   marketGrowth: number | "";
   competitiveAdvantageScore: number;
+  currency?: string;
 }
 
 interface StepMarketProps {
   data: MarketData;
   updateData: (data: Partial<MarketData>) => void;
+  errors?: Record<string, string>;
+  onFieldBlur?: (name: keyof MarketData) => void;
 }
 
-export default function StepMarket({ data, updateData }: StepMarketProps) {
+export default function StepMarket({ data, updateData, errors = {}, onFieldBlur }: StepMarketProps) {
   // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -54,7 +58,11 @@ export default function StepMarket({ data, updateData }: StepMarketProps) {
             onChange={(e) =>
               updateData({ tam: parseFloat(e.target.value) || "" })
             }
-            icon={<DollarSign className="h-4 w-4" />}
+            onBlur={() => onFieldBlur && onFieldBlur("tam")}
+            id="field-tam"
+            required
+            error={errors["tam"]}
+            icon={<span className="h-4 w-4 text-white/50">{currencySymbol((data as any).currency)}</span>}
           />
           <p className="mt-1 text-xs text-white/40">Total market demand</p>
         </motion.div>
@@ -68,7 +76,11 @@ export default function StepMarket({ data, updateData }: StepMarketProps) {
             onChange={(e) =>
               updateData({ sam: parseFloat(e.target.value) || "" })
             }
-            icon={<DollarSign className="h-4 w-4" />}
+            onBlur={() => onFieldBlur && onFieldBlur("sam")}
+            id="field-sam"
+            required
+            error={errors["sam"]}
+            icon={<span className="h-4 w-4 text-white/50">{currencySymbol((data as any).currency)}</span>}
           />
           <p className="mt-1 text-xs text-white/40">Segment you can target</p>
         </motion.div>
@@ -82,7 +94,11 @@ export default function StepMarket({ data, updateData }: StepMarketProps) {
             onChange={(e) =>
               updateData({ som: parseFloat(e.target.value) || "" })
             }
-            icon={<DollarSign className="h-4 w-4" />}
+            onBlur={() => onFieldBlur && onFieldBlur("som")}
+            id="field-som"
+            required
+            error={errors["som"]}
+            icon={<span className="h-4 w-4 text-white/50">{currencySymbol((data as any).currency)}</span>}
           />
           <p className="mt-1 text-xs text-white/40">Realistic market share</p>
         </motion.div>
@@ -95,6 +111,10 @@ export default function StepMarket({ data, updateData }: StepMarketProps) {
             placeholder="e.g. Enterprise SaaS companies with >50 employees"
             value={data.targetCustomer || ""}
             onChange={(e) => updateData({ targetCustomer: e.target.value })}
+            onBlur={() => onFieldBlur && onFieldBlur("targetCustomer")}
+            id="field-targetCustomer"
+            required
+            error={errors["targetCustomer"]}
             icon={<Target className="h-4 w-4" />}
           />
         </motion.div>
@@ -108,6 +128,8 @@ export default function StepMarket({ data, updateData }: StepMarketProps) {
             onChange={(e) =>
               updateData({ marketGrowth: parseFloat(e.target.value) || "" })
             }
+            onBlur={() => onFieldBlur && onFieldBlur("marketGrowth")}
+            id="field-marketGrowth"
             icon={<TrendingUp className="h-4 w-4" />}
           />
         </motion.div>
@@ -120,6 +142,10 @@ export default function StepMarket({ data, updateData }: StepMarketProps) {
           rows={4}
           value={data.competitors || ""}
           onChange={(e) => updateData({ competitors: e.target.value })}
+          onBlur={() => onFieldBlur && onFieldBlur("competitors")}
+          id="field-competitors"
+          required
+          error={errors["competitors"]}
         />
       </motion.div>
 

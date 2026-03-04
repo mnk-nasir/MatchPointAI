@@ -1,5 +1,6 @@
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenObtainPairView
 from core.serializers.auth_serializers import RegisterSerializer
 from django.contrib.auth import get_user_model
@@ -29,3 +30,22 @@ class CustomTokenObtainPairView(TokenObtainPairView):
                 'last_name': user.last_name
             }
         return response
+
+
+class MeView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        u = request.user
+        data = {
+            "id": str(u.id),
+            "email": u.email,
+            "first_name": u.first_name,
+            "last_name": u.last_name,
+            "is_investor": getattr(u, "is_investor", False),
+            "is_founder": getattr(u, "is_founder", False),
+            "is_staff": u.is_staff,
+            "is_superuser": u.is_superuser,
+            "date_joined": u.date_joined,
+        }
+        return Response(data, status=status.HTTP_200_OK)

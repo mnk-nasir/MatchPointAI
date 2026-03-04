@@ -45,6 +45,7 @@ class StartupScoringEngine:
         self._risk_flags: List[str] = []
         self._strengths: List[str] = []
         self._weaknesses: List[str] = []
+        self._section_scores: Dict[str, Dict[str, int]] = {}
 
     def calculate(self) -> Dict[str, Any]:
         """
@@ -81,7 +82,8 @@ class StartupScoringEngine:
             'rating': rating,
             'risk_flags': self._risk_flags,
             'strengths': self._strengths,
-            'weaknesses': self._weaknesses
+            'weaknesses': self._weaknesses,
+            'section_scores': self._section_scores
         }
 
     def _determine_rating(self) -> str:
@@ -101,6 +103,10 @@ class StartupScoringEngine:
         """Helper to add score and log reason if needed."""
         self._total_score += points
         # logging could go here
+    
+    def _record_section(self, key: str, score: int, out_of: int):
+        """Record per-section score breakdown."""
+        self._section_scores[key] = {'score': int(score), 'outOf': int(out_of)}
 
     def _score_identity(self):
         """
@@ -133,6 +139,7 @@ class StartupScoringEngine:
                 self._risk_flags.append("Invalid incorporation year")
 
         self._add_score(score)
+        self._record_section('identity', score, 20)
 
     def _score_market(self):
         """
@@ -171,6 +178,7 @@ class StartupScoringEngine:
             self._risk_flags.append("High market competition")
             
         self._add_score(score)
+        self._record_section('market', score, 40)
 
     def _score_traction(self):
         """
@@ -215,6 +223,7 @@ class StartupScoringEngine:
             pass
 
         self._add_score(score)
+        self._record_section('traction', score, 40)
 
     def _score_financial(self):
         """
@@ -253,6 +262,7 @@ class StartupScoringEngine:
             pass
             
         self._add_score(score)
+        self._record_section('financials', score, 30)
 
     def _score_funding(self):
         """
@@ -280,6 +290,7 @@ class StartupScoringEngine:
             pass
             
         self._add_score(score)
+        self._record_section('funding', score, 20)
 
     def _score_team(self):
         """
@@ -315,6 +326,7 @@ class StartupScoringEngine:
             pass
             
         self._add_score(score)
+        self._record_section('team', score, 30)
 
     def _score_exit(self):
         """
@@ -336,3 +348,4 @@ class StartupScoringEngine:
             self._weaknesses.append("Undefined Exit Strategy")
             
         self._add_score(score)
+        self._record_section('exit', score, 20)

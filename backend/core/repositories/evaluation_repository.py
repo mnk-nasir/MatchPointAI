@@ -86,8 +86,14 @@ class EvaluationRepository:
         """
         try:
             qs = StartupEvaluation.objects.all()
-            if user is not None:
-                return qs.get(id=evaluation_id, user=user)
-            return qs.get(id=evaluation_id)
+            # Access policy:
+            # - Anonymous: can view any evaluation detail (public investor browsing)
+            # - Staff or investor users: can view any evaluation detail
+            # - Other authenticated users: can only view their own evaluations
+            if user is None:
+                return qs.get(id=evaluation_id)
+            if getattr(user, "is_staff", False) or getattr(user, "is_investor", False):
+                return qs.get(id=evaluation_id)
+            return qs.get(id=evaluation_id, user=user)
         except StartupEvaluation.DoesNotExist:
             return None

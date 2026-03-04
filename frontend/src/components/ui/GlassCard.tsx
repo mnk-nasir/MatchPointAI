@@ -17,7 +17,7 @@ export function GlassCard({
   return (
     <motion.div
       className={cn(
-        "relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md",
+        "relative overflow-visible rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md",
         gradient &&
           "bg-gradient-to-b from-white/10 to-white/5 shadow-[0_4px_24px_-1px_rgba(0,0,0,0.2)]",
         className

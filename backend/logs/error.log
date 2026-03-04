@@ -1,0 +1,338 @@
+ERROR 2026-03-02 16:20:32,176 log 9784 14196 Internal Server Error: /api/v1/investor/chat/stream
+Traceback (most recent call last):
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\rest_framework\throttling.py", line 92, in get_rate
+    return self.THROTTLE_RATES[self.scope]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+KeyError: 'investor_chat'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\rest_framework\views.py", line 503, in dispatch
+    self.initial(request, *args, **kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\rest_framework\views.py", line 422, in initial
+    self.check_throttles(request)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\rest_framework\views.py", line 364, in check_throttles
+    for throttle in self.get_throttles():
+                    ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\rest_framework\views.py", line 290, in get_throttles
+    return [throttle() for throttle in self.throttle_classes]
+            ~~~~~~~~^^
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\rest_framework\throttling.py", line 70, in __init__
+    self.rate = self.get_rate()
+                ~~~~~~~~~~~~~^^
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\rest_framework\throttling.py", line 95, in get_rate
+    raise ImproperlyConfigured(msg)
+django.core.exceptions.ImproperlyConfigured: No default throttle rate set for 'investor_chat' scope
+ERROR 2026-03-02 16:20:32,230 log 9784 14196 "GET /api/v1/investor/chat/stream?message=hi HTTP/1.1" 500 23237
+ERROR 2026-03-02 16:26:11,592 log 3192 11488 Internal Server Error: /api/v1/investor/chat/stream
+Traceback (most recent call last):
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\db\backends\mysql\base.py", line 78, in execute
+    return self.cursor.execute(query, args)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\MySQLdb\cursors.py", line 179, in execute
+    res = self._query(mogrified_query)
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\MySQLdb\cursors.py", line 330, in _query
+    db.query(q)
+    ~~~~~~~~^^^
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\MySQLdb\connections.py", line 286, in query
+    _mysql.connection.query(self, query)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+MySQLdb.ProgrammingError: (1146, "Table 'u665497677_MatchPoint.core_chatsession' doesn't exist")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\Match-point\backend\core\views\chat_views.py", line 86, in get
+    session = ChatSession.objects.create(investor=user)
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\db\models\query.py", line 669, in create
+    obj.save(force_insert=True, using=self.db)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\db\models\base.py", line 874, in save
+    self.save_base(
+    ~~~~~~~~~~~~~~^
+        using=using,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        update_fields=update_fields,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\db\models\base.py", line 966, in save_base
+    updated = self._save_table(
+        raw,
+    ...<4 lines>...
+        update_fields,
+    )
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\db\models\base.py", line 1169, in _save_table
+    results = self._do_insert(
+        cls._base_manager, using, insert_fields, returning_fields, raw
+    )
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\db\models\base.py", line 1220, in _do_insert
+    return manager._insert(
+           ~~~~~~~~~~~~~~~^
+        [self],
+        ^^^^^^^
+    ...<3 lines>...
+        raw=raw,
+        ^^^^^^^^
+    )
+    ^
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\db\models\query.py", line 1918, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\db\models\sql\compiler.py", line 1925, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\db\utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\db\backends\mysql\base.py", line 78, in execute
+    return self.cursor.execute(query, args)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\MySQLdb\cursors.py", line 179, in execute
+    res = self._query(mogrified_query)
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\MySQLdb\cursors.py", line 330, in _query
+    db.query(q)
+    ~~~~~~~~^^^
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\MySQLdb\connections.py", line 286, in query
+    _mysql.connection.query(self, query)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: (1146, "Table 'u665497677_MatchPoint.core_chatsession' doesn't exist")
+ERROR 2026-03-02 16:26:11,659 log 3192 11488 "GET /api/v1/investor/chat/stream?message=hi HTTP/1.1" 500 27134
+ERROR 2026-03-02 16:27:20,837 log 1428 14332 Internal Server Error: /api/v1/investor/chat/stream
+Traceback (most recent call last):
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\db\backends\mysql\base.py", line 78, in execute
+    return self.cursor.execute(query, args)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\MySQLdb\cursors.py", line 179, in execute
+    res = self._query(mogrified_query)
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\MySQLdb\cursors.py", line 330, in _query
+    db.query(q)
+    ~~~~~~~~^^^
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\MySQLdb\connections.py", line 286, in query
+    _mysql.connection.query(self, query)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+MySQLdb.ProgrammingError: (1146, "Table 'u665497677_MatchPoint.core_chatsession' doesn't exist")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\Match-point\backend\core\views\chat_views.py", line 86, in get
+    session = ChatSession.objects.create(investor=user)
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\db\models\query.py", line 669, in create
+    obj.save(force_insert=True, using=self.db)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\db\models\base.py", line 874, in save
+    self.save_base(
+    ~~~~~~~~~~~~~~^
+        using=using,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        update_fields=update_fields,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\db\models\base.py", line 966, in save_base
+    updated = self._save_table(
+        raw,
+    ...<4 lines>...
+        update_fields,
+    )
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\db\models\base.py", line 1169, in _save_table
+    results = self._do_insert(
+        cls._base_manager, using, insert_fields, returning_fields, raw
+    )
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\db\models\base.py", line 1220, in _do_insert
+    return manager._insert(
+           ~~~~~~~~~~~~~~~^
+        [self],
+        ^^^^^^^
+    ...<3 lines>...
+        raw=raw,
+        ^^^^^^^^
+    )
+    ^
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\db\models\query.py", line 1918, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\db\models\sql\compiler.py", line 1925, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\db\utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\django\db\backends\mysql\base.py", line 78, in execute
+    return self.cursor.execute(query, args)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\MySQLdb\cursors.py", line 179, in execute
+    res = self._query(mogrified_query)
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\MySQLdb\cursors.py", line 330, in _query
+    db.query(q)
+    ~~~~~~~~^^^
+  File "C:\Users\moham\AppData\Roaming\Python\Python314\site-packages\MySQLdb\connections.py", line 286, in query
+    _mysql.connection.query(self, query)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: (1146, "Table 'u665497677_MatchPoint.core_chatsession' doesn't exist")
+ERROR 2026-03-02 16:27:20,951 log 1428 14332 "GET /api/v1/investor/chat/stream?message=hi HTTP/1.1" 500 27134
+ERROR 2026-03-02 16:31:08,445 log 2248 3392 "GET /api/v1/investor/chat/stream?message=hi HTTP/1.1" 500 59
+ERROR 2026-03-02 16:31:18,949 log 2248 3392 "GET /api/v1/investor/chat/stream?message=hi HTTP/1.1" 500 59
+ERROR 2026-03-02 16:33:40,611 log 2248 10740 "GET /api/v1/investor/chat/stream?message=hi HTTP/1.1" 500 59
+ERROR 2026-03-02 16:34:14,865 log 1820 1348 "GET /api/v1/investor/chat/stream?message=hi HTTP/1.1" 500 59
+ERROR 2026-03-02 16:35:21,575 log 1820 11432 "GET /api/v1/investor/chat/stream?message=List+potential+red+flags+based+on+platform+data. HTTP/1.1" 500 59
+ERROR 2026-03-02 16:37:43,512 log 7188 11412 "GET /api/v1/investor/chat/stream?message=Summarize+financial+metrics+for+visible+startups. HTTP/1.1" 500 59
+ERROR 2026-03-02 16:40:05,749 log 7188 11412 "GET /api/v1/investor/chat/stream?message=Compare+startups+by+score%2C+stage%2C+and+MRR. HTTP/1.1" 500 59
+ERROR 2026-03-02 16:51:26,584 log 1408 3232 "GET /api/v1/investor/chat/stream?message=Explain+key+risk+factors+for+top+startups+shown. HTTP/1.1" 500 59
+ERROR 2026-03-02 16:52:03,352 log 1408 9764 "GET /api/v1/investor/chat/stream?message=Summarize+financial+metrics+for+visible+startups. HTTP/1.1" 500 59
+ERROR 2026-03-02 16:53:05,386 log 1408 420 "GET /api/v1/investor/chat/stream?message=Summarize+financial+metrics+for+visible+startups. HTTP/1.1" 500 59
+ERROR 2026-03-02 16:55:28,472 log 4084 13288 "GET /api/v1/investor/chat/stream?message=Summarize+financial+metrics+for+visible+startups. HTTP/1.1" 500 59
+ERROR 2026-03-02 17:04:21,218 log 9128 7000 "GET /api/v1/investor/chat/stream?message=Summarize+financial+metrics+for+visible+startups. HTTP/1.1" 500 59
+ERROR 2026-03-02 17:04:31,871 log 9128 7000 "GET /api/v1/investor/chat/stream?message=Explain+key+risk+factors+for+top+startups+shown. HTTP/1.1" 500 59
+ERROR 2026-03-02 17:04:34,460 log 9128 7000 "GET /api/v1/investor/chat/stream?message=List+potential+red+flags+based+on+platform+data. HTTP/1.1" 500 59
+ERROR 2026-03-04 10:35:20,413 log 2316 3984 "GET /api/v1/investor/chat/stream?message=hi HTTP/1.1" 500 59
+ERROR 2026-03-04 10:37:33,295 log 2316 8840 "GET /api/v1/investor/chat/stream?message=hi HTTP/1.1" 500 59
+ERROR 2026-03-04 11:50:25,739 log 2316 7012 "GET /api/v1/investor/chat/stream?message=Explain+key+risk+factors+for+top+startups+shown. HTTP/1.1" 500 59
+ERROR 2026-03-04 11:53:45,149 log 2316 7012 "GET /api/v1/investor/chat/stream?message=Explain+key+risk+factors+for+top+startups+shown. HTTP/1.1" 500 59
+ERROR 2026-03-04 11:55:00,335 log 2316 13428 "GET /api/v1/investor/chat/stream?message=Explain+key+risk+factors+for+top+startups+shown. HTTP/1.1" 500 59
+ERROR 2026-03-04 11:55:20,852 log 8372 6844 "GET /api/v1/investor/chat/stream?message=Summarize+financial+metrics+for+visible+startups. HTTP/1.1" 500 59
+ERROR 2026-03-04 11:59:22,852 log 9200 11652 "GET /api/v1/investor/chat/stream?message=Summarize+financial+metrics+for+visible+startups. HTTP/1.1" 500 59
+ERROR 2026-03-04 11:59:53,179 log 9200 12812 "GET /api/v1/investor/chat/stream?message=Explain+key+risk+factors+for+top+startups+shown. HTTP/1.1" 500 59
+ERROR 2026-03-04 12:00:06,664 log 9200 14292 "GET /api/v1/investor/chat/stream?message=Explain+key+risk+factors+for+top+startups+shown. HTTP/1.1" 500 59
+ERROR 2026-03-04 12:03:43,805 log 9200 11652 "GET /api/v1/investor/chat/stream?message=Explain+key+risk+factors+for+top+startups+shown. HTTP/1.1" 500 59
+ERROR 2026-03-04 12:06:59,209 log 2484 13000 "GET /api/v1/investor/chat/stream?message=Explain+key+risk+factors+for+top+startups+shown. HTTP/1.1" 500 59
+ERROR 2026-03-04 13:00:46,871 chat_views 2976 13052 [stream] openai_error: Client.__init__() got an unexpected keyword argument 'proxies'
+ERROR 2026-03-04 13:00:49,498 chat_views 2976 13828 [stream] openai_error: Client.__init__() got an unexpected keyword argument 'proxies'
+ERROR 2026-03-04 13:00:49,502 ai_service 2976 13828 [answer] openai_error: Client.__init__() got an unexpected keyword argument 'proxies'
+ERROR 2026-03-04 13:00:50,057 ai_service 2976 13828 [answer] gemini_error: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+ERROR 2026-03-04 13:00:52,547 chat_views 2976 12436 [stream] openai_error: Client.__init__() got an unexpected keyword argument 'proxies'
+ERROR 2026-03-04 13:00:52,555 ai_service 2976 12436 [answer] openai_error: Client.__init__() got an unexpected keyword argument 'proxies'
+ERROR 2026-03-04 13:00:52,806 ai_service 2976 12436 [answer] gemini_error: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+ERROR 2026-03-04 13:06:39,064 chat_views 8452 3356 [stream] openai_error: Client.__init__() got an unexpected keyword argument 'proxies'
+ERROR 2026-03-04 13:06:41,739 chat_views 8452 11512 [stream] openai_error: Client.__init__() got an unexpected keyword argument 'proxies'
+ERROR 2026-03-04 13:06:41,741 ai_service 8452 11512 [answer] openai_error: Client.__init__() got an unexpected keyword argument 'proxies'
+ERROR 2026-03-04 13:06:42,199 ai_service 8452 11512 [answer] gemini_error: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+ERROR 2026-03-04 13:06:46,501 chat_views 8452 8004 [stream] openai_error: Client.__init__() got an unexpected keyword argument 'proxies'
+ERROR 2026-03-04 13:06:46,507 ai_service 8452 8004 [answer] openai_error: Client.__init__() got an unexpected keyword argument 'proxies'
+ERROR 2026-03-04 13:06:46,952 ai_service 8452 8004 [answer] gemini_error: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+ERROR 2026-03-04 13:07:29,410 chat_views 9680 13920 [stream] openai_error: Client.__init__() got an unexpected keyword argument 'proxies'
+ERROR 2026-03-04 13:07:29,412 ai_service 9680 13920 [answer] openai_error: Client.__init__() got an unexpected keyword argument 'proxies'
+ERROR 2026-03-04 13:07:29,699 ai_service 9680 13920 [answer] gemini_error: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+ERROR 2026-03-04 13:15:26,131 chat_views 13720 1316 [stream] openai_error: Client.__init__() got an unexpected keyword argument 'proxies'
+ERROR 2026-03-04 13:15:26,138 ai_service 13720 1316 [answer] openai_error: Client.__init__() got an unexpected keyword argument 'proxies'
+ERROR 2026-03-04 13:15:26,484 ai_service 13720 1316 [answer] gemini_error: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+ERROR 2026-03-04 13:15:28,334 chat_views 13720 13716 [stream] openai_error: Client.__init__() got an unexpected keyword argument 'proxies'
+ERROR 2026-03-04 13:15:28,338 ai_service 13720 13716 [answer] openai_error: Client.__init__() got an unexpected keyword argument 'proxies'
+ERROR 2026-03-04 13:15:28,575 ai_service 13720 13716 [answer] gemini_error: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+ERROR 2026-03-04 13:15:30,905 chat_views 13720 8824 [stream] openai_error: Client.__init__() got an unexpected keyword argument 'proxies'
+ERROR 2026-03-04 13:15:30,907 ai_service 13720 8824 [answer] openai_error: Client.__init__() got an unexpected keyword argument 'proxies'
+ERROR 2026-03-04 13:15:31,180 ai_service 13720 8824 [answer] gemini_error: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+ERROR 2026-03-04 13:21:06,245 chat_views 6684 2432 [stream] openai_error: Client.__init__() got an unexpected keyword argument 'proxies'
+ERROR 2026-03-04 13:21:10,720 chat_views 6684 10112 [stream] openai_error: Client.__init__() got an unexpected keyword argument 'proxies'
+ERROR 2026-03-04 13:21:10,722 ai_service 6684 10112 [answer] openai_error: Client.__init__() got an unexpected keyword argument 'proxies'
+ERROR 2026-03-04 13:21:11,250 ai_service 6684 10112 [answer] gemini_error: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.

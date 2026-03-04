@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { GlassCard } from "../../components/ui/GlassCard";
 import { GlowButton } from "../../components/ui/GlowButton";
@@ -10,8 +10,14 @@ import StepTraction from "../../components/form/StepTraction";
 import StepFinancials from "../../components/form/StepFinancials";
 import StepTeam from "../../components/form/StepTeam";
 import StepExit from "../../components/form/StepExit";
-import FundingResult from "../../components/form/FundingResult";
+import ErrorBoundary from "../../components/util/ErrorBoundary";
 import { evaluationService } from "../../services/evaluation";
+import { aiService } from "../../services/ai";
+import { Tooltip } from "../../components/ui/Tooltip";
+import DealReport from "../../features/deal-report/DealReport";
+import { exportElementToPdf } from "../../utils/exportPdf";
+import { Download } from "lucide-react";
+import { deriveSummary } from "../../utils/aiFallback";
 
 // Steps configuration
 const STEPS = [
@@ -21,9 +27,18 @@ const STEPS = [
   { id: 4, title: "Traction", description: "Metrics & Validation" },
   { id: 5, title: "Team Overview", description: "Core Members" },
   { id: 6, title: "Financials", description: "Financial projections" },
-  { id: 7, title: "Founder & Vision", description: "Leadership Details" },
-  { id: 8, title: "Exit & ROI", description: "Strategy & Returns" },
+  { id: 7, title: "Exit & ROI", description: "Strategy & Returns" },
 ];
+
+const TOOLTIP_BY_STEP: Record<number, string> = {
+  1: "Company identity: legal structure, incorporation year, HQ country, stage, currency, previous funding, and cap table context.",
+  2: "Describe the problem, your solution, why now, and your unique advantage or moat.",
+  3: "Market overview: TAM/SAM/SOM, target customer, growth rate, competitors, and moat score.",
+  4: "Traction signals: revenue and growth, active users, paying customers, retention, contracts/LOIs/partnerships.",
+  5: "Team snapshot: founder background, domain experience, profile link, startup experience, commitment, hires, and advisors.",
+  6: "Round economics: amount raising, pre-money valuation, equity offered, use of funds, burn rate, and next round.",
+  7: "Exit planning: exit strategy, expected investor return, exit valuation, and timeline.",
+};
 
 export default function FundingApplication() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -32,6 +47,9 @@ export default function FundingApplication() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [backendResult, setBackendResult] = useState<any>(null);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const startedAtRef = useRef<number>(Date.now());
+  const printableRef = useRef<HTMLDivElement>(null);
 
   const [formData, setFormData] = useState<any>({
     // Step 1: Identity
@@ -39,9 +57,13 @@ export default function FundingApplication() {
     legalStructure: "",
     incorporationYear: "",
     country: "",
+    currency: "",
+    companyLogoUrl: "",
     capTableSummary: "",
     stage: "",
     previousFunding: "", // Maps to funding_raised in backend
+    contactEmail: "",
+    contactPhone: "",
 
     // Step 2: Problem & Solution
     coreProblem: "",
@@ -72,6 +94,7 @@ export default function FundingApplication() {
     foundersCount: 1, // Maps to founders_count
     hasTechnicalFounder: false, // Maps to has_technical_founder
     teamSize: 1, // Maps to team_size
+    founderProfileUrl: "",
 
     // Step 6: Financials
     burnRate: "", // Maps to burn_rate
@@ -82,6 +105,73 @@ export default function FundingApplication() {
 
   const updateFormData = (newData: any) => {
     setFormData((prev: any) => ({ ...prev, ...newData }));
+  };
+
+  const REQUIRED_BY_STEP: Record<number, Array<keyof typeof formData>> = {
+    1: ["companyName", "legalStructure", "incorporationYear", "country", "stage", "contactEmail", "contactPhone"],
+    2: ["coreProblem", "solution", "whyNow", "uniqueAdvantage"],
+    3: ["tam", "sam", "som", "targetCustomer", "competitors"],
+    4: ["monthlyRevenue", "revenueGrowth", "activeUsers", "payingCustomers", "retentionRate"],
+    5: ["founderBackground", "domainExperience"],
+    6: ["amountRaising", "preMoneyValuation", "equityOffered", "fundUse"],
+    7: ["exitStrategy", "investorReturn"],
+  } as any;
+
+  const isEmpty = (val: any) =>
+    val === "" || val === undefined || val === null;
+
+  const validateField = (name: string): boolean => {
+    const required = (REQUIRED_BY_STEP[currentStep] as string[] | undefined) || [];
+    if (!required.includes(name)) {
+      setErrors((prev) => {
+        const next = { ...prev };
+        delete next[name];
+        return next;
+      });
+      return true;
+    }
+    const value = (formData as any)[name];
+    const invalid = isEmpty(value);
+    setErrors((prev) => ({ ...prev, [name]: invalid ? "This field is required" : "" }));
+    return !invalid;
+  };
+
+  const validateStep = (step: number): { valid: boolean; invalidFields: string[] } => {
+    const required = (REQUIRED_BY_STEP[step] as string[] | undefined) || [];
+    const invalid: string[] = [];
+    const nextErrors: Record<string, string> = { ...errors };
+    for (const field of required) {
+      const value = (formData as any)[field];
+      if (isEmpty(value)) {
+        invalid.push(field);
+        nextErrors[field] = "This field is required";
+      } else {
+        nextErrors[field] = "";
+      }
+    }
+    setErrors(nextErrors);
+    return { valid: invalid.length === 0, invalidFields: invalid };
+  };
+
+  const focusFirstInvalid = (fields: string[]) => {
+    if (!fields.length) return;
+    const id = `field-${fields[0]}`;
+    const el = document.getElementById(id) as HTMLElement | null;
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+      setTimeout(() => {
+        (el as any).focus?.();
+      }, 200);
+    }
+  };
+
+  const isStepValidPure = (step: number): boolean => {
+    const required = (REQUIRED_BY_STEP[step] as string[] | undefined) || [];
+    for (const field of required) {
+      const value = (formData as any)[field];
+      if (isEmpty(value)) return false;
+    }
+    return true;
   };
 
   const handleSubmit = async () => {
@@ -95,9 +185,12 @@ export default function FundingApplication() {
           legalStructure: formData.legalStructure,
           incorporationYear: formData.incorporationYear,
           country: formData.country,
+          currency: formData.currency,
           stage: formData.stage,
           previousFunding: formData.previousFunding,
           capTableSummary: formData.capTableSummary,
+          contactEmail: formData.contactEmail,
+          contactPhone: formData.contactPhone,
         },
         step2: {
           coreProblem: formData.coreProblem,
@@ -134,6 +227,7 @@ export default function FundingApplication() {
           founderBackground: formData.founderBackground,
           domainExperience: formData.domainExperience,
           prevStartupExp: formData.prevStartupExp,
+          founderProfileUrl: formData.founderProfileUrl,
         },
         step6: {
           amountRaising: formData.amountRaising,
@@ -147,6 +241,7 @@ export default function FundingApplication() {
           founderBackground: formData.founderBackground,
           isFullTime: formData.isFullTime,
           vision: formData.vision,
+          founderProfileUrl: formData.founderProfileUrl,
         },
         step8: {
           exitStrategy: formData.exitStrategy,
@@ -157,21 +252,82 @@ export default function FundingApplication() {
       } as const;
 
       const result = await evaluationService.submitFullEvaluation(payload as any);
-      setBackendResult(result);
+      try {
+        const ai = await aiService.generateNarrative(formData, result?.total_score ?? 0, []);
+        const cleanSummary =
+          (ai.summary && ai.summary !== "Automated snapshot based on submitted signals.")
+            ? ai.summary
+            : deriveSummary(formData, result?.total_score ?? 0);
+        setBackendResult({
+          ...result,
+          ai_summary: cleanSummary,
+          ai_strengths: ai.strengths,
+          ai_risks: ai.risks,
+        });
+      } catch {
+        setBackendResult(result);
+      }
       setIsSubmitted(true);
     } catch (err: any) {
-      setError(err.message || "Failed to submit evaluation. Please try again.");
+      let msg = err?.message || "Failed to submit evaluation. Please try again.";
+      const details = err?.details;
+      if (details && typeof details === "object") {
+        const parts: string[] = [];
+        for (const [k, v] of Object.entries(details)) {
+          if (Array.isArray(v)) {
+            parts.push(`${k}: ${v.join(", ")}`);
+          } else if (v && typeof v === "object") {
+            try {
+              parts.push(`${k}: ${JSON.stringify(v)}`);
+            } catch {
+              parts.push(`${k}`);
+            }
+          } else if (v) {
+            parts.push(`${k}: ${String(v)}`);
+          }
+        }
+        if (parts.length) msg = `${msg} — ${parts.join("; ")}`;
+      }
+      console.error("Submit evaluation failed:", { err, details: err?.details });
+      setError(msg);
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  const isValidUrl = (value: string) => {
+    if (!value) return true;
+    try {
+      const url = new URL(value);
+      return url.protocol === "http:" || url.protocol === "https:";
+    } catch {
+      return false;
+    }
+  };
+
   const nextStep = () => {
+    const check = validateStep(currentStep);
+    if (!check.valid) {
+      focusFirstInvalid(check.invalidFields);
+      return;
+    }
+    if (currentStep === 1 && formData.companyLogoUrl) {
+      if (!isValidUrl(formData.companyLogoUrl)) {
+        alert("Please enter a valid Company Logo URL (e.g. https://example.com/logo.png)");
+        return;
+      }
+    }
+    if ((currentStep === 5 || currentStep === 7) && formData.founderProfileUrl) {
+      if (!isValidUrl(formData.founderProfileUrl)) {
+        alert("Please enter a valid Portfolio/LinkedIn URL (e.g. https://www.linkedin.com/in/yourprofile)");
+        return;
+      }
+    }
+
     if (currentStep < STEPS.length) {
       setDirection(1);
       setCurrentStep((prev) => prev + 1);
     } else {
-      // Final step - submit
       handleSubmit();
     }
   };
@@ -268,6 +424,8 @@ export default function FundingApplication() {
       legalStructure: "",
       incorporationYear: "",
       country: "",
+      contactEmail: "",
+      contactPhone: "",
       capTableSummary: "",
       stage: "",
       previousFunding: "",
@@ -293,6 +451,7 @@ export default function FundingApplication() {
       isFullTime: false,
       keyHires: "",
       advisoryBoard: "",
+      founderProfileUrl: "",
       exitStrategy: "",
       investorReturn: "",
       amountRaising: "",
@@ -308,16 +467,41 @@ export default function FundingApplication() {
     });
   };
 
+  const handlePdf = async () => {
+    const el = printableRef.current;
+    if (!el) return;
+    const name = (formData?.companyName || "startup").toString().trim().replace(/\s+/g, "_");
+    const ts = new Date().toISOString().slice(0, 10);
+    await exportElementToPdf(el, `Intelligence_Report_${name}_${ts}.pdf`, {
+      backgroundColor: "#0b1220",
+      scale: Math.min(3, window.devicePixelRatio * 2),
+      orientation: "portrait",
+      format: "a4",
+      ignoreSelector: ".bg-mp-gradient",
+    });
+  };
+
   if (isSubmitted && backendResult) {
     return (
-      <FundingResult
-        totalScore={backendResult.total_score}
-        rating={backendResult.rating}
-        strengths={backendResult.strengths}
-        weaknesses={backendResult.weaknesses}
-        data={formData}
-        onRestart={() => window.location.reload()}
-      />
+      <ErrorBoundary>
+        <div className="min-h-screen bg-mp-bg text-white font-sans selection:bg-mp-primary/30 pt-20">
+          <div className="fixed inset-0 bg-mp-gradient pointer-events-none" />
+          <div className="relative mx-auto max-w-6xl px-4 py-8 md:py-14">
+            <div className="flex items-center justify-end mb-4">
+              <button
+                onClick={handlePdf}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-mp-primary text-white hover:opacity-90 transition"
+              >
+                <Download className="w-4 h-4" />
+                Download PDF
+              </button>
+            </div>
+            <div ref={printableRef}>
+              <DealReport company={formData} result={backendResult} />
+            </div>
+          </div>
+        </div>
+      </ErrorBoundary>
     );
   }
 
@@ -365,7 +549,16 @@ export default function FundingApplication() {
         {/* Main Card */}
         <GlassCard className="min-h-[500px] p-6 sm:p-10 border-mp-primary/20" gradient>
           <div className="mb-8">
-            <h2 className="text-2xl font-semibold mb-2 text-white">{STEPS[currentStep - 1].title}</h2>
+            <div className="flex items-center gap-3" role="region" aria-live="polite">
+              <div className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-4 py-1.5">
+                <h2 className="text-2xl font-semibold text-white">
+                  {STEPS[currentStep - 1].title}
+                </h2>
+              </div>
+              <div className="mt-1">
+                <Tooltip content={TOOLTIP_BY_STEP[currentStep]} />
+              </div>
+            </div>
             <p className="text-white/60">{STEPS[currentStep - 1].description}</p>
           </div>
 
@@ -380,35 +573,66 @@ export default function FundingApplication() {
               className="h-full"
             >
               {currentStep === 1 && (
-                <StepIdentity data={formData} updateData={updateFormData} />
+                <StepIdentity
+                  data={formData}
+                  updateData={updateFormData}
+                  errors={errors}
+                  onFieldBlur={(name) => validateField(name as string)}
+                />
               )}
 
               {currentStep === 2 && (
-                <StepProblemSolution data={formData} updateData={updateFormData} />
+                <StepProblemSolution
+                  data={formData}
+                  updateData={updateFormData}
+                  errors={errors}
+                  onFieldBlur={(name) => validateField(name as string)}
+                />
               )}
 
               {currentStep === 3 && (
-                <StepMarket data={formData} updateData={updateFormData} />
+                <StepMarket
+                  data={formData}
+                  updateData={updateFormData}
+                  errors={errors}
+                  onFieldBlur={(name) => validateField(name as string)}
+                />
               )}
 
               {currentStep === 4 && (
-                <StepTraction data={formData} updateData={updateFormData} />
+                <StepTraction
+                  data={formData}
+                  updateData={updateFormData}
+                  errors={errors}
+                  onFieldBlur={(name) => validateField(name as string)}
+                />
               )}
 
               {currentStep === 5 && (
-                <StepTeam data={formData} updateData={updateFormData} />
+                <StepTeam
+                  data={formData}
+                  updateData={updateFormData}
+                  errors={errors}
+                  onFieldBlur={(name) => validateField(name as string)}
+                />
               )}
 
               {currentStep === 6 && (
-                <StepFinancials data={formData} updateData={updateFormData} />
+                <StepFinancials
+                  data={formData}
+                  updateData={updateFormData}
+                  errors={errors}
+                  onFieldBlur={(name) => validateField(name as string)}
+                />
               )}
 
               {currentStep === 7 && (
-                <StepTeam data={formData} updateData={updateFormData} isFounderVision={true} />
-              )}
-
-              {currentStep === 8 && (
-                <StepExit data={formData} updateData={updateFormData} />
+                <StepExit
+                  data={formData}
+                  updateData={updateFormData}
+                  errors={errors}
+                  onFieldBlur={(name) => validateField(name as string)}
+                />
               )}
             </motion.div>
           </AnimatePresence>
@@ -429,7 +653,7 @@ export default function FundingApplication() {
 
             <GlowButton
               onClick={nextStep}
-              disabled={isSubmitting}
+              disabled={isSubmitting || !isStepValidPure(currentStep)}
               className="min-w-[140px]"
             >
               {isSubmitting ? (

@@ -108,7 +108,7 @@ const cards = [
     Icon: LineChart,
     route: "/investors",
     features: [
-      "Deal risk index",
+      "Risk index",
       "Smart pipeline filters",
       "Team credibility graph",
     ],
@@ -184,7 +184,7 @@ function DRiskCard({ data, onReadMore }) {
                   className="inline-block h-[1px] w-8 opacity-70"
                   style={{ background: accent }}
                 />
-                MATCH POINT FEATURES
+              MATCHPoint FEATURES
               </div>
               <ul className="space-y-3">
                 {features.map((f, idx) => (

@@ -39,7 +39,8 @@ class EvaluationCreateSerializer(serializers.ModelSerializer):
             'incorporation_year', 
             'country', 
             'stage', 
-            'funding_raised'
+            'funding_raised',
+            'founder_profile_url',
         ]
 
     def validate_incorporation_year(self, value):
@@ -79,6 +80,7 @@ class EvaluationDetailSerializer(serializers.ModelSerializer):
             'country',
             'stage',
             'funding_raised',
+            'founder_profile_url',
             'total_score',
             'rating',
             'formatted_rating',

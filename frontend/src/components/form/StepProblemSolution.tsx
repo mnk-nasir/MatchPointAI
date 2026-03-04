@@ -12,11 +12,15 @@ interface ProblemSolutionData {
 interface StepProblemSolutionProps {
   data: ProblemSolutionData;
   updateData: (data: Partial<ProblemSolutionData>) => void;
+  errors?: Record<string, string>;
+  onFieldBlur?: (name: keyof ProblemSolutionData) => void;
 }
 
 export default function StepProblemSolution({
   data,
   updateData,
+  errors = {},
+  onFieldBlur,
 }: StepProblemSolutionProps) {
   // Animation variants
   const containerVariants = {
@@ -62,6 +66,10 @@ export default function StepProblemSolution({
                   updateData({ coreProblem: text });
                 }
               }}
+              onBlur={() => onFieldBlur && onFieldBlur("coreProblem")}
+              id="field-coreProblem"
+              required
+              error={errors["coreProblem"]}
             />
             <div className="absolute top-0 right-0 text-xs text-white/40 mt-2 mr-1">
               {getWordCount(data.coreProblem || "")} / {MAX_WORDS} words
@@ -76,6 +84,10 @@ export default function StepProblemSolution({
             rows={3}
             value={data.solution || ""}
             onChange={(e) => updateData({ solution: e.target.value })}
+            onBlur={() => onFieldBlur && onFieldBlur("solution")}
+            id="field-solution"
+            required
+            error={errors["solution"]}
           />
         </motion.div>
 
@@ -86,6 +98,10 @@ export default function StepProblemSolution({
             rows={3}
             value={data.whyNow || ""}
             onChange={(e) => updateData({ whyNow: e.target.value })}
+            onBlur={() => onFieldBlur && onFieldBlur("whyNow")}
+            id="field-whyNow"
+            required
+            error={errors["whyNow"]}
           />
         </motion.div>
 
@@ -96,6 +112,10 @@ export default function StepProblemSolution({
             rows={3}
             value={data.uniqueAdvantage || ""}
             onChange={(e) => updateData({ uniqueAdvantage: e.target.value })}
+            onBlur={() => onFieldBlur && onFieldBlur("uniqueAdvantage")}
+            id="field-uniqueAdvantage"
+            required
+            error={errors["uniqueAdvantage"]}
           />
         </motion.div>
       </div>

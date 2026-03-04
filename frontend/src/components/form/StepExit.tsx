@@ -3,11 +3,14 @@ import { motion } from "framer-motion";
 import { Input } from "../ui/Input";
 import { Select } from "../ui/Select";
 import { GlassCard } from "../ui/GlassCard";
-import { TrendingUp, Rocket, Target, DollarSign, Clock } from "lucide-react";
+import { TrendingUp, Rocket, Target, Clock } from "lucide-react";
+import { currencySymbol } from "../../utils/currency";
 
 interface StepExitProps {
   data: any;
   updateData: (data: any) => void;
+  errors?: Record<string, string>;
+  onFieldBlur?: (name: string) => void;
 }
 
 const EXIT_STRATEGIES = [
@@ -18,7 +21,7 @@ const EXIT_STRATEGIES = [
   { value: "secondary", label: "Secondary Sale" },
 ];
 
-const StepExit: React.FC<StepExitProps> = ({ data, updateData }) => {
+const StepExit: React.FC<StepExitProps> = ({ data, updateData, errors = {}, onFieldBlur }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -41,6 +44,10 @@ const StepExit: React.FC<StepExitProps> = ({ data, updateData }) => {
             options={EXIT_STRATEGIES}
             value={data.exitStrategy}
             onChange={(e) => updateData({ exitStrategy: e.target.value })}
+            onBlur={() => onFieldBlur && onFieldBlur("exitStrategy")}
+            id="field-exitStrategy"
+            required
+            error={errors["exitStrategy"]}
           />
 
           <Input
@@ -54,12 +61,12 @@ const StepExit: React.FC<StepExitProps> = ({ data, updateData }) => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Input
-            label="Expected Exit Valuation ($)"
+            label={`Expected Exit Valuation (${data.currency || "USD"})`}
             type="number"
             placeholder="e.g. 50000000"
             value={data.exitValuation}
             onChange={(e) => updateData({ exitValuation: e.target.value })}
-            icon={<span className="text-white/50">$</span>}
+            icon={<span className="text-white/50">{currencySymbol(data.currency)}</span>}
           />
 
           <div className="relative">
@@ -69,6 +76,10 @@ const StepExit: React.FC<StepExitProps> = ({ data, updateData }) => {
               placeholder="e.g. 10"
               value={data.investorReturn}
               onChange={(e) => updateData({ investorReturn: e.target.value })}
+              onBlur={() => onFieldBlur && onFieldBlur("investorReturn")}
+              id="field-investorReturn"
+              required
+              error={errors["investorReturn"]}
               icon={<span className="text-white/50">x</span>}
             />
             <p className="text-xs text-white/40 mt-2">
@@ -84,7 +95,11 @@ const StepExit: React.FC<StepExitProps> = ({ data, updateData }) => {
             <div>
               <h4 className="text-sm font-medium text-web3-primary">Return Projection</h4>
               <p className="text-xs text-white/70 mt-1">
-                A <strong>{data.investorReturn}x</strong> return implies that a $100k investment would grow to <strong>${(100000 * Number(data.investorReturn)).toLocaleString()}</strong>.
+                A <strong>{data.investorReturn}x</strong> return implies that a {currencySymbol(data.currency)}100k investment would grow to{" "}
+                <strong>
+                  {currencySymbol(data.currency)}
+                  {(100000 * Number(data.investorReturn)).toLocaleString()}
+                </strong>.
                 {Number(data.investorReturn) >= 10 && " This is an attractive return profile for VCs."}
                 {Number(data.investorReturn) >= 5 && Number(data.investorReturn) < 10 && " This is a solid return profile for early-stage investors."}
               </p>

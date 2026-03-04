@@ -8,7 +8,7 @@ export default function StartupsAndCompanies() {
     {
       icon: ClipboardList,
       title: "Investment Health‑Check",
-      desc: "Assess your deal before conversations with accelerators, investors, or funds.",
+      desc: "Assess your company before conversations with accelerators, investors, or funds.",
     },
     {
       icon: FileBarChart2,
@@ -32,8 +32,8 @@ export default function StartupsAndCompanies() {
     },
     {
       icon: Rocket,
-      title: "Deal Pack",
-      desc: "Package a concise report and summary to support investor discussions.",
+      title: "Investor Pack",
+      desc: "Package a concise profile and summary to support investor discussions.",
     },
   ];
 
