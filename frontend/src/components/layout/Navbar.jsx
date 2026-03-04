@@ -10,20 +10,15 @@ function Navbar() {
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-8">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-3">
-          <img src={logo} alt="MatchPoint logo" className="h-8 w-auto" />
+          <img src={logo} alt="MATCHPoint logo" className="h-8 w-auto" />
         </Link>
 
         {/* Desktop Links */}
         <nav className="hidden lg:flex items-center gap-8">
-          {["Home", "Services", "Pricing", "About us", "Faqs"].map((item) => (
-            <a
-              key={item}
-              href={`#${item.toLowerCase().replace(" ", "")}`}
-              className="text-sm font-medium text-white/70 transition-colors hover:text-white"
-            >
-              {item}
-            </a>
-          ))}
+          <a href="#home" className="text-sm font-medium text-white/70 transition-colors hover:text-white">Home</a>
+          <Link to="/pricing" className="text-sm font-medium text-white/70 transition-colors hover:text-white">Pricing</Link>
+          <Link to="/about" className="text-sm font-medium text-white/70 transition-colors hover:text-white">About us</Link>
+          <Link to="/faqs" className="text-sm font-medium text-white/70 transition-colors hover:text-white">Faqs</Link>
         </nav>
 
         {/* Desktop CTA */}
@@ -60,16 +55,34 @@ function Navbar() {
           }`}
       >
         <nav className="flex flex-col p-6 space-y-4">
-          {["Home", "Services", "Pricing", "About us", "Faqs"].map((item) => (
-            <a
-              key={item}
-              href={`#${item.toLowerCase().replace(" ", "")}`}
-              className="text-base font-medium text-white/80 hover:text-white"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              {item}
-            </a>
-          ))}
+          <a
+            href="#home"
+            className="text-base font-medium text-white/80 hover:text-white"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Home
+          </a>
+          <Link
+            to="/pricing"
+            className="text-base font-medium text-white/80 hover:text-white"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Pricing
+          </Link>
+          <Link
+            to="/about"
+            className="text-base font-medium text-white/80 hover:text-white"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            About us
+          </Link>
+          <Link
+            to="/faqs"
+            className="text-base font-medium text-white/80 hover:text-white"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Faqs
+          </Link>
           <button className="mt-4 w-full rounded-full bg-gradient-to-r from-[#00f5a0] to-[#00d9f5] px-6 py-3 text-sm font-semibold text-[#02030a]">
             Get In Touch
           </button>

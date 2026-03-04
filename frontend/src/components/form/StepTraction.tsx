@@ -2,7 +2,8 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Input } from "../ui/Input";
 import { Toggle } from "../ui/Toggle";
-import { DollarSign, TrendingUp, Users, Activity } from "lucide-react";
+import { TrendingUp, Users, Activity } from "lucide-react";
+import { currencySymbol } from "../../utils/currency";
 
 interface TractionData {
   monthlyRevenue: number | "";
@@ -13,14 +14,17 @@ interface TractionData {
   hasSignedContracts: boolean;
   hasLOIs: boolean;
   hasPartnerships: boolean;
+  currency?: string;
 }
 
 interface StepTractionProps {
   data: TractionData;
   updateData: (data: Partial<TractionData>) => void;
+  errors?: Record<string, string>;
+  onFieldBlur?: (name: keyof TractionData) => void;
 }
 
-export default function StepTraction({ data, updateData }: StepTractionProps) {
+export default function StepTraction({ data, updateData, errors = {}, onFieldBlur }: StepTractionProps) {
   // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -54,7 +58,11 @@ export default function StepTraction({ data, updateData }: StepTractionProps) {
             onChange={(e) =>
               updateData({ monthlyRevenue: parseFloat(e.target.value) || "" })
             }
-            icon={<DollarSign className="h-4 w-4" />}
+            onBlur={() => onFieldBlur && onFieldBlur("monthlyRevenue")}
+            id="field-monthlyRevenue"
+            required
+            error={errors["monthlyRevenue"]}
+            icon={<span className="h-4 w-4 text-white/50">{currencySymbol((data as any).currency)}</span>}
           />
         </motion.div>
 
@@ -67,6 +75,10 @@ export default function StepTraction({ data, updateData }: StepTractionProps) {
             onChange={(e) =>
               updateData({ revenueGrowth: parseFloat(e.target.value) || "" })
             }
+            onBlur={() => onFieldBlur && onFieldBlur("revenueGrowth")}
+            id="field-revenueGrowth"
+            required
+            error={errors["revenueGrowth"]}
             icon={<TrendingUp className="h-4 w-4" />}
           />
         </motion.div>
@@ -80,6 +92,10 @@ export default function StepTraction({ data, updateData }: StepTractionProps) {
             onChange={(e) =>
               updateData({ activeUsers: parseFloat(e.target.value) || "" })
             }
+            onBlur={() => onFieldBlur && onFieldBlur("activeUsers")}
+            id="field-activeUsers"
+            required
+            error={errors["activeUsers"]}
             icon={<Users className="h-4 w-4" />}
           />
         </motion.div>
@@ -93,6 +109,10 @@ export default function StepTraction({ data, updateData }: StepTractionProps) {
             onChange={(e) =>
               updateData({ payingCustomers: parseFloat(e.target.value) || "" })
             }
+            onBlur={() => onFieldBlur && onFieldBlur("payingCustomers")}
+            id="field-payingCustomers"
+            required
+            error={errors["payingCustomers"]}
             icon={<Users className="h-4 w-4 text-web3-primary" />}
           />
         </motion.div>
@@ -106,6 +126,10 @@ export default function StepTraction({ data, updateData }: StepTractionProps) {
             onChange={(e) =>
               updateData({ retentionRate: parseFloat(e.target.value) || "" })
             }
+            onBlur={() => onFieldBlur && onFieldBlur("retentionRate")}
+            id="field-retentionRate"
+            required
+            error={errors["retentionRate"]}
             icon={<Activity className="h-4 w-4" />}
           />
         </motion.div>

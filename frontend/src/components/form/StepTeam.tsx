@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Input } from "../ui/Input";
 import { Textarea } from "../ui/Textarea";
 import { Toggle } from "../ui/Toggle";
 import { GlassCard } from "../ui/GlassCard";
-import { Users, Briefcase, Award, GraduationCap } from "lucide-react";
+import { Users, Briefcase, Award, GraduationCap, Link2 } from "lucide-react";
 
 interface StepTeamProps {
   data: any;
   updateData: (data: any) => void;
+  errors?: Record<string, string>;
+  onFieldBlur?: (name: string) => void;
 }
 
 const container = {
@@ -26,9 +28,33 @@ const item = {
   show: { opacity: 1, y: 0 }
 };
 
-const StepTeam: React.FC<StepTeamProps> = ({ data, updateData }) => {
+const StepTeam: React.FC<StepTeamProps> = ({ data, updateData, errors = {}, onFieldBlur }) => {
+  const [portfolioError, setPortfolioError] = useState<string | undefined>();
+
+  const validatePortfolioUrl = (value: string) => {
+    if (!value) {
+      setPortfolioError(undefined);
+      return;
+    }
+    try {
+      const url = new URL(value);
+      if (url.protocol === "http:" || url.protocol === "https:") {
+        setPortfolioError(undefined);
+      } else {
+        setPortfolioError("Please enter a valid URL starting with http or https.");
+      }
+    } catch {
+      setPortfolioError("Please enter a valid URL (e.g. https://www.linkedin.com/in/yourprofile).");
+    }
+  };
+
+  const handlePortfolioChange = (value: string) => {
+    updateData({ founderProfileUrl: value });
+    validatePortfolioUrl(value);
+  };
+
   return (
-    <motion.div 
+    <motion.div
       variants={container}
       initial="hidden"
       animate="show"
@@ -37,11 +63,13 @@ const StepTeam: React.FC<StepTeamProps> = ({ data, updateData }) => {
       {/* Founder Profile Section */}
       <motion.div variants={item}>
         <GlassCard className="p-6 space-y-6">
-          <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5">
             <Award className="text-web3-primary" />
-            Founder Profile
-          </h3>
-          
+            <h3 className="text-lg font-semibold text-white">
+              Founder Profile
+            </h3>
+          </div>
+
           <div className="space-y-4">
             <Textarea
               label="Founder Background"
@@ -49,6 +77,10 @@ const StepTeam: React.FC<StepTeamProps> = ({ data, updateData }) => {
               value={data.founderBackground}
               onChange={(e) => updateData({ founderBackground: e.target.value })}
               rows={4}
+              onBlur={() => onFieldBlur && onFieldBlur("founderBackground")}
+              id="field-founderBackground"
+              required
+              error={errors["founderBackground"]}
             />
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -59,13 +91,21 @@ const StepTeam: React.FC<StepTeamProps> = ({ data, updateData }) => {
                 value={data.domainExperience}
                 onChange={(e) => updateData({ domainExperience: e.target.value })}
                 icon={<Briefcase className="w-4 h-4 text-white/50" />}
+                onBlur={() => onFieldBlur && onFieldBlur("domainExperience")}
+                id="field-domainExperience"
+                required
+                error={errors["domainExperience"]}
               />
-              
-              <div className="flex items-end pb-1">
-                 <p className="text-xs text-white/40 italic">
-                   Relevant industry experience is a key indicator of success.
-                 </p>
-              </div>
+
+              <Input
+                label="Portfolio/LinkedIn Profile"
+                type="url"
+                placeholder="https://www.linkedin.com/in/yourprofile"
+                value={data.founderProfileUrl || ""}
+                onChange={(e) => handlePortfolioChange(e.target.value)}
+                icon={<Link2 className="w-4 h-4 text-white/50" />}
+                error={portfolioError}
+              />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
@@ -90,10 +130,12 @@ const StepTeam: React.FC<StepTeamProps> = ({ data, updateData }) => {
       {/* Team Expansion Section */}
       <motion.div variants={item}>
         <GlassCard className="p-6 space-y-6">
-          <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5">
             <Users className="text-web3-purple" />
-            Team Expansion
-          </h3>
+            <h3 className="text-lg font-semibold text-white">
+              Team Expansion
+            </h3>
+          </div>
 
           <div className="space-y-4">
             <Textarea

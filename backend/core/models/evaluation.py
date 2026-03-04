@@ -53,6 +53,11 @@ class StartupEvaluation(models.Model):
         decimal_places=2, 
         default=0.00
     )
+    founder_profile_url = models.URLField(
+        _('Founder Portfolio / LinkedIn URL'),
+        max_length=500,
+        blank=True
+    )
     
     # Full Form Payload (single-table storage)
     form_data = models.JSONField(_('Form Data'), null=True, blank=True)

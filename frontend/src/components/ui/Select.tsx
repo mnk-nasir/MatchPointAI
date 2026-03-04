@@ -11,10 +11,18 @@ interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
 
 export const Select = forwardRef<HTMLSelectElement, SelectProps>(
   ({ className, label, error, options, ...props }, ref) => {
+    const id = (props as any).id as string | undefined;
+    const isRequired = !!(props as any).required;
+    const describedBy = error && id ? `${id}-error` : undefined;
     return (
       <div className="relative space-y-2">
         {label && (
-          <label className="text-sm font-medium text-white/70">{label}</label>
+          <label className="text-sm font-medium text-white/70" htmlFor={id}>
+            {label}
+            {isRequired && (
+              <span aria-hidden="true" className="text-red-500 ml-1">*</span>
+            )}
+          </label>
         )}
         <div className="relative">
           <motion.select
@@ -25,6 +33,9 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
               error && "border-red-500/50 focus:border-red-500",
               className
             )}
+            aria-invalid={!!error}
+            aria-describedby={describedBy}
+            id={id}
             {...props}
           >
             <option value="" disabled className="bg-[#0f0f0f] text-white/50">
@@ -44,7 +55,11 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
             <ChevronDown className="h-4 w-4" />
           </div>
         </div>
-        {error && <p className="text-xs text-red-400">{error}</p>}
+        {error && (
+          <p id={describedBy} role="alert" className="text-xs text-red-400">
+            {error}
+          </p>
+        )}
       </div>
     );
   }

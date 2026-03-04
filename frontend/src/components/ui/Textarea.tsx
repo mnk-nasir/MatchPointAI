@@ -10,10 +10,18 @@ interface TextareaProps
 
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
   ({ className, label, error, ...props }, ref) => {
+    const id = (props as any).id as string | undefined;
+    const isRequired = !!(props as any).required;
+    const describedBy = error && id ? `${id}-error` : undefined;
     return (
       <div className="relative space-y-2">
         {label && (
-          <label className="text-sm font-medium text-white/70">{label}</label>
+          <label className="text-sm font-medium text-white/70" htmlFor={id}>
+            {label}
+            {isRequired && (
+              <span aria-hidden="true" className="text-red-500 ml-1">*</span>
+            )}
+          </label>
         )}
         <motion.textarea
           ref={ref}
@@ -23,9 +31,15 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
             error && "border-red-500/50 focus:border-red-500",
             className
           )}
+          aria-invalid={!!error}
+          aria-describedby={describedBy}
           {...props}
         />
-        {error && <p className="text-xs text-red-400">{error}</p>}
+        {error && (
+          <p id={describedBy} role="alert" className="text-xs text-red-400">
+            {error}
+          </p>
+        )}
       </div>
     );
   }

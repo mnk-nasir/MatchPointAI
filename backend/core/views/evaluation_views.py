@@ -47,6 +47,7 @@ class SubmitFullEvaluationAPIView(APIView):
             s4 = data.get('step4', {}) or {}
             s5 = data.get('step5', {}) or {}
             s6 = data.get('step6', {}) or {}
+            s7 = data.get('step7', {}) or {}
             s8 = data.get('step8', {}) or {}
 
             flat_for_model = {
@@ -56,6 +57,7 @@ class SubmitFullEvaluationAPIView(APIView):
                 'country': s1.get('country'),
                 'stage': (s1.get('stage') or 'IDEA').upper().replace('-', '_'),
                 'funding_raised': s1.get('previousFunding') or 0,
+                'founder_profile_url': s5.get('founderProfileUrl') or s7.get('founderProfileUrl'),
             }
             valid_stages = {c for c, _ in StartupEvaluation.Stage.choices}
             st = flat_for_model['stage']
@@ -127,8 +129,42 @@ class SubmitFullEvaluationAPIView(APIView):
             'risk_flags': score_result['risk_flags'],
             'strengths': score_result['strengths'],
             'weaknesses': score_result['weaknesses'],
+            'section_scores': score_result.get('section_scores', {}),
             'created_at': evaluation.created_at
         }, status=status.HTTP_201_CREATED)
+
+class AnalyticsSummaryAPIView(APIView):
+    """
+    Analytics summary for benchmarking and trends.
+    Public access returns only aggregate benchmarks; authenticated users also get their history.
+    """
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request, *args, **kwargs):
+        from django.db.models import Avg, Max, Count
+        user_history = []
+        if request.user and request.user.is_authenticated:
+            qs = EvaluationRepository.get_user_evaluations(request.user)
+            user_history = [
+                {'ts': e.created_at, 'total_score': e.total_score, 'rating': e.rating}
+                for e in qs
+            ]
+        all_qs = StartupEvaluation.objects.all()
+        aggregate = all_qs.aggregate(
+            avg_score=Avg('total_score'), max_score=Max('total_score'), count=Count('id')
+        )
+        by_stage = list(
+            all_qs.values('stage').annotate(avg_score=Avg('total_score'), count=Count('id')).order_by('stage')
+        )
+        return Response({
+            'user_history': user_history,
+            'benchmark': {
+                'avg_total_score': float(aggregate['avg_score'] or 0),
+                'max_total_score': int(aggregate['max_score'] or 0),
+                'total_evaluations': int(aggregate['count'] or 0),
+                'by_stage': by_stage,
+            }
+        }, status=status.HTTP_200_OK)
 
 class UserEvaluationListAPIView(ListAPIView):
     """

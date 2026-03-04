@@ -4,14 +4,20 @@ import { Input } from "../ui/Input";
 import { Textarea } from "../ui/Textarea";
 import { GlassCard } from "../ui/GlassCard";
 import { Tooltip } from "../ui/Tooltip";
-import { DollarSign, Percent, Calendar, TrendingUp } from "lucide-react";
+import { DollarSign, Percent } from "lucide-react";
+import { currencySymbol } from "../../utils/currency";
 
 interface StepFinancialsProps {
   data: any;
   updateData: (data: any) => void;
+  errors?: Record<string, string>;
+  onFieldBlur?: (name: string) => void;
 }
 
-const StepFinancials: React.FC<StepFinancialsProps> = ({ data, updateData }) => {
+const StepFinancials: React.FC<StepFinancialsProps> = ({ data, updateData, errors = {}, onFieldBlur }) => {
+  const currencyCode: string = data.currency || "USD";
+  const currencySymbolValue = currencySymbol(currencyCode);
+
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -23,22 +29,30 @@ const StepFinancials: React.FC<StepFinancialsProps> = ({ data, updateData }) => 
           </h3>
 
           <Input
-            label="Amount Raising ($)"
+            label={`Amount Raising (${currencySymbolValue})`}
             type="number"
             placeholder="e.g. 500000"
             value={data.amountRaising}
             onChange={(e) => updateData({ amountRaising: e.target.value })}
-            icon={<span className="text-white/50">$</span>}
+            onBlur={() => onFieldBlur && onFieldBlur("amountRaising")}
+            id="field-amountRaising"
+            required
+            error={errors["amountRaising"]}
+            icon={<span className="text-white/50">{currencySymbolValue}</span>}
           />
 
           <div className="flex items-center gap-2">
             <Input
-              label="Pre-money Valuation ($)"
+              label={`Pre-money Valuation (${currencySymbolValue})`}
               type="number"
               placeholder="e.g. 2000000"
               value={data.preMoneyValuation}
               onChange={(e) => updateData({ preMoneyValuation: e.target.value })}
-              icon={<span className="text-white/50">$</span>}
+              onBlur={() => onFieldBlur && onFieldBlur("preMoneyValuation")}
+              id="field-preMoneyValuation"
+              required
+              error={errors["preMoneyValuation"]}
+              icon={<span className="text-white/50">{currencySymbolValue}</span>}
             />
             <div className="pt-8">
               <Tooltip content="The value of your company before this round of investment." />
@@ -52,12 +66,19 @@ const StepFinancials: React.FC<StepFinancialsProps> = ({ data, updateData }) => 
               placeholder="e.g. 15"
               value={data.equityOffered}
               onChange={(e) => updateData({ equityOffered: e.target.value })}
+              onBlur={() => onFieldBlur && onFieldBlur("equityOffered")}
+              id="field-equityOffered"
+              required
+              error={errors["equityOffered"]}
               icon={<span className="text-white/50">%</span>}
             />
-            {/* Helper calculation if available */}
             {data.amountRaising && data.preMoneyValuation && (
               <p className="text-xs text-white/50 mt-2">
-                Implied Post-Money: <span className="text-web3-primary font-bold">${(Number(data.preMoneyValuation) + Number(data.amountRaising)).toLocaleString()}</span>
+                Implied Post-Money:{" "}
+                <span className="text-web3-primary font-bold">
+                  {currencySymbolValue}
+                  {(Number(data.preMoneyValuation) + Number(data.amountRaising)).toLocaleString()}
+                </span>
               </p>
             )}
           </div>
@@ -72,6 +93,10 @@ const StepFinancials: React.FC<StepFinancialsProps> = ({ data, updateData }) => 
             value={data.fundUse}
             onChange={(e) => updateData({ fundUse: e.target.value })}
             rows={5}
+            onBlur={() => onFieldBlur && onFieldBlur("fundUse")}
+            id="field-fundUse"
+            required
+            error={errors["fundUse"]}
           />
           <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
             <Input
