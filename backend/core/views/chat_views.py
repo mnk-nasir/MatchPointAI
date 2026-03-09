@@ -153,10 +153,11 @@ class InvestorChatStreamAPIView(APIView):
                 structured = None
             if structured:
                 content_acc = structured
-                # SSE requires each line to be prefixed by 'data:' to be delivered correctly.
-                for line in (structured.splitlines() or [""]):
-                    seq += 1
-                    yield f"id: {seq}\nevent: token\ndata: {line}\n\n".encode("utf-8")
+                # SSE: newlines in data fields break the event framing.
+                # Encode \n as the literal two chars \\n so the frontend can decode them.
+                encoded = structured.replace("\n", "\\n")
+                seq += 1
+                yield f"id: {seq}\nevent: token\ndata: {encoded}\n\n".encode("utf-8")
                 yield "event: done\ndata: {}\n\n".encode("utf-8")
                 ChatMessage.objects.create(session=session, sender=ChatMessage.Sender.ASSISTANT, message=content_acc)
                 return
@@ -166,7 +167,8 @@ class InvestorChatStreamAPIView(APIView):
                 # Fallback without OpenAI: use non-stream generator
                 ans = generate_response(text, ctx)
                 content_acc = ans
-                yield f"event: token\ndata: {ans}\n\n".encode("utf-8")
+                encoded_ans = ans.replace("\n", "\\n")
+                yield f"event: token\ndata: {encoded_ans}\n\n".encode("utf-8")
                 yield "event: done\ndata: {}\n\n".encode("utf-8")
                 ChatMessage.objects.create(session=session, sender=ChatMessage.Sender.ASSISTANT, message=content_acc)
                 return
@@ -212,7 +214,9 @@ class InvestorChatStreamAPIView(APIView):
                     if delta:
                         content_acc += delta
                         seq += 1
-                        yield f"id: {seq}\nevent: token\ndata: {delta}\n\n".encode("utf-8")
+                        # Encode newlines so they survive SSE framing
+                        encoded_delta = delta.replace("\n", "\\n")
+                        yield f"id: {seq}\nevent: token\ndata: {encoded_delta}\n\n".encode("utf-8")
                 yield "event: done\ndata: {}\n\n".encode("utf-8")
             except Exception as e:
                 logger.error(f"[stream] openai_error: {e}")
@@ -224,7 +228,8 @@ class InvestorChatStreamAPIView(APIView):
                     ans = "Information not available in platform records."
                 content_acc = ans
                 seq += 1
-                yield f"id: {seq}\nevent: token\ndata: {ans}\n\n".encode("utf-8")
+                encoded_ans = ans.replace("\n", "\\n")
+                yield f"id: {seq}\nevent: token\ndata: {encoded_ans}\n\n".encode("utf-8")
                 yield "event: done\ndata: {}\n\n".encode("utf-8")
             finally:
                 ChatMessage.objects.create(session=session, sender=ChatMessage.Sender.ASSISTANT, message=content_acc)
