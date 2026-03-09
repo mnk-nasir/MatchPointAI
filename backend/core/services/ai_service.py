@@ -34,56 +34,37 @@ def _make_openai_client(api_key: str):
         pass
     return OpenAI(api_key=api_key)
 SYSTEM_PROMPT = """
-You are DealScope AI, an institutional-grade investment intelligence assistant.
+You are DealScope AI, a Senior Venture Capital Analyst and Investment Intelligence Assistant.
 
-Your role is to analyze startup data available on the platform and provide structured investment insights.
+Your objective is to provide institutional-grade analysis of startups on the MatchPointAI platform. You transform raw data into actionable investment intelligence.
 
-Core Rules:
-- Only answer using provided platform startup data.
-- Never fabricate or guess financial numbers.
-- If requested data is not available, respond with:
-  'Information not available in platform records.'
-- If a question is unrelated to startups, investments, or companies on this platform, respond with the refusal message.
-- Maintain a professional, analytical, investor-style tone.
-- Avoid casual or conversational language.
+### ANALYTICAL PERSONA:
+- **Tone**: Professional, precise, objective, and slightly skeptical (as a good VC should be).
+- **Style**: Use structured data, bullet points, and clear headings.
+- **Focus**: Prioritize traction (MRR, users), growth rates, burn efficiency, and competitive moat.
 
-Query Understanding:
-Users may ask different types of questions. Identify the intent and respond accordingly.
+### CORE OPERATIONAL RULES:
+1. **Groundedness**: Only analyze using the provided startup data. Never fabricate financial figures.
+2. **Precision**: Use specific numbers (e.g., "$12k MRR" instead of "good revenue").
+3. **Refusal**: If a query is unrelated to investments or the platform's companies, professionally decline.
+4. **Markdown Mastery**: Use Markdown headers (##, ###), bold text, and GFM tables for comparisons.
 
-Possible request types include:
-1. Startup ranking (e.g., "top startups", "highest score companies")
-2. Company financial reports (MRR, users, customers)
-3. Founder information
-4. Startup comparisons
-5. Investment risk analysis
-6. Startup overview or profile
-7. Metrics analysis (growth, revenue, traction)
+### RESPONSE ARCHITECTURE:
+For specific company deep-dives, structure your response as follows:
+- **Executive Summary**: A concise 2-sentence conviction overlay.
+- **Financial Vitality**: Analysis of revenue, growth, and capital efficiency.
+- **Product-Market Fit**: Traction signals and user engagement.
+- **The Moat**: What makes this company hard to replicate?
+- **Risk Assessment**: Identify 2-3 specific red flags or hurdles.
 
-Context Rules:
-- If 'selected_startup' exists in the context, assume the user refers to that startup unless a different company is explicitly mentioned.
-- If multiple startups are requested, compare them objectively using available metrics.
-- Prefer structured database metrics over document-based claims if there is a conflict.
+For list comparisons:
+- Use a **Comparison Matrix** (Markdown Table).
+- Provide a **Relative Ranking** based on score and growth.
+- Give a **Strategic Recommendation** for which deal to prioritize.
 
-Response Structure:
-
-If the request is about a specific startup:
-
-Startup Overview
-Financial Metrics
-Risk Analysis
-Key Insights
-
-If the request is about multiple startups:
-
-Ranking or Comparison Summary
-Key Metrics Table
-Investment Insights
-
-Formatting Rules:
-- Use clear section headings.
-- Avoid duplicated companies.
-- Ensure responses are concise but informative.
-- Prioritize clarity for investors reviewing startup opportunities.
+### CONTEXT UTILIZATION:
+- If a 'selected_startup' is present, focus on it unless directed otherwise.
+- Use 'score' as a weighted indicator of overall baseline quality.
 """
 UNRELATED_RESPONSE = "I am an investment assistant and can only help with startup and investment-related queries within this platform."
 
@@ -105,40 +86,92 @@ def fallback_narrative(company: Dict[str, Any], score: Any) -> str:
 
 
 def generate_narrative(company: Dict[str, Any], score: Any, sections: Any | None = None) -> str:
-    # For stability and to avoid external calls for this endpoint, use fallback
-    return fallback_narrative(company, score)
+    """
+    Generates a high-quality, pro-level narrative summary using the LLM.
+    Falls back to a structural summary if the API is unavailable.
+    """
+    name = company.get("company_name") or company.get("name") or "the company"
+    
+    # Check for API key
+    api_key = config("OPENAI_API_KEY", default="")
+    if api_key and OpenAI is not None:
+        try:
+            client = _make_openai_client(api_key)
+            prompt = f"""
+            Generate a professional Investment Memo Summary for {name}.
+            Data Context: {company}
+            Overall Platform Score: {score}
+            
+            Structure the response with these headers:
+            ## Investment Thesis
+            ## Financial Analysis
+            ## Strategic Moat
+            ## Key Risks
+            
+            Use bold text for numbers and key terms.
+            """
+            
+            resp = client.chat.completions.create(
+                model=config("OPENAI_MODEL", default="gpt-4o-mini"),
+                messages=[
+                    {"role": "system", "content": "You are a Senior VC Associate writing a memo for an investment committee."},
+                    {"role": "user", "content": prompt}
+                ],
+                temperature=0.3,
+                max_tokens=500
+            )
+            return resp.choices[0].message.content.strip()
+        except Exception as e:
+            logging.getLogger("core.ai").error(f"Narrative generation error: {e}")
+
+    # Fallback to enhanced deterministic narrative
+    return f"""
+## Profile: {name}
+**MatchPoint Score: {score}/200**
+
+- **Sector**: {company.get('sector', 'N/A')}
+- **Stage**: {company.get('stage', 'N/A')}
+- **Traction**: MRR of {company.get('mrr', 'N/A')} with {company.get('active_users', 'N/A')} users.
+- **Status**: Currently raising {company.get('amount_raising', 'N/A')}.
+
+*Note: This is an automated diagnostic overview based on submitted platform signals.*
+    """.strip()
 
 
 def _simple_context_summary(ctx: Dict[str, Any]) -> str:
     startups: List[Dict[str, Any]] = _extract_startups(ctx)
     if not startups:
         return "Information not available in platform records."
-    lines = []
-    top = startups[: min(5, len(startups))]
+    top = startups[:min(5, len(startups))]
+    header = "| Company | Score | Stage |"
+    rule   = "|---------|-------|-------|"
+    rows = []
     for s in top:
-        name = s.get("company_name") or s.get("name") or "—"
+        name  = s.get("company_name") or s.get("name") or "—"
         raw_score = s.get("total_score")
         if raw_score is None:
             raw_score = s.get("score")
         score = raw_score if isinstance(raw_score, (int, float)) else "—"
         stage = s.get("stage") or "—"
-        lines.append(f"- {name}: score {score}, stage {stage}")
-    return "Summary of visible startups:\n" + "\n".join(lines)
+        rows.append(f"| {name} | {score} | {stage} |")
+    return "## Platform Startup Summary\n" + header + "\n" + rule + "\n" + "\n".join(rows)
 
 def _companies_list(ctx: Dict[str, Any]) -> str:
     startups: List[Dict[str, Any]] = _extract_startups(ctx)
     if not startups:
         return "No companies found in platform records."
-    lines = []
+    header = "| Company | Score | Stage |"
+    rule   = "|---------|-------|-------|"
+    rows = []
     for s in startups:
-        name = s.get("company_name") or s.get("name") or "—"
+        name  = s.get("company_name") or s.get("name") or "—"
         raw_score = s.get("total_score")
         if raw_score is None:
             raw_score = s.get("score")
         score = raw_score if isinstance(raw_score, (int, float)) else "—"
         stage = s.get("stage") or "—"
-        lines.append(f"- {name} (score {score}, stage {stage})")
-    return "Company list:\n" + "\n".join(lines)
+        rows.append(f"| {name} | {score} | {stage} |")
+    return "## Company List\n" + header + "\n" + rule + "\n" + "\n".join(rows)
 
 def _unique_companies(items: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     seen = set()
@@ -207,27 +240,23 @@ def _format_rank_table(ctx: Dict[str, Any], top_n: int = 10, min_score: Optional
         except Exception:
             pass
     ranked = sorted(deduped, key=score_of, reverse=True)[: max(1, min(top_n, len(deduped)))]
-    header = "Rank | Company | Score | Stage | Country | Rating"
-    rule = "-|-|-|-|-|-"
+    header = "| Rank | Company | Score | Stage | Country | Rating |"
+    rule   = "|------|---------|-------|-------|---------|--------|"
     rows = []
     for idx, s in enumerate(ranked, start=1):
         name = s.get("company_name") or s.get("name") or "—"
         sc = score_of(s)
-        rows.append(" | ".join([
-            str(idx),
-            _fmt_val(name),
-            _fmt_val(sc),
-            _fmt_val(s.get("stage")),
-            _fmt_val(s.get("country")),
-            _fmt_val(s.get("rating")),
-        ]))
-    title = "Top companies by score"
+        sc_str = f"{int(sc)}/200" if sc >= 0 else "—"
+        rows.append(
+            f"| {idx} | {_fmt_val(name)} | {sc_str} | {_fmt_val(s.get('stage'))} | {_fmt_val(s.get('country'))} | {_fmt_val(s.get('rating'))} |"
+        )
+    title = "### Top Companies by Investment Score"
     if min_score is not None:
         try:
-            title += f" ≥ {int(min_score)}"
+            title += f" (Score ≥ {int(min_score)})"
         except Exception:
             pass
-    return f"{title}:\n{header}\n{rule}\n" + "\n".join(rows)
+    return title + "\n\n" + header + "\n" + rule + "\n" + "\n".join(rows)
 
 def _extract_startups(ctx: Dict[str, Any]) -> List[Dict[str, Any]]:
     startups: List[Dict[str, Any]] = []
@@ -271,44 +300,36 @@ def _format_table(ctx: Dict[str, Any]) -> str:
     if not startups:
         return "No companies found in platform records."
     startups = _unique_companies(startups)
-    headers = ["Name", "Stage", "Score", "MRR", "Country", "Rating"]
-    rows: List[List[str]] = []
+    header = "| Name | Stage | Score | MRR | Country | Rating |"
+    rule   = "|------|-------|-------|-----|---------|--------|"
+    rows = []
     for s in startups:
         name = s.get("company_name") or s.get("name") or "—"
         raw_score = s.get("total_score")
         if raw_score is None:
             raw_score = s.get("score")
-        mrr = s.get("mrr")
-        rows.append([
-            _fmt_val(name),
-            _fmt_val(s.get("stage")),
-            _fmt_val(raw_score),
-            _fmt_val(mrr),
-            _fmt_val(s.get("country")),
-            _fmt_val(s.get("rating")),
-        ])
-    out_lines = []
-    header = " | ".join(headers)
-    rule = "-|-|-|-|-|-"
-    out_lines.append(header)
-    out_lines.append(rule)
-    for r in rows:
-        out_lines.append(" | ".join(r))
-    return "Company Table:\n" + "\n".join(out_lines)
+        rows.append(
+            f"| {_fmt_val(name)} | {_fmt_val(s.get('stage'))} | {_fmt_val(raw_score)} | {_fmt_val(s.get('mrr'))} | {_fmt_val(s.get('country'))} | {_fmt_val(s.get('rating'))} |"
+        )
+    return "## Company Overview Table\n\n" + header + "\n" + rule + "\n" + "\n".join(rows)
 
 def _format_list(ctx: Dict[str, Any]) -> str:
     startups = _extract_startups(ctx)
     if not startups:
         return "No companies found in platform records."
-    lines = []
-    for s in startups:
+    header = "| # | Company | Stage | Score | MRR |"
+    rule   = "|---|---------|-------|-------|-----|"
+    rows = []
+    for idx, s in enumerate(startups, start=1):
         name = s.get("company_name") or s.get("name") or "—"
         raw_score = s.get("total_score")
         if raw_score is None:
             raw_score = s.get("score")
         stage = s.get("stage") or "—"
-        lines.append(f"- {name}: stage {stage}, score {raw_score if raw_score is not None else '—'}")
-    return "Company List:\n" + "\n".join(lines)
+        score_str = f"{int(raw_score)}/200" if isinstance(raw_score, (int, float)) else "—"
+        mrr = _fmt_val(s.get("mrr"))
+        rows.append(f"| {idx} | {name} | {stage} | {score_str} | {mrr} |")
+    return "### Company List\n\n" + header + "\n" + rule + "\n" + "\n".join(rows)
 
 def _format_compare(ctx: Dict[str, Any], top_n: int = 2) -> str:
     startups = _extract_startups(ctx)
@@ -326,14 +347,12 @@ def _format_compare(ctx: Dict[str, Any], top_n: int = 2) -> str:
     if len(ranked) == 1:
         return _simple_context_summary({"companies": ranked})
     fields = ["Stage", "Score", "MRR", "Country", "Rating"]
-    names = [ (x.get("company_name") or x.get("name") or "—") for x in ranked ]
-    lines = []
-    header = "Metric | " + " | ".join(names)
-    rule = "-|"+ "|".join(["-"]*len(names))
-    lines.append(header)
-    lines.append(rule)
+    names = [(x.get("company_name") or x.get("name") or "—") for x in ranked]
+    header = "| Metric | " + " | ".join(names) + " |"
+    rule   = "|--------|" + "--------|" * len(names)
+    lines = [header, rule]
     for field in fields:
-        row = [field]
+        row = [f"| **{field}**"]
         for s in ranked:
             if field == "Stage":
                 row.append(_fmt_val(s.get("stage")))
@@ -341,15 +360,16 @@ def _format_compare(ctx: Dict[str, Any], top_n: int = 2) -> str:
                 v = s.get("total_score")
                 if v is None:
                     v = s.get("score")
-                row.append(_fmt_val(v))
+                sc_str = f"{int(float(v))}/200" if v is not None else "—"
+                row.append(sc_str)
             elif field == "MRR":
                 row.append(_fmt_val(s.get("mrr")))
             elif field == "Country":
                 row.append(_fmt_val(s.get("country")))
             elif field == "Rating":
                 row.append(_fmt_val(s.get("rating")))
-        lines.append(" | ".join(row))
-    return "Comparison:\n" + "\n".join(lines)
+        lines.append(" | ".join(row) + " |")
+    return "### Comparison Matrix\n\n" + "\n".join(lines)
 
 def _norm_text(x: str) -> str:
     return "".join(ch.lower() if ch.isalnum() or ch.isspace() else " " for ch in (x or "")).split()
@@ -440,14 +460,12 @@ def _format_compare_selected(selected: List[Dict[str, Any]]) -> str:
     if len(selected) == 1:
         return _simple_context_summary({"companies": selected})
     fields = ["Stage", "Score", "MRR", "Country", "Rating"]
-    names = [ (x.get("company_name") or x.get("name") or "—") for x in selected ]
-    lines = []
-    header = "Metric | " + " | ".join(names)
-    rule = "-|"+ "|".join(["-"]*len(names))
-    lines.append(header)
-    lines.append(rule)
+    names = [(x.get("company_name") or x.get("name") or "—") for x in selected]
+    header = "| Metric | " + " | ".join(names) + " |"
+    rule   = "|--------|" + "--------|" * len(names)
+    lines = [header, rule]
     for field in fields:
-        row = [field]
+        row = [f"| **{field}**"]
         for s in selected:
             if field == "Stage":
                 row.append(_fmt_val(s.get("stage")))
@@ -455,34 +473,38 @@ def _format_compare_selected(selected: List[Dict[str, Any]]) -> str:
                 v = s.get("total_score")
                 if v is None:
                     v = s.get("score")
-                row.append(_fmt_val(v))
+                sc_str = f"{int(float(v))}/200" if v is not None else "—"
+                row.append(sc_str)
             elif field == "MRR":
                 row.append(_fmt_val(s.get("mrr")))
             elif field == "Country":
                 row.append(_fmt_val(s.get("country")))
             elif field == "Rating":
                 row.append(_fmt_val(s.get("rating")))
-        lines.append(" | ".join(row))
-    return "Comparison:\n" + "\n".join(lines)
+        lines.append(" | ".join(row) + " |")
+    return "### Comparison Matrix\n\n" + "\n".join(lines)
 
 def _company_profile(ctx: Dict[str, Any], company: Dict[str, Any]) -> str:
     name = company.get("company_name") or company.get("name") or "—"
     v_score = company.get("total_score")
     if v_score is None:
         v_score = company.get("score")
-    lines = []
-    lines.append("Company Profile:")
-    lines.append(f"- Name: {name}")
-    lines.append(f"- Stage: {_fmt_val(company.get('stage'))}")
-    lines.append(f"- Score: {_fmt_val(v_score)}")
-    lines.append(f"- MRR: {_fmt_val(company.get('mrr'))}")
-    lines.append(f"- Active users: {_fmt_val(company.get('active_users'))}")
-    lines.append(f"- Paying customers: {_fmt_val(company.get('paying_customers'))}")
-    lines.append(f"- Burn rate: {_fmt_val(company.get('burn_rate'))}")
-    lines.append(f"- Amount raising: {_fmt_val(company.get('amount_raising'))}")
-    lines.append(f"- Country: {_fmt_val(company.get('country'))}")
-    lines.append(f"- Rating: {_fmt_val(company.get('rating'))}")
-    return "\n".join(lines)
+    sc_str = f"{int(float(v_score))}/200" if v_score is not None else "—"
+    return f"""## {name} — Company Profile
+
+| Field | Value |
+|-------|-------|
+| **Stage** | {_fmt_val(company.get('stage'))} |
+| **MatchPoint Score** | {sc_str} |
+| **MRR** | {_fmt_val(company.get('mrr'))} |
+| **Active Users** | {_fmt_val(company.get('active_users'))} |
+| **Paying Customers** | {_fmt_val(company.get('paying_customers'))} |
+| **Burn Rate** | {_fmt_val(company.get('burn_rate'))} |
+| **Raising** | {_fmt_val(company.get('amount_raising'))} |
+| **Country** | {_fmt_val(company.get('country'))} |
+| **Rating** | {_fmt_val(company.get('rating'))} |
+"""
+
 
 def _company_metric_answer(question: str, ctx: Dict[str, Any]) -> Optional[str]:
     s = _find_company_by_name(question, ctx)
