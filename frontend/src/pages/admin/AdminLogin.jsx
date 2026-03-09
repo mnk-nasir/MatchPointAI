@@ -19,7 +19,7 @@ export default function AdminLogin() {
     setLoading(true);
     try {
       await authService.login(email, password);
-      navigate("/admin/investors");
+      navigate("/admin/dashboard");
     } catch (err) {
       setError(err?.message || "Login failed");
     } finally {
