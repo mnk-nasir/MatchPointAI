@@ -6,13 +6,13 @@ import ChatInput from "./ChatInput";
 import { chatService } from "../../../services/chatService";
 
 const QUICK = [
-  { label: "Explain Risk", prompt: "Explain key risk factors for top startups shown." },
-  { label: "Summarize Financials", prompt: "Summarize financial metrics for visible startups." },
-  { label: "Compare Startups", prompt: "Compare startups by score, stage, and MRR." },
-  { label: "Show Red Flags", prompt: "List potential red flags based on platform data." },
+  { label: "Executive Summary", prompt: "Provide a high-level executive summary of the top-performing startups." },
+  { label: "Comparison Matrix", prompt: "Create a comparison matrix for recently submitted startups." },
+  { label: "Financial Analysis", prompt: "Analyze the financial health and MRR of visible startups." },
+  { label: "Risk Mitigation", prompt: "Identify potential risks and suggested mitigation strategies." },
 ];
 
-export default function ChatContainer({ title = "DealScope AI" }) {
+export default function ChatContainer({ title = "DealScope AI", companyMap = {}, onCompanyClick }) {
   const [sessionId, setSessionId] = useState(null);
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -52,23 +52,22 @@ export default function ChatContainer({ title = "DealScope AI" }) {
           setMessages((m) => {
             const copy = m.slice();
             const last = copy[copy.length - 1];
-            const chunk = evt.data || "";
+            // Backend encodes newlines as \\n to survive SSE framing — decode them back.
+            const raw = (evt.data || "").replace(/\\n/g, "\n");
+            const chunk = raw;
             if (chunk) {
-              const key = chunk.trim();
-              if (chunk === lastChunkRef.current || seenChunksRef.current.has(key)) {
-                return copy; // drop exact duplicate chunk
+              const isWhitespace = !chunk.trim();
+              // Only deduplicate non-whitespace chunks.
+              // Newlines (\n) have trim() === "" so they must always pass through.
+              if (!isWhitespace) {
+                const key = chunk.trim();
+                if (chunk === lastChunkRef.current || seenChunksRef.current.has(key)) {
+                  return copy;
+                }
+                lastChunkRef.current = chunk;
+                seenChunksRef.current.add(key);
               }
-              const isStructuredLine =
-                chunk.includes("|") ||
-                /^\s*-\s/.test(chunk) ||
-                /^-+\|(-+\|)*-+$/.test(chunk.trim()) ||
-                /^Metric\s*\|/i.test(chunk) ||
-                /^Top companies by score/i.test(chunk) ||
-                /^Company (Table|List|Profile|Profile:|List:|Table:)/i.test(chunk);
-              const sep = isStructuredLine && last.message && !last.message.endsWith("\n") ? "\n" : "";
-              last.message += sep + chunk;
-              lastChunkRef.current = chunk;
-              seenChunksRef.current.add(key);
+              last.message += chunk;
             }
             return copy;
           });
@@ -97,7 +96,7 @@ export default function ChatContainer({ title = "DealScope AI" }) {
           <div className="text-sm text-white/70">Ask DealScope AI about risk, valuation, traction, or compare startups.</div>
         )}
         {messages.map((m, i) => (
-          <ChatMessage key={i} sender={m.sender} message={m.message} />
+          <ChatMessage key={i} sender={m.sender} message={m.message} companyMap={companyMap} onCompanyClick={onCompanyClick} />
         ))}
         {loading && <div className="text-xs text-white/50 animate-pulse">Thinking…</div>}
       </div>
