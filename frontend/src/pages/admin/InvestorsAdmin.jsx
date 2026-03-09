@@ -13,7 +13,9 @@ export default function InvestorsAdmin() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [emailQuery, setEmailQuery] = useState("");
-  const [form, setForm] = useState({ email: "", first_name: "", last_name: "", password: "" });
+  const [form, setForm] = useState({ email: "", first_name: "", last_name: "", company: "", phone: "", password: "" });
+  const [editingUser, setEditingUser] = useState(null);
+  const [editForm, setEditForm] = useState({ email: "", first_name: "", last_name: "", company: "", phone: "", password: "" });
   const [lead, setLead] = useState({ lead_id: "", password: "" });
   const [error, setError] = useState("");
 
@@ -44,7 +46,7 @@ export default function InvestorsAdmin() {
     e.preventDefault();
     try {
       await adminInvestorsService.create(form);
-      setForm({ email: "", first_name: "", last_name: "", password: "" });
+      setForm({ email: "", first_name: "", last_name: "", company: "", phone: "", password: "" });
       await load();
       alert("Investor account created.");
     } catch (e) {
@@ -61,6 +63,34 @@ export default function InvestorsAdmin() {
       alert("Investor created from lead.");
     } catch (e) {
       alert(e?.message || "Create-from-lead failed");
+    }
+  };
+
+  const startEdit = (user) => {
+    setEditingUser(user);
+    setEditForm({
+      email: user.email,
+      first_name: user.first_name || "",
+      last_name: user.last_name || "",
+      company: user.company || "",
+      phone: user.phone || "",
+      password: "" // Don't pre-fill password
+    });
+  };
+
+  const update = async (e) => {
+    e.preventDefault();
+    try {
+      // Only send password if it's actually changed
+      const payload = { ...editForm };
+      if (!payload.password) delete payload.password;
+      
+      await adminInvestorsService.update(editingUser.id, payload);
+      setEditingUser(null);
+      await load();
+      alert("Investor updated.");
+    } catch (e) {
+      alert(e?.message || "Update failed");
     }
   };
 
@@ -124,9 +154,20 @@ export default function InvestorsAdmin() {
                     <div key={u.id} className="rounded-lg border border-white/10 bg-white/5 p-3 flex items-center justify-between">
                       <div>
                         <div className="font-semibold">{u.email}</div>
-                        <div className="text-xs text-white/60">{u.first_name} {u.last_name} · Joined {new Date(u.date_joined).toLocaleDateString()}</div>
+                        <div className="text-xs text-white/60">
+                          {u.first_name} {u.last_name} {u.company ? `(${u.company})` : ""} {u.phone ? `· ${u.phone}` : ""}
+                        </div>
+                        <div className="text-[10px] text-white/40 uppercase tracking-wider mt-0.5">Joined {new Date(u.date_joined).toLocaleDateString()}</div>
                       </div>
-                      <div className="text-xs text-emerald-300">Investor</div>
+                      <div className="flex items-center gap-3">
+                        <button 
+                          onClick={() => startEdit(u)}
+                          className="text-xs bg-white/10 hover:bg-white/20 px-3 py-1 rounded-full transition-colors border border-white/5"
+                        >
+                          Edit
+                        </button>
+                        <div className="text-xs text-emerald-300">Investor</div>
+                      </div>
                     </div>
                   ))}
                   {items.length === 0 && <div className="text-sm text-white/60">No investors found.</div>}
@@ -136,18 +177,42 @@ export default function InvestorsAdmin() {
           </GlassCard>
 
           <GlassCard className="p-6 space-y-4">
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 px-3 py-1 text-[10px] uppercase tracking-[0.25em] bg-white/5">
-              <UserPlus className="h-4 w-4" /> Create Investor
-            </div>
-            <form onSubmit={create} className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <Input label="Email" type="email" required value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
-              <Input label="Password" type="password" required value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
-              <Input label="First Name" value={form.first_name} onChange={(e) => setForm({ ...form, first_name: e.target.value })} />
-              <Input label="Last Name" value={form.last_name} onChange={(e) => setForm({ ...form, last_name: e.target.value })} />
-              <div className="md:col-span-2 flex justify-end">
-                <GlowButton type="submit">Create</GlowButton>
-              </div>
-            </form>
+            {editingUser ? (
+              <>
+                <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 px-3 py-1 text-[10px] uppercase tracking-[0.25em] bg-emerald-500/5 text-emerald-300">
+                  <UserPlus className="h-4 w-4" /> Edit Investor
+                </div>
+                <form onSubmit={update} className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <Input label="Email" type="email" required value={editForm.email} onChange={(e) => setEditForm({ ...editForm, email: e.target.value })} />
+                  <Input label="New Password (Optional)" type="password" placeholder="Leave blank to keep same" value={editForm.password} onChange={(e) => setEditForm({ ...editForm, password: e.target.value })} />
+                  <Input label="First Name" value={editForm.first_name} onChange={(e) => setEditForm({ ...editForm, first_name: e.target.value })} />
+                  <Input label="Last Name" value={editForm.last_name} onChange={(e) => setEditForm({ ...editForm, last_name: e.target.value })} />
+                  <Input label="Company" value={editForm.company} onChange={(e) => setEditForm({ ...editForm, company: e.target.value })} />
+                  <Input label="Phone" value={editForm.phone} onChange={(e) => setEditForm({ ...editForm, phone: e.target.value })} />
+                  <div className="md:col-span-2 flex justify-between gap-3">
+                    <button type="button" onClick={() => setEditingUser(null)} className="text-xs text-white/50 hover:text-white transition-colors">Cancel</button>
+                    <GlowButton type="submit">Save Changes</GlowButton>
+                  </div>
+                </form>
+              </>
+            ) : (
+              <>
+                <div className="inline-flex items-center gap-2 rounded-full border border-white/10 px-3 py-1 text-[10px] uppercase tracking-[0.25em] bg-white/5">
+                  <UserPlus className="h-4 w-4" /> Create Investor
+                </div>
+                <form onSubmit={create} className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <Input label="Email" type="email" required value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
+                  <Input label="Password" type="password" required value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
+                  <Input label="First Name" value={form.first_name} onChange={(e) => setForm({ ...form, first_name: e.target.value })} />
+                  <Input label="Last Name" value={form.last_name} onChange={(e) => setForm({ ...form, last_name: e.target.value })} />
+                  <Input label="Company" value={form.company} onChange={(e) => setForm({ ...form, company: e.target.value })} />
+                  <Input label="Phone" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} />
+                  <div className="md:col-span-2 flex justify-end">
+                    <GlowButton type="submit">Create</GlowButton>
+                  </div>
+                </form>
+              </>
+            )}
           </GlassCard>
         </div>
         )}
