@@ -66,9 +66,9 @@ export default function DealReport({
                   {item.subs && (
                     <div className="text-xs text-white/70 grid grid-cols-1 gap-1 mb-2">
                       {item.subs.slice(0, 5).map((s) => (
-                        <div key={s} className="flex items-center justify-between">
-                          <span className="truncate">{s}</span>
-                          <span className="text-white/40">1</span>
+                        <div key={s} className="flex items-start justify-between gap-2">
+                          <span className="break-words leading-tight">{s}</span>
+                          <span className="text-white/40 whitespace-nowrap shrink-0 mt-0.5">1</span>
                         </div>
                       ))}
                     </div>
