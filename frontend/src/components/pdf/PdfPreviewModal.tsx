@@ -38,9 +38,11 @@ export default function PdfPreviewModal({
   metaItems: Array<{ label: string; value: string }>;
 }) {
   const printableRef = useRef<HTMLDivElement>(null);
+  const [isDownloading, setIsDownloading] = React.useState(false);
 
   const handleDownload = async () => {
     try {
+      setIsDownloading(true);
       const name = (data?.companyName || "startup").toString().trim().replace(/\s+/g, "_");
       const ts = new Date().toISOString().slice(0, 10);
       const file = `Results_${name}_${ts}.pdf`;
@@ -56,6 +58,8 @@ export default function PdfPreviewModal({
     } catch (e) {
       console.error("PDF export failed", e);
       alert("Failed to generate PDF. Please try again.");
+    } finally {
+      setIsDownloading(false);
     }
   };
 
@@ -77,7 +81,7 @@ export default function PdfPreviewModal({
           exit={{ opacity: 0 }}
         >
           <motion.div
-            className="relative w-full max-w-5xl rounded-2xl border border-white/10 bg-slate-900 p-4 md:p-6"
+            className="relative w-full max-w-5xl max-h-[90vh] overflow-y-auto scrollbar-hide rounded-2xl border border-white/10 bg-slate-900 p-4 md:p-6"
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 20, opacity: 0 }}
@@ -125,10 +129,15 @@ export default function PdfPreviewModal({
               </button>
               <button
                 onClick={handleDownload}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-web3-primary text-white hover:opacity-90 transition"
+                disabled={isDownloading}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-web3-primary text-white hover:opacity-90 transition disabled:opacity-50"
               >
-                <Download className="w-4 h-4" />
-                Download as PDF
+                {isDownloading ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <Download className="w-4 h-4" />
+                )}
+                {isDownloading ? "Downloading..." : "Download as PDF"}
               </button>
             </div>
           </motion.div>
