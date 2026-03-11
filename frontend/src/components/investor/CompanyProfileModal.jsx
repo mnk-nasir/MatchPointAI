@@ -1,15 +1,19 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { Loader2 } from "lucide-react";
 import { GlassCard } from "../ui/GlassCard";
 import { GlowButton } from "../ui/GlowButton";
 import { investorService } from "../../services/investor";
 import { exportElementToPdf } from "../../utils/exportPdf";
+import DealReport from "../../features/deal-report/DealReport";
 
 export default function CompanyProfileModal({ id, onClose }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [data, setData] = useState(null);
   const [tab, setTab] = useState("overview");
+  const [isPrinting, setIsPrinting] = useState(false);
   const ref = useRef(null);
+  const printRef = useRef(null);
 
   useEffect(() => {
     if (!id) return;
@@ -38,6 +42,11 @@ export default function CompanyProfileModal({ id, onClose }) {
     };
   }, [data]);
 
+  const flatData = useMemo(() => {
+    if (!data?.form_data) return {};
+    return Object.values(data.form_data).reduce((acc, stepData) => ({ ...acc, ...stepData }), {});
+  }, [data]);
+
   const roi = useMemo(() => {
     const raise = Number(metrics.amountRaising || 0);
     const mrr = Number(metrics.monthlyRevenue || 0);
@@ -47,17 +56,23 @@ export default function CompanyProfileModal({ id, onClose }) {
   }, [metrics]);
 
   const downloadPdf = async () => {
-    if (ref.current) {
-      await exportElementToPdf(ref.current, `${data?.company_name || "company"}-deal-report.pdf`, {
-        ignoreSelector: ".no-print",
-      });
-    }
+    setIsPrinting(true);
+    // Wait for the DOM to update the hidden report
+    setTimeout(async () => {
+      if (printRef.current) {
+        await exportElementToPdf(printRef.current, `${data?.company_name || "company"}-deal-report.pdf`, {
+          ignoreSelector: ".no-print",
+          backgroundColor: "#0b1220"
+        });
+      }
+      setIsPrinting(false);
+    }, 300);
   };
 
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/60 p-0 sm:p-6">
       <div className="absolute inset-0" onClick={onClose} />
-      <GlassCard className="relative w-full sm:max-w-4xl max-h-[90vh] overflow-hidden">
+      <GlassCard className={`relative w-full sm:max-w-4xl ${isPrinting ? 'h-auto' : 'max-h-[90vh] overflow-hidden'}`}>
         <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
           <div className="text-sm font-semibold text-white/80">{data?.company_name || "Company"}</div>
           <button className="text-white/60 hover:text-white no-print" onClick={onClose}>Close</button>
@@ -66,20 +81,31 @@ export default function CompanyProfileModal({ id, onClose }) {
           <button onClick={() => setTab("overview")} className={`text-xs px-3 py-1.5 rounded ${tab==="overview"?"bg-white/15":"hover:bg-white/10"} `}>Overview</button>
           <button onClick={() => setTab("report")} className={`text-xs px-3 py-1.5 rounded ${tab==="report"?"bg-white/15":"hover:bg-white/10"} `}>Deal Report</button>
         </div>
-        <div ref={ref} className="p-4 overflow-y-auto max-h-[75vh]">
+        <div ref={ref} className={`p-4 ${isPrinting ? 'h-auto overflow-visible' : 'overflow-y-auto max-h-[75vh]'}`}>
           {loading ? (
             <div className="text-white/60 text-sm">Loading…</div>
           ) : error ? (
             <div className="text-red-200 text-sm">{error}</div>
-          ) : tab === "overview" ? (
-            <div className="space-y-4">
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <div className="text-lg font-semibold">{data?.company_name || "Company"}</div>
-                <div className="text-white/60 text-sm">
-                  {data?.country ? `Based in ${data.country}. ` : ""}
-                  {data?.legal_structure ? `${data.legal_structure}. ` : ""}
-                  {data?.incorporation_year ? `Incorporated ${data.incorporation_year}. ` : ""}
-                  {typeof data?.funding_raised === "number" ? `Raised to date $${data.funding_raised}.` : ""}
+          ) : (
+            <>
+              {/* Overview Section */}
+              <div className={(tab === "overview" || isPrinting) ? "space-y-4" : "hidden"}>
+              <div className="rounded-lg border border-white/10 bg-white/5 p-4 flex items-center gap-4">
+                {data?.form_data?.step1?.companyLogoUrl && (
+                  <img 
+                    src={data.form_data.step1.companyLogoUrl} 
+                    alt="Logo" 
+                    className="h-14 w-14 object-contain rounded-xl bg-white/5 p-2 border border-white/10"
+                  />
+                )}
+                <div>
+                  <div className="text-lg font-semibold">{data?.company_name || "Company"}</div>
+                  <div className="text-white/60 text-sm">
+                    {data?.country ? `Based in ${data.country}. ` : ""}
+                    {data?.legal_structure ? `${data.legal_structure}. ` : ""}
+                    {data?.incorporation_year ? `Incorporated ${data.incorporation_year}. ` : ""}
+                    {typeof data?.funding_raised === "number" ? `Raised to date $${data.funding_raised}.` : ""}
+                  </div>
                 </div>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -179,10 +205,16 @@ export default function CompanyProfileModal({ id, onClose }) {
                   </li>
                 </ul>
               </div>
-            </div>
-          ) : (
-            <div className="space-y-4">
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
+              </div>
+
+              {/* Deal Report Section */}
+              <div className={(tab === "report" || isPrinting) ? "space-y-4" : "hidden"}>
+                {isPrinting && (
+                  <div className="mb-4 pt-8 border-t border-white/20">
+                    <h2 className="text-lg font-bold text-white">Deal Report Details</h2>
+                  </div>
+                )}
+                <div className="rounded-lg border border-white/10 bg-white/5 p-4">
                 <div className="flex items-center justify-between mb-2">
                   <div className="text-sm font-semibold">Executive Summary</div>
                 </div>
@@ -217,19 +249,32 @@ export default function CompanyProfileModal({ id, onClose }) {
                 <div className="text-sm font-semibold mb-2">Key Documents</div>
                 <div className="text-white/60 text-sm">Documents linking coming soon.</div>
               </div>
-            </div>
+              </div>
+            </>
           )}
         </div>
         <div className="px-4 py-3 border-t border-white/10 flex items-center justify-between">
           <div className="text-xs text-white/50">{data?.company_name || "Company"}</div>
           <div className="flex gap-2 no-print">
             <GlowButton variant="secondary" onClick={() => setTab(tab === "overview" ? "report" : "overview")} className="text-xs px-3 py-2">
-              {tab === "overview" ? "View Deal Report" : "Back to Overview"}
+              {tab === "overview" ? "View Summary Report" : "Back to Overview"}
             </GlowButton>
-            <GlowButton onClick={downloadPdf} className="text-xs px-3 py-2">Download PDF</GlowButton>
+            <GlowButton onClick={downloadPdf} disabled={isPrinting} className="text-xs px-3 py-2 flex items-center justify-center gap-1.5">
+              {isPrinting && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
+              {isPrinting ? "Generating PDF..." : "Download Full Report"}
+            </GlowButton>
           </div>
         </div>
       </GlassCard>
+
+      {/* Hidden container for PDF export */}
+      {isPrinting && (
+        <div className="fixed top-0 left-0 w-[1200px] z-[-9999] opacity-0 pointer-events-none bg-[#0b1220]">
+          <div ref={printRef} className="p-8 w-full bg-[#0b1220]">
+            <DealReport company={flatData} result={data} />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
