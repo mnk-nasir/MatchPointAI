@@ -6,7 +6,7 @@ import Configurator from "./components/Configurator";
 import InvestmentReadiness from "./components/InvestmentReadiness";
 import Valuator from "./components/Valuator";
 import SectionHeader from "./components/SectionHeader";
-import { currencySymbol } from "../../utils/currency";
+import { Mail } from "lucide-react";
 import logo from "../../assets/logo.png";
 
 export default function DealReport({
@@ -285,12 +285,6 @@ export default function DealReport({
     },
   ];
 
-  const metaRight = [
-    ["Profile Date", new Date().toLocaleDateString()],
-    ["First Data", new Date().toLocaleDateString()],
-    ["Currency", `${company?.currency || "USD"} (${currencySymbol(company?.currency)})`],
-    ["Location", company?.country || "United Kingdom"],
-  ];
   const valuatorEntries = (() => {
     const mv_total = mv_identification + mv_interact + mv_results; // out of 9
     const progress_total =
@@ -359,20 +353,29 @@ export default function DealReport({
 
   return (
     <div className="rounded-2xl border border-white/10 bg-white/5 p-4 md:p-6">
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-3">
+      <div className="flex items-center justify-between mb-4 border-b border-white/5 pb-4">
+        <div className="flex items-center gap-4">
+          {company?.companyLogoUrl && (
+            <img 
+              src={company.companyLogoUrl} 
+              alt="Company Logo" 
+              className="h-12 w-12 object-contain rounded-xl bg-white/5 p-1.5 border border-white/10"
+            />
+          )}
           <div className="leading-tight text-white/85">
-            <span className="block text-[14px] md:text-[16px] font-black tracking-[0.08em]">Deal</span>
-            <span className="block text-[14px] md:text-[16px] font-black tracking-[0.08em]">Intelligence Report</span>
-          </div>
-          <img src={logo} alt="Match Point logo" className="h-6 w-auto" />
-        </div>
-        <div className="text-xs text-white/60 text-right space-y-0.5">
-          {metaRight.map(([k, v]) => (
-            <div key={k as string}>
-              <span className="text-white/50">{k}:</span> {String(v)}
+            <div className="text-[18px] md:text-[20px] font-black tracking-[0.08em] uppercase">
+              {company?.companyName || "Deal Intelligence Report"}
             </div>
-          ))}
+            <div className="text-[10px] md:text-[11px] font-medium text-white/50 tracking-widest uppercase">
+              {company?.companyName ? "Deal Intelligence Report" : "Matchpoint AI Analysis"}
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-col items-end gap-1">
+          <img src={logo} alt="Match Point logo" className="h-4 w-auto opacity-50" />
+          <div className="text-[10px] text-white/40 text-right">
+            Report ID: {Math.random().toString(36).substr(2, 9).toUpperCase()}
+          </div>
         </div>
       </div>
 
@@ -386,24 +389,16 @@ export default function DealReport({
         <div className="md:col-span-8 space-y-6">
           <div className="flex items-start justify-between">
             <div>
-              <div className="text-2xl font-bold text-white">{company?.companyName || "—"}</div>
-              <div className="text-white/60">{company?.contactEmail || ""}</div>
-            </div>
-            <div className="text-right text-xs text-white/60 space-y-2">
-              {company?.companyLogoUrl ? (
-                <div className="flex justify-end">
-                  <img
-                    src={company.companyLogoUrl}
-                    alt="Company logo"
-                    className="h-10 w-auto rounded-md border border-white/10 bg-white/5 p-1"
-                    crossOrigin="anonymous"
-                  />
-                </div>
-              ) : null}
-              <div className="space-y-1">
-                <div>First Data: {new Date().toLocaleDateString()}</div>
-                <div>Sector: {company?.sector || "—"}</div>
+              <div className="text-2xl font-bold text-white mb-1">Overview</div>
+              <div className="text-white/60 text-sm flex items-start gap-2 mt-1">
+                <Mail className="h-4 w-4 shrink-0 mt-0.5" />
+                <span className="break-all leading-tight">{company?.contactEmail || "Contact not provided"}</span>
               </div>
+            </div>
+            <div className="text-right text-xs text-white/60 space-y-1">
+              <div>First Data: {new Date().toLocaleDateString()}</div>
+              <div>Sector: {company?.sector || "—"}</div>
+              <div>Location: {company?.country || "United Kingdom"}</div>
             </div>
           </div>
 
