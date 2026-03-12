@@ -64,6 +64,10 @@ class StartupEvaluation(models.Model):
 
     # Evaluation Results
     total_score = models.IntegerField(_('Total Score'), default=0, db_index=True)
+    opportunity_score = models.IntegerField(_('Opportunity Score'), default=0)
+    risk_score = models.IntegerField(_('Risk Score'), default=0)
+    market_momentum = models.CharField(_('Market Momentum'), max_length=50, blank=True, default="Medium")
+    
     rating = models.CharField(
         _('Rating Classification'), 
         max_length=20, 
