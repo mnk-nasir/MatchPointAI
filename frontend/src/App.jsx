@@ -10,8 +10,11 @@ import Investors from "./pages/Investors.jsx";
 import InvestorInterest from "./pages/investors/InvestorInterest.jsx";
 import AcceleratorInterest from "./pages/accelerators/AcceleratorInterest.jsx";
 import InvestorsAdmin from "./pages/admin/InvestorsAdmin.jsx";
+import AdminDashboard from "./pages/admin/AdminDashboard.jsx";
 import AdminLogin from "./pages/admin/AdminLogin.jsx";
 import InvestorLogin from "./pages/investors/InvestorLogin.jsx";
+import ForgotPassword from "./pages/investors/ForgotPassword.jsx";
+import ResetPassword from "./pages/investors/ResetPassword.jsx";
 import InvestorLayout from "./components/investor/InvestorLayout.jsx";
 import InvestorDashboardPage from "./pages/investor/Dashboard.jsx";
 import DealsPage from "./pages/investor/Deals.jsx";
@@ -19,6 +22,9 @@ import WatchlistPage from "./pages/investor/Watchlist.jsx";
 import MeetingsPage from "./pages/investor/Meetings.jsx";
 import ChatbotPage from "./pages/investor/Chatbot.jsx";
 import CompanyDetail from "./pages/investor/CompanyDetail.jsx";
+import ProfilePage from "./pages/investor/Profile.jsx";
+import PipelinePage from "./pages/investor/Pipeline.jsx";
+import ContactsPage from "./pages/investor/Contacts.jsx";
 import { Navigate } from "react-router-dom";
 import StartupsAndCompanies from "./pages/StartupsAndCompanies.jsx";
 import About from "./pages/About.jsx";
@@ -50,9 +56,15 @@ function App() {
               <Route path="watchlist" element={<WatchlistPage />} />
               <Route path="meetings" element={<MeetingsPage />} />
               <Route path="chat" element={<ChatbotPage />} />
+              <Route path="profile" element={<ProfilePage />} />
+              <Route path="pipeline" element={<PipelinePage />} />
+              <Route path="contacts" element={<ContactsPage />} />
             </Route>
             <Route path="/investors/login" element={<InvestorLogin />} />
+            <Route path="/investor/forgot-password" element={<ForgotPassword />} />
+            <Route path="/investor/reset-password" element={<ResetPassword />} />
             <Route path="/startups-and-companies" element={<StartupsAndCompanies />} />
+            <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route path="/admin/investors" element={<InvestorsAdmin />} />
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/about" element={<About />} />
