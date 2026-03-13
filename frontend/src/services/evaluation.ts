@@ -43,6 +43,11 @@ export const evaluationService = {
   getEvaluation: async (id: string): Promise<EvaluationDetail> => {
     const res = await api.get(`/evaluations/${id}/`);
     return res.data as EvaluationDetail;
-    },
+  },
+
+  getNews: async (id: string): Promise<any> => {
+    const res = await api.get(`/startups/${id}/news/`);
+    return res.data;
+  },
 };
 
