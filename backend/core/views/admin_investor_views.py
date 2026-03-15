@@ -15,6 +15,7 @@ User = get_user_model()
 class InvestorAdminListCreateAPIView(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAdminUser]
     serializer_class = InvestorAdminCreateSerializer
+    pagination_class = None
 
     def get_queryset(self):
         qs = User.objects.filter(is_investor=True).order_by("-date_joined")

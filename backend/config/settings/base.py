@@ -221,3 +221,5 @@ CORS_ALLOWED_ORIGINS = config(
     cast=Csv()
 )
 CORS_ALLOW_CREDENTIALS = config('CORS_ALLOW_CREDENTIALS', default=True, cast=bool)
+LOGIN_URL = '/admin/login/'
+LOGIN_REDIRECT_URL = '/admin/'
