@@ -336,3 +336,1249 @@ ERROR 2026-03-04 13:21:06,245 chat_views 6684 2432 [stream] openai_error: Client
 ERROR 2026-03-04 13:21:10,720 chat_views 6684 10112 [stream] openai_error: Client.__init__() got an unexpected keyword argument 'proxies'
 ERROR 2026-03-04 13:21:10,722 ai_service 6684 10112 [answer] openai_error: Client.__init__() got an unexpected keyword argument 'proxies'
 ERROR 2026-03-04 13:21:11,250 ai_service 6684 10112 [answer] gemini_error: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+ERROR 2026-03-12 14:16:43,890 exception_handler 2188 14160 Unexpected error: 'StartupEvaluation' object has no attribute 'industry'
+Traceback (most recent call last):
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\core\views\match_views.py", line 21, in get
+    s_industry = startup.industry or startup.form_data.get('step1', {}).get('industry', '')
+                 ^^^^^^^^^^^^^^^^
+AttributeError: 'StartupEvaluation' object has no attribute 'industry'
+ERROR 2026-03-12 14:16:43,969 log 2188 14160 Internal Server Error: /api/v1/matching/startup/13284818-cc76-466e-8bad-f5f47d881188
+ERROR 2026-03-12 14:16:43,970 log 2188 14160 "GET /api/v1/matching/startup/13284818-cc76-466e-8bad-f5f47d881188 HTTP/1.1" 500 151
+ERROR 2026-03-12 14:16:57,986 exception_handler 2188 14160 Unexpected error: 'StartupEvaluation' object has no attribute 'industry'
+Traceback (most recent call last):
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\core\views\match_views.py", line 21, in get
+    s_industry = startup.industry or startup.form_data.get('step1', {}).get('industry', '')
+                 ^^^^^^^^^^^^^^^^
+AttributeError: 'StartupEvaluation' object has no attribute 'industry'
+ERROR 2026-03-12 14:16:57,989 log 2188 14160 Internal Server Error: /api/v1/matching/startup/13284818-cc76-466e-8bad-f5f47d881188
+ERROR 2026-03-12 14:16:57,990 log 2188 14160 "GET /api/v1/matching/startup/13284818-cc76-466e-8bad-f5f47d881188 HTTP/1.1" 500 151
+ERROR 2026-03-12 14:17:14,819 exception_handler 2188 14160 Unexpected error: 'StartupEvaluation' object has no attribute 'industry'
+Traceback (most recent call last):
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\core\views\match_views.py", line 21, in get
+    s_industry = startup.industry or startup.form_data.get('step1', {}).get('industry', '')
+                 ^^^^^^^^^^^^^^^^
+AttributeError: 'StartupEvaluation' object has no attribute 'industry'
+ERROR 2026-03-12 14:17:14,825 log 2188 14160 Internal Server Error: /api/v1/matching/startup/13284818-cc76-466e-8bad-f5f47d881188
+ERROR 2026-03-12 14:17:14,826 log 2188 14160 "GET /api/v1/matching/startup/13284818-cc76-466e-8bad-f5f47d881188 HTTP/1.1" 500 151
+ERROR 2026-03-12 14:18:40,101 exception_handler 2188 9696 Unexpected error: 'StartupEvaluation' object has no attribute 'industry'
+Traceback (most recent call last):
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\core\views\match_views.py", line 21, in get
+    form_data = startup.form_data or {}
+                 ^^^^^^^^^^^^^^^^
+AttributeError: 'StartupEvaluation' object has no attribute 'industry'
+ERROR 2026-03-12 14:18:40,133 log 2188 9696 Internal Server Error: /api/v1/matching/startup/13284818-cc76-466e-8bad-f5f47d881188
+ERROR 2026-03-12 14:18:40,134 log 2188 9696 "GET /api/v1/matching/startup/13284818-cc76-466e-8bad-f5f47d881188 HTTP/1.1" 500 151
+ERROR 2026-03-12 14:19:31,660 exception_handler 5296 1096 Unexpected error: 'StartupEvaluation' object has no attribute 'industry'
+Traceback (most recent call last):
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\core\views\match_views.py", line 22, in get
+    s_industry = startup.industry or form_data.get('step1', {}).get('industry', '')
+                 ^^^^^^^^^^^^^^^^
+AttributeError: 'StartupEvaluation' object has no attribute 'industry'
+ERROR 2026-03-12 14:19:31,668 log 5296 1096 Internal Server Error: /api/v1/matching/startup/6385c9d8-1e35-4ca0-85ce-56e290984a5f
+ERROR 2026-03-12 14:19:31,669 log 5296 1096 "GET /api/v1/matching/startup/6385c9d8-1e35-4ca0-85ce-56e290984a5f HTTP/1.1" 500 151
+ERROR 2026-03-13 13:19:38,732 exception_handler 7232 12324 Unexpected error: Cannot resolve keyword 'industry' into field. Choices are: amount, announced_on, created_at, currency, id, round_name, source_url, startup, startup_id
+Traceback (most recent call last):
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\core\views\intelligence_views.py", line 23, in get
+    signal = calculate_market_intelligence(startup)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\core\services\market_intelligence\engine.py", line 38, in calculate_market_intelligence
+    funding_count = FundingEvent.objects.filter(
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        industry__iexact=industry,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+        created_at__gte=recent_date
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ).count()
+    ^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 1542, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 1560, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 1570, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\sql\query.py", line 1676, in add_q
+    clause, _ = self._add_q(q_object, can_reuse)
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\sql\query.py", line 1708, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ~~~~~~~~~~~~~~~~~^
+        child,
+        ^^^^^^
+    ...<7 lines>...
+        update_join_types=update_join_types,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\sql\query.py", line 1556, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
+                                        ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\sql\query.py", line 1363, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+                                ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\sql\query.py", line 1842, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'industry' into field. Choices are: amount, announced_on, created_at, currency, id, round_name, source_url, startup, startup_id
+ERROR 2026-03-13 13:19:38,844 log 7232 12324 Internal Server Error: /api/v1/startups/c307171e-f39e-4baa-87c6-af1e560e1559/market-intelligence/
+ERROR 2026-03-13 13:19:38,851 log 7232 12324 "GET /api/v1/startups/c307171e-f39e-4baa-87c6-af1e560e1559/market-intelligence/ HTTP/1.1" 500 151
+ERROR 2026-03-13 13:19:39,016 exception_handler 7232 12324 Unexpected error: Cannot resolve keyword 'industry' into field. Choices are: amount, announced_on, created_at, currency, id, round_name, source_url, startup, startup_id
+Traceback (most recent call last):
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\core\views\intelligence_views.py", line 23, in get
+    signal = calculate_market_intelligence(startup)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\core\services\market_intelligence\engine.py", line 38, in calculate_market_intelligence
+    funding_count = FundingEvent.objects.filter(
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        industry__iexact=industry,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+        created_at__gte=recent_date
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ).count()
+    ^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 1542, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 1560, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 1570, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\sql\query.py", line 1676, in add_q
+    clause, _ = self._add_q(q_object, can_reuse)
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\sql\query.py", line 1708, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ~~~~~~~~~~~~~~~~~^
+        child,
+        ^^^^^^
+    ...<7 lines>...
+        update_join_types=update_join_types,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\sql\query.py", line 1556, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
+                                        ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\sql\query.py", line 1363, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+                                ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\sql\query.py", line 1842, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'industry' into field. Choices are: amount, announced_on, created_at, currency, id, round_name, source_url, startup, startup_id
+ERROR 2026-03-13 13:19:39,069 log 7232 12324 Internal Server Error: /api/v1/startups/c307171e-f39e-4baa-87c6-af1e560e1559/market-intelligence/
+ERROR 2026-03-13 13:19:39,070 log 7232 12324 "GET /api/v1/startups/c307171e-f39e-4baa-87c6-af1e560e1559/market-intelligence/ HTTP/1.1" 500 151
+ERROR 2026-03-23 12:49:18,956 exception_handler 11088 236 Unexpected error: (2013, 'Lost connection to server during query')
+Traceback (most recent call last):
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\mysql\base.py", line 78, in execute
+    return self.cursor.execute(query, args)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\cursors.py", line 179, in execute
+    res = self._query(mogrified_query)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\cursors.py", line 330, in _query
+    db.query(q)
+    ~~~~~~~~^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\connections.py", line 286, in query
+    _mysql.connection.query(self, query)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+MySQLdb.OperationalError: (2013, 'Lost connection to server during query')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\views.py", line 503, in dispatch
+    self.initial(request, *args, **kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\views.py", line 420, in initial
+    self.perform_authentication(request)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\views.py", line 330, in perform_authentication
+    request.user
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\request.py", line 232, in user
+    self._authenticate()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\request.py", line 385, in _authenticate
+    user_auth_tuple = authenticator.authenticate(self)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework_simplejwt\authentication.py", line 51, in authenticate
+    return self.get_user(validated_token), validated_token
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework_simplejwt\authentication.py", line 132, in get_user
+    user = self.user_model.objects.get(**{api_settings.USER_ID_FIELD: user_id})
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 635, in get
+    num = len(clone)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 372, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 2000, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 95, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1624, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\mysql\base.py", line 78, in execute
+    return self.cursor.execute(query, args)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\cursors.py", line 179, in execute
+    res = self._query(mogrified_query)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\cursors.py", line 330, in _query
+    db.query(q)
+    ~~~~~~~~^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\connections.py", line 286, in query
+    _mysql.connection.query(self, query)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+django.db.utils.OperationalError: (2013, 'Lost connection to server during query')
+ERROR 2026-03-23 12:49:19,704 log 11088 236 Internal Server Error: /api/v1/investor/ai-opportunities/
+ERROR 2026-03-23 12:49:45,054 exception_handler 11088 11016 Unexpected error: (2013, 'Lost connection to server during query')
+Traceback (most recent call last):
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\mysql\base.py", line 294, in _set_autocommit
+    self.connection.autocommit(autocommit)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\connections.py", line 271, in autocommit
+    _mysql.connection.autocommit(self, on)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+MySQLdb.OperationalError: (2013, 'Lost connection to server during query')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\views.py", line 503, in dispatch
+    self.initial(request, *args, **kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\views.py", line 420, in initial
+    self.perform_authentication(request)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\views.py", line 330, in perform_authentication
+    request.user
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\request.py", line 232, in user
+    self._authenticate()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\request.py", line 385, in _authenticate
+    user_auth_tuple = authenticator.authenticate(self)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework_simplejwt\authentication.py", line 51, in authenticate
+    return self.get_user(validated_token), validated_token
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework_simplejwt\authentication.py", line 132, in get_user
+    user = self.user_model.objects.get(**{api_settings.USER_ID_FIELD: user_id})
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 635, in get
+    num = len(clone)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 372, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 2000, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 95, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1611, in execute_sql
+    sql, params = self.as_sql()
+                  ~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 795, in as_sql
+    self.compile(self.where) if self.where is not None else ("", [])
+    ~~~~~~~~~~~~^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 578, in compile
+    sql, params = node.as_sql(self, self.connection)
+                  ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\sql\where.py", line 151, in as_sql
+    sql, params = compiler.compile(child)
+                  ~~~~~~~~~~~~~~~~^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 578, in compile
+    sql, params = node.as_sql(self, self.connection)
+                  ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\lookups.py", line 407, in as_sql
+    return super().as_sql(compiler, connection)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\lookups.py", line 239, in as_sql
+    rhs_sql, rhs_params = self.process_rhs(compiler, connection)
+                          ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\lookups.py", line 138, in process_rhs
+    return self.get_db_prep_lookup(value, connection)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\lookups.py", line 272, in get_db_prep_lookup
+    else get_db_prep_value(v, connection, prepared=True)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\fields\__init__.py", line 2758, in get_db_prep_value
+    if connection.features.has_native_uuid_field:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\mysql\features.py", line 284, in has_native_uuid_field
+    is_mariadb = self.connection.mysql_is_mariadb
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\mysql\base.py", line 440, in mysql_is_mariadb
+    return "mariadb" in self.mysql_server_info.lower()
+                        ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\mysql\base.py", line 426, in mysql_server_info
+    return self.mysql_server_data["version"]
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\mysql\base.py", line 400, in mysql_server_data
+    with self.temporary_connection() as cursor:
+         ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Program Files\Python314\Lib\contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 695, in temporary_connection
+    with self.cursor() as cursor:
+         ~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 320, in cursor
+    return self._cursor()
+           ~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 296, in _cursor
+    self.ensure_connection()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 279, in ensure_connection
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 257, in connect
+    self.set_autocommit(self.settings_dict["AUTOCOMMIT"])
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 484, in set_autocommit
+    self._set_autocommit(autocommit)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\mysql\base.py", line 293, in _set_autocommit
+    with self.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\mysql\base.py", line 294, in _set_autocommit
+    self.connection.autocommit(autocommit)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\connections.py", line 271, in autocommit
+    _mysql.connection.autocommit(self, on)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+django.db.utils.OperationalError: (2013, 'Lost connection to server during query')
+ERROR 2026-03-23 12:49:46,020 log 11088 11016 Internal Server Error: /api/v1/investor/trending-startups/
+ERROR 2026-03-23 12:52:20,777 exception_handler 11088 12724 Unexpected error: (2002, "Can't connect to server on '82.25.121.125' (10060)")
+Traceback (most recent call last):
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 279, in ensure_connection
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 256, in connect
+    self.connection = self.get_new_connection(conn_params)
+                      ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\mysql\base.py", line 258, in get_new_connection
+    connection = Database.connect(**conn_params)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\__init__.py", line 121, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\connections.py", line 206, in __init__
+    super().__init__(*args, **kwargs2)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+MySQLdb.OperationalError: (2002, "Can't connect to server on '82.25.121.125' (10060)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\views.py", line 503, in dispatch
+    self.initial(request, *args, **kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\views.py", line 420, in initial
+    self.perform_authentication(request)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\views.py", line 330, in perform_authentication
+    request.user
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\request.py", line 232, in user
+    self._authenticate()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\request.py", line 385, in _authenticate
+    user_auth_tuple = authenticator.authenticate(self)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework_simplejwt\authentication.py", line 51, in authenticate
+    return self.get_user(validated_token), validated_token
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework_simplejwt\authentication.py", line 132, in get_user
+    user = self.user_model.objects.get(**{api_settings.USER_ID_FIELD: user_id})
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 635, in get
+    num = len(clone)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 372, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 2000, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 95, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1622, in execute_sql
+    cursor = self.connection.cursor()
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 320, in cursor
+    return self._cursor()
+           ~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 296, in _cursor
+    self.ensure_connection()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 278, in ensure_connection
+    with self.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 279, in ensure_connection
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 256, in connect
+    self.connection = self.get_new_connection(conn_params)
+                      ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\mysql\base.py", line 258, in get_new_connection
+    connection = Database.connect(**conn_params)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\__init__.py", line 121, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\connections.py", line 206, in __init__
+    super().__init__(*args, **kwargs2)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: (2002, "Can't connect to server on '82.25.121.125' (10060)")
+ERROR 2026-03-23 12:52:20,841 log 11088 12724 Internal Server Error: /api/v1/investor/ai-opportunities/
+ERROR 2026-03-23 12:52:25,027 exception_handler 11088 11044 Unexpected error: (2013, 'Lost connection to server during query')
+Traceback (most recent call last):
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 279, in ensure_connection
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 256, in connect
+    self.connection = self.get_new_connection(conn_params)
+                      ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\mysql\base.py", line 258, in get_new_connection
+    connection = Database.connect(**conn_params)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\__init__.py", line 121, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\connections.py", line 244, in __init__
+    self.autocommit(autocommit)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\connections.py", line 271, in autocommit
+    _mysql.connection.autocommit(self, on)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+MySQLdb.OperationalError: (2013, 'Lost connection to server during query')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\views.py", line 503, in dispatch
+    self.initial(request, *args, **kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\views.py", line 420, in initial
+    self.perform_authentication(request)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\views.py", line 330, in perform_authentication
+    request.user
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\request.py", line 232, in user
+    self._authenticate()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\request.py", line 385, in _authenticate
+    user_auth_tuple = authenticator.authenticate(self)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework_simplejwt\authentication.py", line 51, in authenticate
+    return self.get_user(validated_token), validated_token
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework_simplejwt\authentication.py", line 132, in get_user
+    user = self.user_model.objects.get(**{api_settings.USER_ID_FIELD: user_id})
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 635, in get
+    num = len(clone)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 372, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 2000, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 95, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1622, in execute_sql
+    cursor = self.connection.cursor()
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 320, in cursor
+    return self._cursor()
+           ~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 296, in _cursor
+    self.ensure_connection()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 278, in ensure_connection
+    with self.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 279, in ensure_connection
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 256, in connect
+    self.connection = self.get_new_connection(conn_params)
+                      ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\mysql\base.py", line 258, in get_new_connection
+    connection = Database.connect(**conn_params)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\__init__.py", line 121, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\connections.py", line 244, in __init__
+    self.autocommit(autocommit)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\connections.py", line 271, in autocommit
+    _mysql.connection.autocommit(self, on)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+django.db.utils.OperationalError: (2013, 'Lost connection to server during query')
+ERROR 2026-03-23 12:52:25,047 log 11088 11044 Internal Server Error: /api/v1/startups
+ERROR 2026-03-23 12:53:19,545 exception_handler 4384 3496 Unexpected error: (2013, 'Lost connection to server during query')
+Traceback (most recent call last):
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 279, in ensure_connection
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 256, in connect
+    self.connection = self.get_new_connection(conn_params)
+                      ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\mysql\base.py", line 258, in get_new_connection
+    connection = Database.connect(**conn_params)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\__init__.py", line 121, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\connections.py", line 221, in __init__
+    self.set_character_set(charset, collation)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\connections.py", line 330, in set_character_set
+    super().set_character_set(charset)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+MySQLdb.OperationalError: (2013, 'Lost connection to server during query')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\views.py", line 503, in dispatch
+    self.initial(request, *args, **kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\views.py", line 420, in initial
+    self.perform_authentication(request)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\views.py", line 330, in perform_authentication
+    request.user
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\request.py", line 232, in user
+    self._authenticate()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\request.py", line 385, in _authenticate
+    user_auth_tuple = authenticator.authenticate(self)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework_simplejwt\authentication.py", line 51, in authenticate
+    return self.get_user(validated_token), validated_token
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework_simplejwt\authentication.py", line 132, in get_user
+    user = self.user_model.objects.get(**{api_settings.USER_ID_FIELD: user_id})
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 635, in get
+    num = len(clone)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 372, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 2000, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 95, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1622, in execute_sql
+    cursor = self.connection.cursor()
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 320, in cursor
+    return self._cursor()
+           ~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 296, in _cursor
+    self.ensure_connection()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 278, in ensure_connection
+    with self.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 279, in ensure_connection
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 256, in connect
+    self.connection = self.get_new_connection(conn_params)
+                      ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\mysql\base.py", line 258, in get_new_connection
+    connection = Database.connect(**conn_params)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\__init__.py", line 121, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\connections.py", line 221, in __init__
+    self.set_character_set(charset, collation)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\connections.py", line 330, in set_character_set
+    super().set_character_set(charset)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+django.db.utils.OperationalError: (2013, 'Lost connection to server during query')
+ERROR 2026-03-23 12:53:19,594 log 4384 3496 Internal Server Error: /api/v1/investor/recent-funding/
+ERROR 2026-03-23 13:15:30,488 exception_handler 4384 6728 Unexpected error: (2013, 'Lost connection to server during query')
+Traceback (most recent call last):
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 279, in ensure_connection
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 256, in connect
+    self.connection = self.get_new_connection(conn_params)
+                      ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\mysql\base.py", line 258, in get_new_connection
+    connection = Database.connect(**conn_params)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\__init__.py", line 121, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\connections.py", line 221, in __init__
+    self.set_character_set(charset, collation)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\connections.py", line 330, in set_character_set
+    super().set_character_set(charset)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+MySQLdb.OperationalError: (2013, 'Lost connection to server during query')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\views.py", line 503, in dispatch
+    self.initial(request, *args, **kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\views.py", line 420, in initial
+    self.perform_authentication(request)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\views.py", line 330, in perform_authentication
+    request.user
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\request.py", line 232, in user
+    self._authenticate()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\request.py", line 385, in _authenticate
+    user_auth_tuple = authenticator.authenticate(self)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework_simplejwt\authentication.py", line 51, in authenticate
+    return self.get_user(validated_token), validated_token
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework_simplejwt\authentication.py", line 132, in get_user
+    user = self.user_model.objects.get(**{api_settings.USER_ID_FIELD: user_id})
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 635, in get
+    num = len(clone)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 372, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 2000, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 95, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1622, in execute_sql
+    cursor = self.connection.cursor()
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 320, in cursor
+    return self._cursor()
+           ~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 296, in _cursor
+    self.ensure_connection()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 278, in ensure_connection
+    with self.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 279, in ensure_connection
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 256, in connect
+    self.connection = self.get_new_connection(conn_params)
+                      ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\mysql\base.py", line 258, in get_new_connection
+    connection = Database.connect(**conn_params)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\__init__.py", line 121, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\connections.py", line 221, in __init__
+    self.set_character_set(charset, collation)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\connections.py", line 330, in set_character_set
+    super().set_character_set(charset)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+django.db.utils.OperationalError: (2013, 'Lost connection to server during query')
+ERROR 2026-03-23 13:15:30,535 log 4384 6728 Internal Server Error: /api/v1/investor/ai-opportunities/
+ERROR 2026-03-23 13:15:34,601 exception_handler 4384 1608 Unexpected error: (2013, 'Lost connection to server during query')
+Traceback (most recent call last):
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\mysql\base.py", line 78, in execute
+    return self.cursor.execute(query, args)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\cursors.py", line 179, in execute
+    res = self._query(mogrified_query)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\cursors.py", line 330, in _query
+    db.query(q)
+    ~~~~~~~~^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\connections.py", line 286, in query
+    _mysql.connection.query(self, query)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+MySQLdb.OperationalError: (2013, 'Lost connection to server during query')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\core\views\investor_views.py", line 209, in get
+    ).count()
+      ~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 610, in count
+    return self.query.get_count(using=self.db)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\sql\query.py", line 656, in get_count
+    return obj.get_aggregation(using, {"__count": Count("*")})["__count"]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\sql\query.py", line 638, in get_aggregation
+    result = compiler.execute_sql(SINGLE)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1624, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\mysql\base.py", line 78, in execute
+    return self.cursor.execute(query, args)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\cursors.py", line 179, in execute
+    res = self._query(mogrified_query)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\cursors.py", line 330, in _query
+    db.query(q)
+    ~~~~~~~~^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\connections.py", line 286, in query
+    _mysql.connection.query(self, query)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+django.db.utils.OperationalError: (2013, 'Lost connection to server during query')
+ERROR 2026-03-23 13:15:34,699 log 4384 1608 Internal Server Error: /api/v1/investor/trending-startups/
+ERROR 2026-03-23 13:18:04,442 exception_handler 4384 9768 Unexpected error: (2013, 'Lost connection to server during query')
+Traceback (most recent call last):
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 279, in ensure_connection
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 256, in connect
+    self.connection = self.get_new_connection(conn_params)
+                      ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\mysql\base.py", line 258, in get_new_connection
+    connection = Database.connect(**conn_params)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\__init__.py", line 121, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\connections.py", line 244, in __init__
+    self.autocommit(autocommit)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\connections.py", line 271, in autocommit
+    _mysql.connection.autocommit(self, on)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+MySQLdb.OperationalError: (2013, 'Lost connection to server during query')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\views.py", line 503, in dispatch
+    self.initial(request, *args, **kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\views.py", line 420, in initial
+    self.perform_authentication(request)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\views.py", line 330, in perform_authentication
+    request.user
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\request.py", line 232, in user
+    self._authenticate()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\request.py", line 385, in _authenticate
+    user_auth_tuple = authenticator.authenticate(self)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework_simplejwt\authentication.py", line 51, in authenticate
+    return self.get_user(validated_token), validated_token
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework_simplejwt\authentication.py", line 132, in get_user
+    user = self.user_model.objects.get(**{api_settings.USER_ID_FIELD: user_id})
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 635, in get
+    num = len(clone)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 372, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 2000, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 95, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1622, in execute_sql
+    cursor = self.connection.cursor()
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 320, in cursor
+    return self._cursor()
+           ~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 296, in _cursor
+    self.ensure_connection()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 278, in ensure_connection
+    with self.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 279, in ensure_connection
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 256, in connect
+    self.connection = self.get_new_connection(conn_params)
+                      ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\mysql\base.py", line 258, in get_new_connection
+    connection = Database.connect(**conn_params)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\__init__.py", line 121, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\connections.py", line 244, in __init__
+    self.autocommit(autocommit)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\connections.py", line 271, in autocommit
+    _mysql.connection.autocommit(self, on)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+django.db.utils.OperationalError: (2013, 'Lost connection to server during query')
+ERROR 2026-03-23 13:18:04,505 log 4384 9768 Internal Server Error: /api/v1/auth/me/
+ERROR 2026-03-23 13:18:20,582 exception_handler 4384 12320 Unexpected error: (2013, 'Lost connection to server during query')
+Traceback (most recent call last):
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 279, in ensure_connection
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 256, in connect
+    self.connection = self.get_new_connection(conn_params)
+                      ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\mysql\base.py", line 258, in get_new_connection
+    connection = Database.connect(**conn_params)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\__init__.py", line 121, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\connections.py", line 244, in __init__
+    self.autocommit(autocommit)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\connections.py", line 271, in autocommit
+    _mysql.connection.autocommit(self, on)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+MySQLdb.OperationalError: (2013, 'Lost connection to server during query')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\views.py", line 503, in dispatch
+    self.initial(request, *args, **kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\views.py", line 420, in initial
+    self.perform_authentication(request)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\views.py", line 330, in perform_authentication
+    request.user
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\request.py", line 232, in user
+    self._authenticate()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\request.py", line 385, in _authenticate
+    user_auth_tuple = authenticator.authenticate(self)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework_simplejwt\authentication.py", line 51, in authenticate
+    return self.get_user(validated_token), validated_token
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework_simplejwt\authentication.py", line 132, in get_user
+    user = self.user_model.objects.get(**{api_settings.USER_ID_FIELD: user_id})
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 635, in get
+    num = len(clone)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 372, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 2000, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 95, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1622, in execute_sql
+    cursor = self.connection.cursor()
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 320, in cursor
+    return self._cursor()
+           ~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 296, in _cursor
+    self.ensure_connection()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 278, in ensure_connection
+    with self.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 279, in ensure_connection
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 256, in connect
+    self.connection = self.get_new_connection(conn_params)
+                      ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\mysql\base.py", line 258, in get_new_connection
+    connection = Database.connect(**conn_params)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\__init__.py", line 121, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\connections.py", line 244, in __init__
+    self.autocommit(autocommit)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\connections.py", line 271, in autocommit
+    _mysql.connection.autocommit(self, on)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+django.db.utils.OperationalError: (2013, 'Lost connection to server during query')
+ERROR 2026-03-23 13:18:20,622 log 4384 12320 Internal Server Error: /api/v1/startups
+ERROR 2026-03-23 13:21:45,220 exception_handler 4384 1800 Unexpected error: (2013, 'Lost connection to server during query')
+Traceback (most recent call last):
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\utils.py", line 103, in _execute
+    return self.cursor.execute(sql)
+           ~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\mysql\base.py", line 78, in execute
+    return self.cursor.execute(query, args)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\cursors.py", line 179, in execute
+    res = self._query(mogrified_query)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\cursors.py", line 330, in _query
+    db.query(q)
+    ~~~~~~~~^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\connections.py", line 286, in query
+    _mysql.connection.query(self, query)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+MySQLdb.OperationalError: (2013, 'Lost connection to server during query')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\views.py", line 503, in dispatch
+    self.initial(request, *args, **kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\views.py", line 420, in initial
+    self.perform_authentication(request)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\views.py", line 330, in perform_authentication
+    request.user
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\request.py", line 232, in user
+    self._authenticate()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\request.py", line 385, in _authenticate
+    user_auth_tuple = authenticator.authenticate(self)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework_simplejwt\authentication.py", line 51, in authenticate
+    return self.get_user(validated_token), validated_token
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework_simplejwt\authentication.py", line 132, in get_user
+    user = self.user_model.objects.get(**{api_settings.USER_ID_FIELD: user_id})
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 635, in get
+    num = len(clone)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 372, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 2000, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 95, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1622, in execute_sql
+    cursor = self.connection.cursor()
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 320, in cursor
+    return self._cursor()
+           ~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 296, in _cursor
+    self.ensure_connection()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 279, in ensure_connection
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 258, in connect
+    self.init_connection_state()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\mysql\base.py", line 279, in init_connection_state
+    cursor.execute("; ".join(assignments))
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\utils.py", line 103, in _execute
+    return self.cursor.execute(sql)
+           ~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\mysql\base.py", line 78, in execute
+    return self.cursor.execute(query, args)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\cursors.py", line 179, in execute
+    res = self._query(mogrified_query)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\cursors.py", line 330, in _query
+    db.query(q)
+    ~~~~~~~~^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\connections.py", line 286, in query
+    _mysql.connection.query(self, query)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+django.db.utils.OperationalError: (2013, 'Lost connection to server during query')
+ERROR 2026-03-23 13:21:45,416 log 4384 1800 Internal Server Error: /api/v1/investor/dashboard-stats
+ERROR 2026-03-23 14:14:41,786 exception_handler 1908 5736 Unexpected error: (2002, "Can't connect to server on '82.25.121.125' (10060)")
+Traceback (most recent call last):
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 279, in ensure_connection
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 256, in connect
+    self.connection = self.get_new_connection(conn_params)
+                      ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\mysql\base.py", line 258, in get_new_connection
+    connection = Database.connect(**conn_params)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\__init__.py", line 121, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\connections.py", line 206, in __init__
+    super().__init__(*args, **kwargs2)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+MySQLdb.OperationalError: (2002, "Can't connect to server on '82.25.121.125' (10060)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\views.py", line 503, in dispatch
+    self.initial(request, *args, **kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\views.py", line 420, in initial
+    self.perform_authentication(request)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\views.py", line 330, in perform_authentication
+    request.user
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\request.py", line 232, in user
+    self._authenticate()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework\request.py", line 385, in _authenticate
+    user_auth_tuple = authenticator.authenticate(self)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework_simplejwt\authentication.py", line 51, in authenticate
+    return self.get_user(validated_token), validated_token
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\rest_framework_simplejwt\authentication.py", line 132, in get_user
+    user = self.user_model.objects.get(**{api_settings.USER_ID_FIELD: user_id})
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 635, in get
+    num = len(clone)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 372, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 2000, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\query.py", line 95, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1622, in execute_sql
+    cursor = self.connection.cursor()
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 320, in cursor
+    return self._cursor()
+           ~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 296, in _cursor
+    self.ensure_connection()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 278, in ensure_connection
+    with self.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 279, in ensure_connection
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\base\base.py", line 256, in connect
+    self.connection = self.get_new_connection(conn_params)
+                      ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\django\db\backends\mysql\base.py", line 258, in get_new_connection
+    connection = Database.connect(**conn_params)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\__init__.py", line 121, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\Naseer bhai uk product details\Match Point\MatchPointAI\backend\.venv\Lib\site-packages\MySQLdb\connections.py", line 206, in __init__
+    super().__init__(*args, **kwargs2)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: (2002, "Can't connect to server on '82.25.121.125' (10060)")
+ERROR 2026-03-23 14:14:42,263 log 1908 5736 Internal Server Error: /api/v1/auth/me/
