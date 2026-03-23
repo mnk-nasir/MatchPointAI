@@ -1,0 +1,47 @@
+AI Opportunity Scoring: Deep Dive
+
+File: backend/core/services/ai_scoring/engine.py
+
+---
+
+1. Core Function: calculate_startup_score(startup)
+Computes dynamic Opportunity and Risk scores synthesizing internal form responses against live external social streams.
+
+---
+
+2. Inputs & Dependencies:
+- StartupEvaluation Model: Provides foundational total_score variables.
+- SocialSignal Model: Supplies live sentiment_score and popularity_score counters.
+- FundingEvent Model: Checks for capital verification counters.
+
+---
+
+3. Weighting Logic (0-100 Points):
+
+A. Base Score Setup
+- Initial Opp Score = startup.total_score (Default: 50)
+- Initial Risk Score = 100 - BaseScore
+
+B. Team Strength Multipliers
+- Condition: Checks form JSONB arrays for coFounders.
+- Impact: If Co-Founder Exists -> +10 Opp / -5 Risk.
+
+C. News Sentiment & Buzz
+- Condition: Filters social streams matching startup name.
+- Impact:
+  - Strong Sentiment (>80): +15 Opp / -10 Risk.
+  - Weak Sentiment (<40): -10 Opp / +15 Risk.
+  - Popularity Buzz (>75): +10 Opp.
+
+D. Funding Pipeline Verification
+- Condition: Sums linked dollar amounts in Funding tables.
+- Impact:
+  - > $1,000,000: +15 Opp / -10 Risk.
+  - > $0 (Any): +5 Opp.
+
+---
+
+4. Outputs:
+Enforces caps ensuring scores stay between 0 and 100.
+Derives labels: High (>=80), Medium (>=50), Low (<50).
+Directly saves back to startup.opportunity_score and startup.risk_score variables.

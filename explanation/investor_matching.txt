@@ -1,0 +1,42 @@
+Investor Matching Engine: Deep Dive
+
+File: backend/core/services/investor_matching/engine.py
+
+---
+
+1. Core Function: calculate_investor_matches(startup)
+Uses algorithmic score matrix to pair startups with qualified investor candidates strictly based on criteria fit.
+
+---
+
+2. Inputs & Dependencies:
+- InvestorProfile Model: Preference criteria (target_industries, preferred_stages, min/max check sizes).
+- Startup Attributes: Resolves industry, stage, location, target amounts.
+
+---
+
+3. Score Matrix Logic (100 Points Total):
+
+A. Industry Alignment (Max: 40 Points)
+Checks startup sector matching array defaults.
+- Strong Align: +40 Points.
+- General Tech Alignment: +10 Points.
+
+B. Funding Stage Fit (Max: 30 Points)
+- Validates startup lifecycles (Seed, Series A) inside investor preferences array.
+- Align: +30 Points.
+
+C. Geography Envelope (Max: 15 Points)
+- Confirms continental regional align descriptors boundary overlaps.
+- Align: +15 Points.
+
+D. Check Size Target (Max: 15 Points)
+- Verifies if startup valuation target fits safely within Investor check sizes limits.
+- Align: +15 Points.
+
+---
+
+4. Outputs:
+Rejects match aggregates final score falling below 50 Points threshold.
+Saves row items directly into StartupInvestorMatch tables storing justified rationale string logs.
+Serves rank cards dynamically triggering profile card sidebar mounting loops.
