@@ -213,11 +213,36 @@ SIMPLE_JWT = {
 }
 
 # CORS Settings
-# For local development, allow common dev origins and credentials by default.
-CORS_ALLOW_ALL_ORIGINS = config('CORS_ALLOW_ALL_ORIGINS', default=True, cast=bool)
-CORS_ALLOWED_ORIGINS = config(
-    'CORS_ALLOWED_ORIGINS',
-    default='http://localhost:5173,http://127.0.0.1:5173,http://localhost:3000,http://127.0.0.1:3000',
-    cast=Csv()
-)
-CORS_ALLOW_CREDENTIALS = config('CORS_ALLOW_CREDENTIALS', default=True, cast=bool)
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = False
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]
+LOGIN_URL = '/admin/login/'
+LOGIN_REDIRECT_URL = '/admin/'
+
+# Email Configuration
+EMAIL_BACKEND = config('EMAIL_BACKEND', default='django.core.mail.backends.console.EmailBackend')
+EMAIL_HOST = config('EMAIL_HOST', default='')
+EMAIL_PORT = config('EMAIL_PORT', cast=int, default=587)
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool, default=True)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='MatchPoint AI <noreply@matchpoint.ai>')
+ADMIN_EMAIL = config('ADMIN_EMAIL', default='admin@matchpoint.ai')

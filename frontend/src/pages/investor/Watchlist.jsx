@@ -2,39 +2,40 @@ import React, { useEffect, useState } from "react";
 import EmptyState from "../../components/ui/EmptyState";
 import { GlassCard } from "../../components/ui/GlassCard";
 import { watchlist } from "../../services/watchlist";
-import { userService } from "../../services/user";
 
 export default function WatchlistPage() {
-  const [userId, setUserId] = useState(null);
   const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchItems = async () => {
+    setLoading(true);
+    try {
+      const list = await watchlist.load();
+      setItems(list);
+    } catch {
+      setItems([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    let active = true;
-    userService
-      .me()
-      .then((u) => {
-        if (!active) return;
-        const uid = u?.id || null;
-        setUserId(uid);
-        setItems(watchlist.load(uid));
-      })
-      .catch(() => {
-        setUserId(null);
-        setItems(watchlist.load(null));
-      });
-    return () => {
-      active = false;
-    };
+    fetchItems();
   }, []);
 
-  const remove = (id) => {
-    watchlist.remove(userId, id);
-    setItems(watchlist.load(userId));
+  const remove = async (startupId) => {
+    await watchlist.remove(startupId);
+    setItems((prev) => prev.filter((w) => w.startup !== startupId));
   };
-  const clear = () => {
-    watchlist.clear(userId);
+
+  const clear = async () => {
+    // Remove all one by one
+    const ids = items.map((w) => w.startup);
+    await Promise.all(ids.map((id) => watchlist.remove(id)));
     setItems([]);
   };
+
+  if (loading) return <div className="p-6 text-white/60 text-sm">Loading watchlist…</div>;
 
   return (
     <div className="space-y-4">
@@ -60,13 +61,13 @@ export default function WatchlistPage() {
               <tbody>
                 {items.map((s, i) => (
                   <tr key={s.id || i} className="border-t border-white/10">
-                    <td className="p-3">{s.name || "—"}</td>
-                    <td className="p-3">{s.industry || "—"}</td>
-                    <td className="p-3">{s.funding_ask ? `$${s.funding_ask}` : "—"}</td>
-                    <td className="p-3">{s.risk_score ?? "—"}</td>
+                    <td className="p-3">{s.startup_name || "—"}</td>
+                    <td className="p-3">{s.startup_industry || "—"}</td>
+                    <td className="p-3">{s.startup_funding_ask ? `$${s.startup_funding_ask}` : "—"}</td>
+                    <td className="p-3">{s.startup_risk_score ?? "—"}</td>
                     <td className="p-3 text-right">
                       <button
-                        onClick={() => remove(s.id)}
+                        onClick={() => remove(s.startup)}
                         className="text-xs rounded-lg px-3 py-1 border border-white/15 text-white/80 hover:bg-white/10"
                       >
                         Remove

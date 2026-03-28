@@ -120,6 +120,14 @@ class SubmitFullEvaluationAPIView(APIView):
                 evaluation.form_data = steps_field
                 evaluation.save(update_fields=['form_data'])
 
+        # 4.5 Trigger Notifications
+        try:
+            from core.services.email_service import send_startup_submission_admin_alert, send_new_startup_investor_alert
+            send_startup_submission_admin_alert(evaluation)
+            send_new_startup_investor_alert(evaluation)
+        except Exception:
+            pass
+
         # 5. Return Response
         return Response({
             'evaluation_id': evaluation.id,

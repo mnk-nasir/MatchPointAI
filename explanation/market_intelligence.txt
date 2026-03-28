@@ -1,0 +1,39 @@
+Market Intelligence Engine: Deep Dive
+
+File: backend/core/services/market_intelligence/engine.py
+
+---
+
+1. Core Function: calculate_market_intelligence(startup)
+Processes high-frequency external signals (Google News and social trackers) creating structured dashboard lookups.
+
+---
+
+2. Inputs & Dependencies:
+- NewsArticle Model: Mentions counter populated by background scrapers.
+- SocialSignal Model: Live sentiment indexes.
+- FundingEvent Model: Sector heatmap indexes verifying industry funding flags.
+
+---
+
+3. Calculation Logic:
+
+A. News Mentions Score
+- Logic: Counts article entries linked to startup in last 30 days.
+- Formula: Count * 5 (Cap 100).
+
+B. Sentiment Score Tracking
+- Logic: Live keyword extraction metrics.
+- Formula: Live percentage mapping (0-100). Default fallback is 50.
+
+C. Industry Momentum Score
+- Logic: Monitors funding absolute counts strictly flowing into exact industry sector.
+- Formula: 40 + (FundingCount * 10) (Cap 100).
+
+---
+
+4. Outputs:
+Converts continuous metrics to text tags:
+Levels: High (>=75), Medium (>=45), Low (<45).
+Trends: Rising (>=70), Stable (>=40), Falling (<40).
+Updates the StartupSignal node directly for frontend sidebar mounting.

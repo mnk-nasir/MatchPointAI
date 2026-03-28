@@ -11,6 +11,7 @@ from core.repositories.leads_repository import (
     create_investor_lead,
     create_accelerator_lead,
 )
+from core.services.email_service import send_investor_interest_confirmation, send_investor_interest_admin_alert
 
 
 def _meta_from_request(request):
@@ -32,6 +33,11 @@ class InvestorInterestAPIView(APIView):
         serializer = InvestorInterestSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         lead = create_investor_lead(serializer.validated_data, _meta_from_request(request))
+        
+        # Trigger Notifications
+        send_investor_interest_confirmation(lead)
+        send_investor_interest_admin_alert(lead)
+        
         out = InvestorInterestSerializer(lead)
         return Response(out.data, status=status.HTTP_201_CREATED)
 

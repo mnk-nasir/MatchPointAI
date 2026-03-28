@@ -15,7 +15,7 @@ function Navbar() {
 
         {/* Desktop Links */}
         <nav className="hidden lg:flex items-center gap-8">
-          <a href="#home" className="text-sm font-medium text-white/70 transition-colors hover:text-white">Home</a>
+          <Link to="/" className="text-sm font-medium text-white/70 transition-colors hover:text-white">Home</Link>
           <Link to="/pricing" className="text-sm font-medium text-white/70 transition-colors hover:text-white">Pricing</Link>
           <Link to="/about" className="text-sm font-medium text-white/70 transition-colors hover:text-white">About us</Link>
           <Link to="/faqs" className="text-sm font-medium text-white/70 transition-colors hover:text-white">Faqs</Link>
@@ -55,13 +55,13 @@ function Navbar() {
           }`}
       >
         <nav className="flex flex-col p-6 space-y-4">
-          <a
-            href="#home"
+          <Link
+            to="/"
             className="text-base font-medium text-white/80 hover:text-white"
             onClick={() => setIsMenuOpen(false)}
           >
             Home
-          </a>
+          </Link>
           <Link
             to="/pricing"
             className="text-base font-medium text-white/80 hover:text-white"

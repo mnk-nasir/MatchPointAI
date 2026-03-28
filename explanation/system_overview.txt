@@ -1,0 +1,47 @@
+System Intelligence & AI Logic Guide
+
+This document explains the logic driving the Market Intelligence, Investor Matching, and AI Scoring engines on the platform.
+
+---
+
+1. AI Opportunity Scoring Engine
+Goal: Calculates a dynamic Opportunity Score and Risk Score for any startup by blending internal review criteria with live external signals.
+
+Factors weighed:
+- Base Score: Derived from internal startup evaluation questions.
+- Team Strength: Checks for presence of co-founders; impacts score triggers.
+- Sentiment & Buzz: Evaluates continuous news mentions; high sentiment boosts triggers.
+- Funding History: Verifies previous capital raising; verified dollars trigger heavy verification.
+
+---
+
+2. Market Intelligence Engine
+Goal: Processes high-frequency external signals (Google News feeds, Social Buzz counters) into verifiable dashboards.
+
+Factors weighed:
+- News Mentions Score: Counts unique NewsArticle entries tied to startup name in the last 30 days.
+- Social Sentiment Score: Extracts sentiment keywords from continuous aggregates.
+- Industry Momentum Score: Counts volume of Funding Events inside the exact same industry sector.
+
+---
+
+3. Investor Matching Engine
+Goal: Automatically ranks and matches Venture Capital firms to startups to optimize funding success.
+
+Factors weighed (Point Multiplier):
+- Industry Alignment: Checks portfolio overlap limits.
+- Funding Stage fit: Validates startup stage fit.
+- Geography Overlay: Checks continental boundary overlays.
+- Check Size target: Inspects target limits within min/max criteria.
+
+---
+
+4. Startup Discovery Agent (The Background Brain)
+Goal: Runs automated loops scan external streams to find startups before they are entered manually.
+
+Layers:
+- News Scraper: Monitors RSS streams or funding phrases.
+- LinkedIn Signal Finder: Tracks founder announcement frameworks.
+- Product Launch Finder: Evaluates product launch feeds targeting category buckets.
+
+(Please consult separate files in this folder for deep-dive technical mechanics into each node)

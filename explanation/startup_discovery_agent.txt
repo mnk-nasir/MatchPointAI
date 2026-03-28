@@ -1,0 +1,33 @@
+Startup Discovery Agent: Deep Dive
+
+File: backend/core/services/startup_discovery/
+
+---
+
+1. Core Function: agent.py -> run()
+Aggregates scraper finds separating stealth startup triggers before manual database creations take place.
+
+---
+
+2. Sub-Collector finders:
+
+A. News Startup Finder (news_startup_finder.py)
+- Scans Google News sequences and secondary TechCrunch Aggregators.
+- Regex isolates naming sequences sitting prior to launch keywords.
+- Extracts round tags and keyword taxonomies dynamically.
+
+B. LinkedIn Signal Finder (linkedin_signal_finder.py)
+- Monitors triggers announcing stealth deployment frameworks or launch announcements.
+- Matches typical name placeholders.
+
+C. Product Launch Finder (product_launch_finder.py)
+- Evaluates descriptive launch text separating product categories (SaaS, AI, Marketplace, Hardware, Fintech App).
+- Extracts targets accurately.
+
+---
+
+3. De-Duplication & Promote Loops:
+- Unique strictly standardizes by (company_name, article_url) node keys.
+- Discards invalid variables (strings > 80 lengths or noise triggers).
+- Promotes row creation triggering StartupEvaluation creating baseline row assigning stage triggers.
+Leaves descriptors safely stored continuous inner loop JSON arrays.

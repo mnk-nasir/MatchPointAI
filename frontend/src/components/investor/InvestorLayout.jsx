@@ -11,7 +11,7 @@ export default function InvestorLayout() {
     <RequireInvestor>
       <div className="min-h-screen bg-[#050a12] text-white flex relative">
         <Sidebar />
-        <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col min-h-screen overflow-y-auto">
           <Topbar />
           <main className="p-6">
             <Outlet />

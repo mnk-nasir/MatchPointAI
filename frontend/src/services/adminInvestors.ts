@@ -5,6 +5,8 @@ export interface AdminInvestor {
   email: string;
   first_name?: string;
   last_name?: string;
+  company?: string;
+  phone?: string;
   is_investor: boolean;
   date_joined: string;
 }
@@ -13,6 +15,8 @@ export interface CreateInvestorPayload {
   email: string;
   first_name?: string;
   last_name?: string;
+  company?: string;
+  phone?: string;
   password: string;
 }
 
@@ -27,6 +31,10 @@ export const adminInvestorsService = {
   },
   async createFromLead(lead_id: number, password: string) {
     const res = await api.post<AdminInvestor>("/admin/investors/from-lead/", { lead_id, password });
+    return res.data;
+  },
+  async update(id: string, payload: Partial<CreateInvestorPayload>) {
+    const res = await api.patch<AdminInvestor>(`/admin/investors/${id}/`, payload);
     return res.data;
   },
 };

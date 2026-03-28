@@ -20,6 +20,16 @@ html {
   padding-top: 5rem; /* fallback for non-tailwind paths */
 }
 
+/* Hide default browser up/down arrows for number inputs since we have custom ones */
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
 /* PDF clarity tweaks for the preview capture root */
 .printable {
   /* Avoid shadow artifacts and heavy blurs in capture */

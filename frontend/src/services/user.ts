@@ -17,5 +17,9 @@ export const userService = {
     const res = await api.get("/auth/me/");
     return res.data as CurrentUser;
   },
+  async updateProfile(data: { first_name?: string; last_name?: string }): Promise<CurrentUser> {
+    const res = await api.put("/auth/me/", data);
+    return res.data as CurrentUser;
+  }
 };
 

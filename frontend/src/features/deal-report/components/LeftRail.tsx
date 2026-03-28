@@ -29,9 +29,9 @@ export default function LeftRail({ items }: { items: Item[] }) {
             </div>
             <div className="text-xs text-white/70 grid grid-cols-1 gap-1 mb-2">
               {item.subs.map((s, i) => (
-                <div key={i} className="flex items-center justify-between">
-                  <span className="truncate">{s.label}</span>
-                  <span className="text-white/40">
+                <div key={i} className="flex items-start justify-between gap-2">
+                  <span className="break-words leading-tight">{s.label}</span>
+                  <span className="text-white/40 whitespace-nowrap shrink-0 mt-0.5">
                     {typeof s.max === "number"
                       ? `${Math.max(0, Math.min(Number(s.score ?? 0), Number(s.max)))} / ${s.max}`
                       : countOrDash(s.count)}

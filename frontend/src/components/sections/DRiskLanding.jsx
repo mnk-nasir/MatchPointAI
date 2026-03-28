@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { Rocket, Gauge, Shield, LineChart, Layers, Users } from "lucide-react";
+import { Rocket, Gauge, Shield, LineChart, Layers, Users, TrendingUp } from "lucide-react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
@@ -81,6 +81,8 @@ const cards = [
     accent: "#00e6b4",
     Icon: Rocket,
     route: "/startups-and-companies",
+    description: "Prepare for fundraising with AI-driven deal reports, precise valuation benchmarking, and readiness scoring.",
+    stats: { label: "Average Readiness", value: "88%" },
     features: [
       "AI-assisted pitch prep",
       "Investor-fit scoring",
@@ -94,6 +96,8 @@ const cards = [
     accent: "#00aaff",
     Icon: Layers,
     route: "/accelerators",
+    description: "Manage cohorts efficiently with automated signal extraction, performance dashboards, and portfolio health tracking.",
+    stats: { label: "Signals tracked", value: "1.2k+" },
     features: [
       "Cohort benchmarking",
       "Signal-based shortlisting",
@@ -107,6 +111,8 @@ const cards = [
     accent: "#a78bfa",
     Icon: LineChart,
     route: "/investors",
+    description: "Act with conviction using intelligent risk indexing, deep deal intelligence, and automated pipeline filtering.",
+    stats: { label: "Deal Match Rate", value: "94%" },
     features: [
       "Risk index",
       "Smart pipeline filters",
@@ -116,7 +122,7 @@ const cards = [
 ];
 
 function DRiskCard({ data, onReadMore }) {
-  const { id, label, title, accent, Icon, features } = data;
+  const { id, label, title, accent, Icon, description, stats, features } = data;
   return (
     <motion.div
       whileHover={{ y: -8 }}
@@ -164,8 +170,42 @@ function DRiskCard({ data, onReadMore }) {
 
       </div>
 
-      {/* Hover Reveal Panel (in-flow, no layout shift) */}
-      <div className="px-6 sm:px-8 pb-6 sm:pb-8">
+      {/* Middle Content Area */}
+      <div className="relative px-6 sm:px-8 pb-6 sm:pb-8 flex-1 flex flex-col justify-end">
+        {/* Placeholder (visible BEFORE hover) */}
+        <div className="absolute inset-x-6 sm:inset-x-8 bottom-6 sm:bottom-8 transition-all duration-300 ease-out opacity-100 visible group-hover:opacity-0 group-hover:invisible">
+          <div className="p-4 sm:p-5 rounded-xl border border-white/5 bg-white/[0.02] backdrop-blur-sm relative overflow-hidden">
+            {/* Animated Graph Background Accent */}
+            <div className="absolute right-0 bottom-0 opacity-10 pointer-events-none" style={{ color: accent }}>
+              <TrendingUp className="w-24 h-24 transform translate-x-4 translate-y-4" />
+            </div>
+
+            <div className="flex items-center gap-4 mb-3">
+              <div className="flex items-end gap-1 h-8 opacity-80">
+                {[40, 70, 45, 90, 60, 80, 50].map((h, i) => (
+                  <motion.div
+                    key={i}
+                    className="w-1.5 rounded-t-sm"
+                    style={{ backgroundColor: accent }}
+                    animate={{ height: [`${h * 0.4}%`, `${h}%`, `${h * 0.6}%`] }}
+                    transition={{ duration: 1.5, repeat: Infinity, repeatType: "reverse", ease: "easeInOut", delay: i * 0.1 }}
+                  />
+                ))}
+              </div>
+              <div>
+                <div className="text-xl font-bold text-white tracking-tight" style={{ fontFamily: "'Rajdhani', sans-serif" }}>{stats.value}</div>
+                <div className="text-[10px] uppercase tracking-[0.15em] text-white/50" style={{ fontFamily: "'Space Mono', monospace" }}>{stats.label}</div>
+              </div>
+            </div>
+            
+            <p className="text-white/70 text-sm leading-relaxed border-l-2 pl-3" style={{ borderColor: `${accent}40` }}>
+              {description}
+            </p>
+          </div>
+        </div>
+
+        {/* Hover Reveal Panel (shows ON hover) */}
+
         <div
           className="rounded-xl border transition-all duration-300 ease-out opacity-0 translate-y-2 invisible pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:visible group-hover:pointer-events-auto h-[180px] md:h-[220px] overflow-hidden"
           style={{
@@ -184,7 +224,7 @@ function DRiskCard({ data, onReadMore }) {
                   className="inline-block h-[1px] w-8 opacity-70"
                   style={{ background: accent }}
                 />
-              MATCHPoint FEATURES
+                MATCHPoint FEATURES
               </div>
               <ul className="space-y-3">
                 {features.map((f, idx) => (
@@ -214,13 +254,15 @@ function DRiskCard({ data, onReadMore }) {
         </div>
         <div className="mt-3 h-px w-full bg-white/10" />
         <div className="mt-1 h-px w-2/3 bg-white/15" />
-        <button
+        <motion.button
+          whileHover={{ scale: 1.05, backgroundColor: `${accent}22` }}
+          whileTap={{ scale: 0.95 }}
           onClick={onReadMore}
           className="mt-3 rounded-full px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] border transition-colors"
           style={{ fontFamily: "'Space Mono', monospace", borderColor: accent, color: accent }}
         >
           Read More →
-        </button>
+        </motion.button>
       </div>
     </motion.div>
   );

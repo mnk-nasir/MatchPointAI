@@ -59,16 +59,31 @@ export default function InvestorLogin() {
               required
               icon={<Mail className="h-4 w-4" />}
             />
-            <Input
-              label="Password"
-              type="password"
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              icon={<Lock className="h-4 w-4" />}
-            />
-            <GlowButton type="submit" disabled={loading}>
+            <div>
+              <Input
+                label="Password"
+                type="password"
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                icon={<Lock className="h-4 w-4" />}
+              />
+              <div className="mt-2 text-right">
+                <a
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigate("/investor/forgot-password");
+                  }}
+                  className="text-xs text-indigo-400 hover:text-indigo-300 transition-colors"
+                  style={{ fontFamily: "'Space Mono', monospace" }}
+                >
+                  Forgot password?
+                </a>
+              </div>
+            </div>
+            <GlowButton type="submit" disabled={loading} className="w-full mt-2">
               {loading ? "Signing in…" : "Sign In"}
             </GlowButton>
           </form>

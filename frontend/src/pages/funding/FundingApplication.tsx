@@ -59,6 +59,7 @@ export default function FundingApplication() {
     country: "",
     currency: "",
     companyLogoUrl: "",
+    sector: "",
     capTableSummary: "",
     stage: "",
     previousFunding: "", // Maps to funding_raised in backend
@@ -108,7 +109,7 @@ export default function FundingApplication() {
   };
 
   const REQUIRED_BY_STEP: Record<number, Array<keyof typeof formData>> = {
-    1: ["companyName", "legalStructure", "incorporationYear", "country", "stage", "contactEmail", "contactPhone"],
+    1: ["companyName", "legalStructure", "incorporationYear", "country", "stage", "contactEmail", "contactPhone", "companyLogoUrl"],
     2: ["coreProblem", "solution", "whyNow", "uniqueAdvantage"],
     3: ["tam", "sam", "som", "targetCustomer", "competitors"],
     4: ["monthlyRevenue", "revenueGrowth", "activeUsers", "payingCustomers", "retentionRate"],
@@ -191,6 +192,8 @@ export default function FundingApplication() {
           capTableSummary: formData.capTableSummary,
           contactEmail: formData.contactEmail,
           contactPhone: formData.contactPhone,
+          companyLogoUrl: formData.companyLogoUrl,
+          sector: formData.sector,
         },
         step2: {
           coreProblem: formData.coreProblem,
@@ -310,12 +313,6 @@ export default function FundingApplication() {
     if (!check.valid) {
       focusFirstInvalid(check.invalidFields);
       return;
-    }
-    if (currentStep === 1 && formData.companyLogoUrl) {
-      if (!isValidUrl(formData.companyLogoUrl)) {
-        alert("Please enter a valid Company Logo URL (e.g. https://example.com/logo.png)");
-        return;
-      }
     }
     if ((currentStep === 5 || currentStep === 7) && formData.founderProfileUrl) {
       if (!isValidUrl(formData.founderProfileUrl)) {

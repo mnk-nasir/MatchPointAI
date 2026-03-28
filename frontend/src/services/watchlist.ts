@@ -1,48 +1,42 @@
+import api from "./api";
+
 export type WatchItem = {
-  id: string;
-  name?: string;
-  industry?: string | null;
-  funding_ask?: number | string | null;
-  risk_score?: number | null;
-  saved_at: number;
+  id: string; // The watchlist API record ID
+  startup: string; // The startup UUID
+  startup_name?: string;
+  startup_industry?: string | null;
+  startup_funding_ask?: string | null;
+  startup_risk_score?: number | null;
+  startup_logo_url?: string | null;
+  created_at?: string;
 };
 
-function keyFor(userId: string | number | null | undefined): string {
-  const uid = userId ? String(userId) : "anon";
-  return `mp_watchlist_${uid}`;
-}
-
 export const watchlist = {
-  load(userId?: string | number | null): WatchItem[] {
+  async load(): Promise<WatchItem[]> {
     try {
-      const raw = localStorage.getItem(keyFor(userId || null));
-      return raw ? (JSON.parse(raw) as WatchItem[]) : [];
+      const res = await api.get("/investor/watchlist");
+      const data: any = res.data;
+      return Array.isArray(data) ? data : data?.results ?? [];
     } catch {
       return [];
     }
   },
-  save(userId: string | number | null | undefined, items: WatchItem[]) {
+  async has(startupId: string): Promise<boolean> {
+    const list = await this.load();
+    return list.some((w) => w.startup === startupId);
+  },
+  async add(startupId: string): Promise<void> {
     try {
-      localStorage.setItem(keyFor(userId || null), JSON.stringify(items));
+      await api.post("/investor/watchlist", { startup: startupId });
     } catch {
       // ignore
     }
   },
-  has(userId: string | number | null | undefined, id: string): boolean {
-    return this.load(userId).some((w) => w.id === id);
-  },
-  add(userId: string | number | null | undefined, item: Omit<WatchItem, "saved_at">) {
-    const list = this.load(userId);
-    if (list.find((w) => w.id === item.id)) return;
-    list.unshift({ ...item, saved_at: Date.now() });
-    this.save(userId, list);
-  },
-  remove(userId: string | number | null | undefined, id: string) {
-    const list = this.load(userId).filter((w) => w.id !== id);
-    this.save(userId, list);
-  },
-  clear(userId: string | number | null | undefined) {
-    this.save(userId, []);
+  async remove(startupId: string): Promise<void> {
+    try {
+      await api.delete(`/investor/watchlist/${startupId}`);
+    } catch {
+      // ignore
+    }
   },
 };
-

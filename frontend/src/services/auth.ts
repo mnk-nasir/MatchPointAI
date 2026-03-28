@@ -14,5 +14,13 @@ export const authService = {
     clearAccessToken();
     clearRefreshToken();
   },
+  async forgotPassword(email: string) {
+    const res = await api.post("/auth/forgot-password/", { email });
+    return res.data;
+  },
+  async resetPassword(uid: string, token: string, password: string) {
+    const res = await api.post("/auth/reset-password/", { uid, token, password });
+    return res.data;
+  },
 };
 

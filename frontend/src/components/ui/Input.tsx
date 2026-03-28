@@ -1,6 +1,7 @@
 import React, { forwardRef } from "react";
 import { cn } from "../../utils/cn";
 import { motion } from "framer-motion";
+import { Plus, Minus } from "lucide-react";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -41,10 +42,64 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               error && "border-red-500/50 focus:border-red-500",
               className
             )}
-            aria-invalid={!!error}
             aria-describedby={describedBy}
+            onKeyDown={(e) => {
+              if (props.onKeyDown) props.onKeyDown(e);
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                const form = e.currentTarget.form;
+                if (!form) return;
+                const elements = Array.from(form.elements) as HTMLElement[];
+                const index = elements.indexOf(e.currentTarget);
+                
+                // Find next focusable input/button that isn't hidden or disabled
+                for (let i = index + 1; i < elements.length; i++) {
+                  const nextEl = elements[i];
+                  if (nextEl.tabIndex >= 0 && !nextEl.hasAttribute('disabled')) {
+                    nextEl.focus();
+                    break;
+                  }
+                }
+              }
+            }}
             {...props}
           />
+          {props.type === "number" && (
+            <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1">
+              <button
+                type="button"
+                className="flex items-center justify-center h-7 w-7 rounded-md bg-white/5 hover:bg-white/10 text-white/70 hover:text-white transition-colors border border-white/5"
+                onClick={(e) => {
+                  const el = e.currentTarget.parentElement?.parentElement?.querySelector('input') as HTMLInputElement;
+                  if (el) {
+                    el.stepDown();
+                    const tracker = (el as any)._valueTracker;
+                    if (tracker) tracker.setValue(el.value);
+                    el.dispatchEvent(new Event('input', { bubbles: true }));
+                    el.dispatchEvent(new Event('change', { bubbles: true }));
+                  }
+                }}
+              >
+                <Minus className="h-3 w-3" />
+              </button>
+              <button
+                type="button"
+                className="flex items-center justify-center h-7 w-7 rounded-md bg-white/5 hover:bg-white/10 text-white/70 hover:text-white transition-colors border border-white/5"
+                onClick={(e) => {
+                  const el = e.currentTarget.parentElement?.parentElement?.querySelector('input') as HTMLInputElement;
+                  if (el) {
+                    el.stepUp();
+                    const tracker = (el as any)._valueTracker;
+                    if (tracker) tracker.setValue(el.value);
+                    el.dispatchEvent(new Event('input', { bubbles: true }));
+                    el.dispatchEvent(new Event('change', { bubbles: true }));
+                  }
+                }}
+              >
+                <Plus className="h-3 w-3" />
+              </button>
+            </div>
+          )}
         </div>
         {error && (
           <p id={describedBy} role="alert" className="text-xs text-red-400">
