@@ -37,6 +37,7 @@ class InvestorInterestAPIView(APIView):
         # Trigger Notifications
         send_investor_interest_confirmation(lead)
         send_investor_interest_admin_alert(lead)
+        
         out = InvestorInterestSerializer(lead)
         return Response(out.data, status=status.HTTP_201_CREATED)
 

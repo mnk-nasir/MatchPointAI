@@ -44,6 +44,8 @@ from core.views.startup_views import (
     StartupNewsAPIView,
 )
 
+from core.views.gdpr_views import DataExportView, AccountDeletionView
+
 urlpatterns = [
     # Auth Endpoints
     path('auth/register/', RegisterView.as_view(), name='auth_register'),
@@ -52,6 +54,10 @@ urlpatterns = [
     path('auth/me/', MeView.as_view(), name='auth_me'),
     path('auth/forgot-password/', ForgotPasswordView.as_view(), name='auth_forgot_password'),
     path('auth/reset-password/', ResetPasswordView.as_view(), name='auth_reset_password'),
+
+    # GDPR Endpoints
+    path('auth/gdpr/export/', DataExportView.as_view(), name='gdpr_export'),
+    path('auth/gdpr/delete/', AccountDeletionView.as_view(), name='gdpr_delete'),
 
     # Evaluation Endpoints
     path('evaluations/create/', CreateEvaluationAPIView.as_view(), name='create-evaluation'),

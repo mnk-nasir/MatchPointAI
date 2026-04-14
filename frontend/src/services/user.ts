@@ -20,6 +20,13 @@ export const userService = {
   async updateProfile(data: { first_name?: string; last_name?: string }): Promise<CurrentUser> {
     const res = await api.put("/auth/me/", data);
     return res.data as CurrentUser;
+  },
+  async exportData(): Promise<any> {
+    const res = await api.get("/auth/gdpr/export/");
+    return res.data;
+  },
+  async deleteAccount(): Promise<void> {
+    await api.delete("/auth/gdpr/delete/");
   }
 };
 

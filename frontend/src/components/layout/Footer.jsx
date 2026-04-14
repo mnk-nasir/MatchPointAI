@@ -10,6 +10,8 @@ export default function Footer() {
             © {new Date().getFullYear()} MATCHPoint. All rights reserved.
           </div>
           <nav className="flex items-center gap-6">
+            <Link to="/privacy-policy" className="text-[10px] md:text-sm text-white/50 hover:text-white transition-colors">Privacy</Link>
+            <Link to="/terms-of-service" className="text-[10px] md:text-sm text-white/50 hover:text-white transition-colors">Terms</Link>
             <Link to="/pricing" className="text-sm text-white/70 hover:text-white">Pricing</Link>
             <Link to="/about" className="text-sm text-white/70 hover:text-white">About</Link>
             <Link to="/faqs" className="text-sm text-white/70 hover:text-white">FAQs</Link>

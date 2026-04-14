@@ -145,6 +145,67 @@ export default function Profile() {
           </div>
         </form>
       </GlassCard>
+
+      <div className="pt-8 border-t border-white/10 mt-12">
+        <h2 className="text-xl font-bold text-white mb-2">Privacy & Data Control</h2>
+        <p className="text-white/60 mb-6 text-sm">
+          Manage your personal data and privacy settings in accordance with GDPR regulations.
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="p-5 rounded-2xl bg-white/5 border border-white/10 flex flex-col justify-between">
+            <div>
+              <h3 className="font-semibold text-white mb-2">Export Personal Data</h3>
+              <p className="text-xs text-white/40 mb-4 leading-relaxed">
+                Download a machine-readable copy of all the information we have associated with your account.
+              </p>
+            </div>
+            <button 
+              onClick={async () => {
+                try {
+                  const data = await userService.exportData();
+                  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                  const url = window.URL.createObjectURL(blob);
+                  const a = document.createElement('a');
+                  a.href = url;
+                  a.download = `matchpoint-data-${new Date().toISOString().split('T')[0]}.json`;
+                  a.click();
+                } catch (err) {
+                  setError("Failed to export data. Please try again.");
+                }
+              }}
+              className="w-full py-2.5 text-sm font-medium bg-white/10 hover:bg-white/20 text-white rounded-xl transition-all border border-white/10"
+            >
+              Request Data Export
+            </button>
+          </div>
+
+          <div className="p-5 rounded-2xl bg-red-500/5 border border-red-500/10 flex flex-col justify-between">
+            <div>
+              <h3 className="font-semibold text-red-200 mb-2">Delete Account</h3>
+              <p className="text-xs text-red-200/40 mb-4 leading-relaxed">
+                Permanently remove your account and all associated data. This action is irreversible.
+              </p>
+            </div>
+            <button 
+              onClick={async () => {
+                if (window.confirm("ARE YOU ABSOLUTELY SURE? This will permanently delete your account and all data across MatchPointAI. This cannot be undone.")) {
+                  try {
+                    await userService.deleteAccount();
+                    localStorage.clear();
+                    window.location.href = "/";
+                  } catch (err) {
+                    setError("Failed to delete account. Please contact support.");
+                  }
+                }
+              }}
+              className="w-full py-2.5 text-sm font-medium bg-red-500/10 hover:bg-red-500/20 text-red-400 rounded-xl transition-all border border-red-500/20"
+            >
+              Delete My Account
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

@@ -27,6 +27,9 @@ import PipelinePage from "./pages/investor/Pipeline.jsx";
 import ContactsPage from "./pages/investor/Contacts.jsx";
 import { Navigate } from "react-router-dom";
 import StartupsAndCompanies from "./pages/StartupsAndCompanies.jsx";
+import PrivacyPolicy from "./pages/legal/PrivacyPolicy.jsx";
+import TermsOfService from "./pages/legal/TermsOfService.jsx";
+import CookieBanner from "./components/gdpr/CookieBanner.jsx";
 import About from "./pages/About.jsx";
 import Pricing from "./pages/Pricing.jsx";
 import Faqs from "./pages/Faqs.jsx";
@@ -39,6 +42,7 @@ function AppContent() {
   return (
     <div className="app-root min-h-screen bg-mp-bg text-white">
       {!hideLayout && <Navbar />}
+      <CookieBanner />
       <main className={!hideLayout ? "app-main" : ""}>
         <Routes>
           <Route path="/" element={<DRiskLanding />} />
@@ -73,6 +77,8 @@ function AppContent() {
           <Route path="/about" element={<About />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/faqs" element={<Faqs />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-of-service" element={<TermsOfService />} />
         </Routes>
       </main>
       {!hideLayout && <Footer />}
